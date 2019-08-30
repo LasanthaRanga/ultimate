@@ -359,11 +359,10 @@ public class BarcodePay implements Initializable {
                     txt_dis1.setText(data.getString("cus_name"));
                     double fullTot = data.getDouble("receipt_total");
                     if (radio_print.isSelected()) {
-
                         modle.Payment.PaymentByID.genarateRisiptNo(10, "", appid);
                         modle.book.Recipt.genarateBookingRecipt(idRecipt + "",true);
+                        modle.Allert.notificationGood("Completed", "Booking " + idRecipt);
                         clearAll();
-
                     } else {
                         payAnable();
                     }
