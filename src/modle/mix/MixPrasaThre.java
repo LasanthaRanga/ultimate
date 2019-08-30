@@ -1,0 +1,131 @@
+package modle.mix;
+
+import conn.DB;
+import modle.GetInstans;
+import modle.StaticViews;
+
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MixPrasaThre {
+
+    final static int VATID = 33;
+    final static int NBTID = 34;
+    final static int STAMPID = 35;
+    final static int CASH = 65;
+    final static int CHQUE = 66;
+
+    public void updateMixIncomeStatus(int appid, int appcat) {
+        try {
+            conn.DB.setData("UPDATE mixincome\n" +
+                    "SET \n" +
+                    " mixincome_status = '1'\n" +
+                    "WHERE\n" +
+                    "\tidMixincome = '" + appid + "'");
+
+            ResultSet data1 = DB.getData("SELECT\n" +
+                    "\treceipt.idReceipt,\n" +
+                    "\treceipt.receipt_print_no,\n" +
+                    "\tmixincome.idMixincome,\n" +
+                    "\tmixincome.mixincome_userid,\n" +
+                    "\treceipt.cheack,\n" +
+                    "\treceipt.cesh\n" +
+                    "FROM\n" +
+                    "\treceipt\n" +
+                    "INNER JOIN mixincome ON mixincome.idMixincome = receipt.recept_applicationId\n" +
+                    "WHERE\n" +
+                    "\treceipt.Application_Catagory_idApplication_Catagory =  '" + appcat + "'" +
+                    "AND mixincome.idMixincome = " + appid);
+
+            String reciptNo = null;
+            int idRecipt = 0;
+            int mixincome_userid = 0;
+
+            double cheack = 0;
+            double cesh = 0;
+            if (data1.last()) {
+                reciptNo = data1.getString("receipt_print_no");
+                idRecipt = data1.getInt("idReceipt");
+                mixincome_userid = data1.getInt("mixincome_userid");
+
+                cheack = data1.getDouble("cheack");
+                cesh = data1.getDouble("cesh");
+
+
+            }
+
+            String quary = "SELECT\n" +
+                    "mixdata.idMixdata,\n" +
+                    "mixdata.md_description,\n" +
+                    "mixdata.md_amount,\n" +
+                    "mixdata.md_vat,\n" +
+                    "mixdata.md_nbt,\n" +
+                    "mixdata.md_stamp,\n" +
+                    "mixdata.md_total,\n" +
+                    "mixdata.mixintype_idMixintype,\n" +
+                    "mixdata.mixincome_IdMixincome,\n" +
+                    "mixintype.idMixintype,\n" +
+                    "mixintype.mixintype_name,\n" +
+                    "mixintype.account_receipt_title_idAccount_receipt_title,\n" +
+                    "mixintype.mixintype_status,\n" +
+                    "account_receipt_title.idAccount_receipt_title,\n" +
+                    "mixintype.bankinfo_idBank\n" +
+                    "FROM\n" +
+                    "\tmixdata\n" +
+                    "INNER JOIN mixintype ON mixdata.mixintype_idMixintype = mixintype.idMixintype\n" +
+                    "INNER JOIN account_receipt_title ON mixintype.account_receipt_title_idAccount_receipt_title = account_receipt_title.idAccount_receipt_title\n" +
+                    "WHERE\n" +
+                    "\tmixincome_IdMixincome =" + appid;
+
+            ResultSet data = DB.getData(quary);
+
+            Date systemDate = GetInstans.getQuater().getSystemDate();
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(systemDate);
+            Integer idUser = StaticViews.getLogUser().getIdUser();
+
+
+            int bankinfo_idBank = 0;
+            while (data.next()) {
+                double md_amount = data.getDouble("md_amount");
+                int idVote = data.getInt("account_receipt_title_idAccount_receipt_title");
+                bankinfo_idBank = data.getInt("bankinfo_idBank");
+                if (md_amount > 0) {
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat);
+                }
+                double vat = data.getDouble("md_vat");
+                if (vat > 0) {
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat);
+                }
+                double nbt = data.getDouble("md_nbt");
+                if (nbt > 0) {
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat);
+                }
+                double stamp = data.getDouble("md_stamp");
+                if (stamp > 0) {
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat);
+                }
+            }
+
+            if (cesh > 0) {
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat);
+            }
+
+            if (cheack > 0) {
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat);
+            }
+
+            conn.DB.setData("UPDATE \n" +
+                    "`receipt`\n" +
+                    "SET \n" +
+                    " `receipt_account_id` = '" + bankinfo_idBank + "',\n" +
+                    " `receipt_user_id` = '" + mixincome_userid + "'\n" +
+                    "WHERE\n" +
+                    "\t(`idReceipt` = '" + idRecipt + "');\n");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+}
