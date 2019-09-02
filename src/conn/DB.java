@@ -21,13 +21,13 @@ public class DB {
 //    public static final String USER = "root";
 //    public static final String PASS = "root";
 
-    //Cat 2020 Local server
+//Cat 2020 Local server
 //    public static final String DBPATH = "jdbc:mysql://192.168.1.3:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "root";
 
 
-    // LOCAL
+// LOCAL
 //    public static final String DBPATH = "jdbc:mysql://127.0.0.1:3306/polgahawela?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "root";
@@ -38,13 +38,13 @@ public class DB {
 //    public static final String USER = "root";
 //    public static final String PASS = "@Mck_#321";
 
-    ////    MCK Online
+////    MCK Online
 //    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "@Mck_#321";
 
 
-    ////    Polgahawela
+////    Polgahawela
 //    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/polgahawela?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "@Mck_#321";
@@ -56,17 +56,17 @@ public class DB {
 //    public static final String PASS = "3ta@kela#
 
 
-    //    Pannala
+//    Pannala
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "3ta@kela#una@";
 
-    //    Pannala local
+//    Pannala local
 //    public static final String DBPATH = "jdbc:mysql://127.0.0.1:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "root";
 
-    // Kuliyapitiya
+// Kuliyapitiya
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "3ta@kela#una@";
