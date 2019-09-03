@@ -74,8 +74,13 @@ public class SelectAssessment implements Initializable {
     private TableColumn<HolderAssess, String> col_allocation;
     @FXML
     private TableColumn<HolderAssess, String> col_owner;
+//    @FXML
+//    private TableColumn<HolderAssess, String> col_status;
+
     @FXML
-    private TableColumn<HolderAssess, String> col_status;
+    private TableColumn<HolderAssess, JFXCheckBox> col_ch;
+
+
     @FXML
     private JFXButton btn_paySelected;
     @FXML
@@ -99,6 +104,9 @@ public class SelectAssessment implements Initializable {
         modle.StaticViews.getMc().changeTitle("Search Assessment");
 
 
+
+
+
         loadOldSearch();
 
 
@@ -106,6 +114,14 @@ public class SelectAssessment implements Initializable {
 
 
     public void loadOldSearch() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }).start();
+
         SearchHolder sh = StaticBadu.getSH();
         if (sh.w) {
             w = true;
@@ -443,6 +459,7 @@ public class SelectAssessment implements Initializable {
                 } else {
                     status = "Deleted";
                 }
+                JFXCheckBox jfxCheckBox = new JFXCheckBox();
                 HolderAssess holderAssess = new HolderAssess(rs.getInt("idAssessment"), rs.getDouble("assessment_oder"), rs.getString("ass_nature.ass_nature_name"), rs.getString("ward_name"), rs.getString("street_name"), rs.getString("assessment_no"), rs.getString("assessment_obsolete"), rs.getDouble("ass_allocation.ass_allocation"), rs.getString("cus_name"), status);
                 List.add(holderAssess);
             }
@@ -463,7 +480,8 @@ public class SelectAssessment implements Initializable {
         col_obsalut.setCellValueFactory(new PropertyValueFactory<>("osaleteNo"));
         col_allocation.setCellValueFactory(new PropertyValueFactory<>("alocation"));
         col_owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
-        col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        // col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        col_ch.setCellValueFactory(new PropertyValueFactory<>("ch"));
     }
 
     @FXML
@@ -484,8 +502,10 @@ public class SelectAssessment implements Initializable {
 
     @FXML
     private void selectFormTable(MouseEvent event) {
-        idAssess = tbl_assess.getSelectionModel().getSelectedItem().getIdAssess();
-        txt_selected.setText(idAssess + "");
+        if (tbl_assess.getSelectionModel().getSelectedItem() != null) {
+            idAssess = tbl_assess.getSelectionModel().getSelectedItem().getIdAssess();
+            txt_selected.setText(idAssess + "");
+        }
     }
 
     @FXML

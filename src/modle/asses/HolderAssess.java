@@ -1,10 +1,10 @@
 
 package modle.asses;
 
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.beans.property.SimpleStringProperty;
 
 /**
- *
  * @author RM.LasanthaRanga@gmail.com
  */
 public class HolderAssess {
@@ -78,7 +78,7 @@ public class HolderAssess {
     public String getStatus() {
         return status.get();
     }
-    
+
     private final int idAssess;
     private final double order;
     private final SimpleStringProperty Natrue;
@@ -91,7 +91,7 @@ public class HolderAssess {
     private final SimpleStringProperty status;
 
     public HolderAssess(int idAssess, double order, String Natrue, String ward, String street, String assessmentNo, String osaleteNo, double alocation, String owner, String status) {
-        this.idAssess =  idAssess;
+        this.idAssess = idAssess;
         this.order = order;
         this.Natrue = new SimpleStringProperty(Natrue);
         this.ward = new SimpleStringProperty(ward);
@@ -101,8 +101,19 @@ public class HolderAssess {
         this.alocation = alocation;
         this.owner = new SimpleStringProperty(owner);
         this.status = new SimpleStringProperty(status);
+        this.ch = new JFXCheckBox();
+
+
     }
-    
-    
-    
+
+
+    private JFXCheckBox ch;
+
+    public void setCh(JFXCheckBox ch) {
+        this.ch = ch;
+    }
+
+    public JFXCheckBox getCh() {
+        return ch;
+    }
 }
