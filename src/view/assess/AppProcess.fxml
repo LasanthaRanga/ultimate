@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="625.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.assess.AppProcess">
+   <children>
+      <TableView fx:id="tbl_assess" layoutX="235.0" layoutY="46.0" onMouseClicked="#selectFormTable" prefHeight="209.0" prefWidth="831.0">
+         <columns>
+            <TableColumn fx:id="col_order" prefWidth="75.0" text="Order" />
+            <TableColumn fx:id="col_nature" prefWidth="79.0" text="Nature" />
+            <TableColumn fx:id="col_ward" minWidth="0.0" prefWidth="66.0" text="Ward" />
+            <TableColumn fx:id="col_street" prefWidth="98.0" text="Street" />
+            <TableColumn fx:id="col_assess" prefWidth="147.0" text="Assessment NO." />
+            <TableColumn fx:id="col_obsalut" prefWidth="115.0" text="Obsolete NO." />
+            <TableColumn fx:id="col_allocation" prefWidth="92.0" style="-fx-alignment: CENTER-RIGHT;" text="Allocation" />
+            <TableColumn fx:id="col_owner" prefWidth="98.0" text="Owner Name" />
+            <TableColumn fx:id="col_ch" prefWidth="45.0" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

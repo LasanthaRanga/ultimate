@@ -1,5 +1,7 @@
 package modle;
 
+import javafx.collections.ObservableList;
+import modle.asses.HolderAssess;
 import modle.asses.SearchHolder;
 
 import java.util.Date;
@@ -11,6 +13,16 @@ public class StaticBadu {
     private static int appcatid;
     private static int appid;
     private static SearchHolder sh;
+
+    private static ObservableList<HolderAssess> selectedList;
+
+    public static void setSelectedList(ObservableList<HolderAssess> selectedList) {
+        StaticBadu.selectedList = selectedList;
+    }
+
+    public static ObservableList<HolderAssess> getSelectedList() {
+        return selectedList;
+    }
 
     public static Date getSelectedSystemDate() {
         return selectedSystemDate;
@@ -35,6 +47,10 @@ public class StaticBadu {
     public static void setAppid(int appid) {
         StaticBadu.appid = appid;
     }
+
+
+
+
 
     public static SearchHolder getSH() {
         if (sh == null) {

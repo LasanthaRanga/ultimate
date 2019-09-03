@@ -5,9 +5,13 @@ import conn.DB;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import jdk.nashorn.internal.codegen.Compiler;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import pojo.AssCreditdebit;
 import pojo.AssQstart;
 import pojo.Assessment;
 
@@ -19,12 +23,13 @@ public class GetArrias {
 
     public static void main(String[] args) {
         GetArrias arrias = new GetArrias();
-        AllArrias ar = arrias.getAllArriasGetAllWarrant(3);
+        AllArrias ar = arrias.getAllArriasGetAllWarrant(600);
 
         if (ar != null) {
             System.out.println(ar.HaveArrias());
             System.out.println(ar.getTotalArrias());
             System.out.println(ar.getTotalWarrant());
+            System.out.println(ar.getCd());
         } else {
             System.out.println("NULL");
         }
@@ -41,6 +46,15 @@ public class GetArrias {
         try {
             Assessment as = (Assessment) session.load(Assessment.class, idAsssessmetn);
             Integer assessmentSyn = as.getAssessmentSyn();
+
+            List<pojo.AssCreditdebit> list = session.createCriteria(AssCreditdebit.class)
+                    .add(Restrictions.eq("assessment", as))
+                    .add(Restrictions.eq("assCreditDebitStatus", 1)).list();
+
+            for (AssCreditdebit c : list) {
+                Double assBalance = c.getAssBalance();
+                allArrias.cd += assBalance;
+            }
 
 
             if (as != null) {
@@ -317,6 +331,16 @@ public class GetArrias {
         private double q3w;
         private double q4w;
 
+        private double cd;
+
+        public void setCd(double cd) {
+            this.cd = cd;
+        }
+
+        public double getCd() {
+            return cd;
+        }
+
         public double getTotalArrias() {
             return getLya() + getQ1a() + getQ2a() + getQ3a() + getQ4a();
         }
@@ -334,7 +358,7 @@ public class GetArrias {
         }
 
         public boolean HaveArrias() {
-            if (getTotalArrias() + getTotalWarrant() > 0) {
+            if (getTotalArrias() + getTotalWarrant() + cd > 0) {
                 return true;
             } else {
                 return false;

@@ -88,6 +88,9 @@ public class SelectAssessment implements Initializable {
     @FXML
     private JFXButton btn_getBook;
 
+    @FXML
+    private JFXButton btn_application;
+
     /**
      * Initializes the controller class.
      */
@@ -104,10 +107,12 @@ public class SelectAssessment implements Initializable {
         modle.StaticViews.getMc().changeTitle("Search Assessment");
 
 
-
-
-
-        loadOldSearch();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadOldSearch();
+            }
+        }).start();
 
 
     }
@@ -115,12 +120,6 @@ public class SelectAssessment implements Initializable {
 
     public void loadOldSearch() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }).start();
 
         SearchHolder sh = StaticBadu.getSH();
         if (sh.w) {
@@ -573,5 +572,74 @@ public class SelectAssessment implements Initializable {
         modle.GetInstans.getAssessReport().getBook(ss);
 
     }
+
+
+    public ObservableList<HolderAssess> selectedList = FXCollections.observableArrayList();
+
+    public void getSelectedFromTable() {
+        selectedList.clear();
+        for (HolderAssess ha : List) {
+            if (ha.getCh().isSelected()) {
+                selectedList.add(ha);
+            }
+            modle.StaticBadu.setSelectedList(selectedList);
+        }
+    }
+
+
+    @FXML
+    void clickOnProcess(MouseEvent event) {
+
+        getSelectedFromTable();
+
+        if (modle.StaticBadu.getSelectedList() != null && modle.StaticBadu.getSelectedList().size() > 0) {
+
+
+            modle.asses.StaticBadu.setIdAssessment(idAssess);
+            AnchorPane container = modle.StaticViews.getContainer();
+            container.getChildren().removeAll();
+            container.getChildren().clear();
+            AnchorPane dashh;
+            try {
+                dashh = FXMLLoader.load(getClass().getResource("/view/assess/AppProcess.fxml"));
+                container.getChildren().add(dashh);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Logger
+                        .getLogger(Customer_regController.class
+                                .getName()).log(Level.SEVERE, null, ex);
+            }
+            Set<String> keySet = modle.StaticViews.getButtonMap().keySet();
+            String s = "/view/buttons/Ass_Select.fxml";
+
+            for (String string : keySet) {
+                if (string.equals(s)) {
+                    try {
+                        JFXButton get = modle.StaticViews.getButtonMap().get(string);
+                        BTN get1 = modle.StaticViews.getBtnConMap().get(string);
+                        get1.setImage("/grafics/pay_b.png");
+                        get.setStyle("-fx-background-color: #FFFFFF; -fx-text-fill: #03A9F4;");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        JFXButton btn = modle.StaticViews.getButtonMap().get(string);
+                        btn.setStyle("-fx-background-color: #03A9F4; -fx-text-fill: #FFFFFF;");
+                        BTN get = modle.StaticViews.getBtnConMap().get(string);
+                        if (get != null) {
+                            get.setImage();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            }
+        } else {
+            modle.Allert.notificationWorning("No Selected", "Select First");
+        }
+    }
+
 
 }
