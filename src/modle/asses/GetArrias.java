@@ -38,6 +38,7 @@ public class GetArrias {
 
 
     public AllArrias getAllArriasGetAllWarrant(int idAsssessmetn) {
+        System.out.println(idAsssessmetn);
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
         session.beginTransaction().commit();
 

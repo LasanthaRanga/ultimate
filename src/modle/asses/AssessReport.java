@@ -36,11 +36,12 @@ public class AssessReport {
         }
     }
 
-    public void getKform(String list) {
+    public void getKform(String list) { 
         try {
             // String path = "C:\\UltimateCat\\Report\\adv_bill.jrxml";
             //  String path = "C:\\Users\\Punnajee\\JaspersoftWorkspace\\MyReports\\ultimate\\kfrom_1.jrxml";
-            String path = "C:\\Ultimate\\Report\\assessment\\kfrom_1.jrxml";// IN SYSTEM
+//            String path = "C:\\Ultimate\\Report\\assessment\\kfrom_1.jrxml";// IN SYSTEM
+            String path = "C:\\Ultimate\\Report\\assessment\\kfrom_wattegama.jrxml";// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, Integer>();
             param.put("assList", list);

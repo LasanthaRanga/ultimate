@@ -7,6 +7,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import modle.GetInstans;
+import modle.asses.GetArrias;
 import modle.asses.HolderAssess;
 
 import java.net.URL;
@@ -35,6 +38,18 @@ public class AppProcess implements Initializable {
     @FXML
     private TableColumn<HolderAssess, JFXCheckBox> col_ch;
 
+    @FXML
+    private Text txt_arrias;
+
+    @FXML
+    private Text txt_warant;
+
+    @FXML
+    private Text txt_cd;
+
+    @FXML
+    private Text txt_total;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,8 +62,8 @@ public class AppProcess implements Initializable {
 
         if (tbl_assess.getSelectionModel().getSelectedItem() != null) {
             HolderAssess selectedItem = tbl_assess.getSelectionModel().getSelectedItem();
-
             System.out.println(selectedItem.getIdAssess());
+            testArriasWarrant(selectedItem.getIdAssess());
         }
 
 
@@ -72,8 +87,12 @@ public class AppProcess implements Initializable {
     }
 
 
-
-    public void testArriasWarrant(int id){
+    public void testArriasWarrant(int id) {
+        GetArrias.AllArrias awc = modle.GetInstans.getGetArrias().getAllArriasGetAllWarrant(id);
+        txt_arrias.setText(modle.Round.roundToString(awc.getTotalArrias()));
+        txt_warant.setText(modle.Round.roundToString(awc.getTotalWarrant()));
+        txt_cd.setText(modle.Round.roundToString(awc.getCd()));
+        txt_total.setText(modle.Round.roundToString(awc.getCd() + awc.getTotalArrias() + awc.getTotalWarrant()));
     }
 
 

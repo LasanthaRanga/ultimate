@@ -385,8 +385,18 @@ public class GetInstans {
 
     public static MixPrasaThre mixPrasaThre;
 
+
+    public static GetArrias getArrias;
+
+    public static GetArrias getGetArrias() {
+        if (getArrias == null) {
+            getArrias = new GetArrias();
+        }
+        return getArrias;
+    }
+
     public static MixPrasaThre getMixPrasaThre() {
-        if(mixPrasaThre==null){
+        if (mixPrasaThre == null) {
             mixPrasaThre = new MixPrasaThre();
         }
         return mixPrasaThre;
