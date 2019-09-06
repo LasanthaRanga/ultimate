@@ -6,10 +6,12 @@
 package modle.adv;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
 import java.util.Date;
 import java.util.List;
 
 import com.sun.jmx.snmp.SnmpUnknownModelLcdException;
+import conn.DB;
 import modle.GetInstans;
 import modle.StaticViews;
 import org.hibernate.Criteria;
@@ -117,11 +119,112 @@ public class Pay {
         try {
             conn.DB.setData("UPDATE `adv_advertising` SET   `adv_paid_notpaid`='1' WHERE (`receipt_idReceipt`='" + payid + "')");
             conn.DB.setData("UPDATE `receipt` SET  `receipt_status`='1'  WHERE (`idReceipt`='" + payid + "')");
+
+            ResultSet data = DB.getData("SELECT\n" +
+                    "adv_advertising.idAdv_Advertising,\n" +
+                    "adv_advertising.adv_total,\n" +
+                    "adv_advertising.adv_vat,\n" +
+                    "adv_advertising.adv_nbt,\n" +
+                    "adv_advertising.adv_stamp,\n" +
+                    "adv_advertising.adv_diposit,\n" +
+                    "adv_advertising.adv_ground_total,\n" +
+                    "adv_advertising.adv_visiting_price,\n" +
+                    "adv_advertising.adv_others,\n" +
+                    "adv_advertising.adv_full_total,\n" +
+                    "adv_advertising.adv_cheque,\n" +
+                    "adv_advertising.adv_cash,\n" +
+                    "adv_advertising.receipt_idReceipt,\n" +
+                    "receipt.recept_applicationId,\n" +
+                    "receipt.receipt_print_no,\n" +
+                    "receipt.receipt_day,\n" +
+                    "receipt.idReceipt,\n" +
+                    "adv_advertising.user_idUser,\n" +
+                    "adv_advertising.office_id\n" +
+                    "FROM\n" +
+                    "adv_advertising\n" +
+                    "INNER JOIN receipt ON receipt.recept_applicationId = adv_advertising.idAdv_Advertising\n" +
+                    "WHERE\n" +
+                    "receipt.Application_Catagory_idApplication_Catagory = 1 AND\n" +
+                    "receipt.idReceipt = " + payid);
+
+            if (data.last()) {
+                double adv_total = data.getDouble("adv_total");
+                double adv_vat = data.getDouble("adv_vat");
+                double adv_nbt = data.getDouble("adv_nbt");
+                double adv_stamp = data.getDouble("adv_stamp");
+                double adv_diposit = data.getDouble("adv_diposit");
+                double adv_ground_total = data.getDouble("adv_ground_total");
+                double adv_visiting_price = data.getDouble("adv_visiting_price");
+                double adv_others = data.getDouble("adv_others");
+                double adv_full_total = data.getDouble("adv_full_total");
+                double adv_cheque = data.getDouble("adv_cheque");
+                double adv_cash = data.getDouble("adv_cash");
+                String receipt_print_no = data.getString("receipt_print_no");
+                String receipt_day = data.getString("receipt_day");
+                int user_idUser = data.getInt("user_idUser");
+                int idAdv_advertising = data.getInt("idAdv_Advertising");
+
+
+                if (adv_total > 0) {
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("AF"), 1, adv_total, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_vat>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("VAT"), 1, adv_vat, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_nbt>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("NBT"), 1, adv_nbt, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_stamp>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("STAMP"), 1, adv_stamp, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_diposit>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("DE"), 1, adv_diposit, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_ground_total>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("GR"), 1, adv_ground_total, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_visiting_price>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("SV"), 1, adv_visiting_price, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_visiting_price>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("SV"), 1, adv_visiting_price, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_others>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("Others"), 1, adv_others, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_cheque>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CASH"), 1, adv_cheque, user_idUser, idAdv_advertising, 1);
+                }
+                if(adv_cash>0){
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CHQUE"), 1, adv_cash, user_idUser, idAdv_advertising, 1);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
         }
 
+    }
+
+
+    public int getVoteId(String key) {
+        int adv_vote_table_id = 0;
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "adv_vote.adv_vote_table_id\n" +
+                    "FROM\n" +
+                    "adv_vote\n" +
+                    "WHERE\n" +
+                    "adv_vote.`key` = '" + key + "'");
+            if (data.last()) {
+                adv_vote_table_id = data.getInt("adv_vote_table_id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return adv_vote_table_id;
     }
 
 

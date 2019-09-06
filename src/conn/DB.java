@@ -17,6 +17,11 @@ public class DB {
     public static final String USER = "root";
     public static final String PASS = "root";
 
+
+//    public static final String DBPATH = "jdbc:mysql://192.168.1.6:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String USER = "root";
+//    public static final String PASS = "root";
+
 //    public static final String DBPATH = "jdbc:mysql://192.168.1.155:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "root";

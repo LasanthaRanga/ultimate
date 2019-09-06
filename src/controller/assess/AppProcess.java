@@ -1,6 +1,8 @@
 package controller.assess;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -14,6 +16,8 @@ import modle.asses.HolderAssess;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static modle.Allert.*;
 
 public class AppProcess implements Initializable {
 
@@ -49,6 +53,10 @@ public class AppProcess implements Initializable {
 
     @FXML
     private Text txt_total;
+
+
+    @FXML
+    private JFXButton btn_start_process;
 
 
     @Override
@@ -93,6 +101,29 @@ public class AppProcess implements Initializable {
         txt_warant.setText(modle.Round.roundToString(awc.getTotalWarrant()));
         txt_cd.setText(modle.Round.roundToString(awc.getCd()));
         txt_total.setText(modle.Round.roundToString(awc.getCd() + awc.getTotalArrias() + awc.getTotalWarrant()));
+    }
+
+
+    @FXML
+    void clickOnProcess(MouseEvent event) {
+        if (!checkOllArrias()) {
+
+        }
+    }
+
+
+    public boolean checkOllArrias() {
+        boolean hasArrias = false;
+        ObservableList<HolderAssess> items = tbl_assess.getItems();
+        for (HolderAssess ha : items) {
+            GetArrias.AllArrias awc = modle.GetInstans.getGetArrias().getAllArriasGetAllWarrant(ha.getIdAssess());
+            if (awc.HaveArrias()) {
+                modle.Allert.notificationError("There is an Arrears", "Can not do any process");
+                hasArrias = true;
+                break;
+            }
+        }
+        return hasArrias;
     }
 
 

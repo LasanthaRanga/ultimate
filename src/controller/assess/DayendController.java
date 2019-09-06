@@ -941,6 +941,14 @@ public class DayendController implements Initializable {
                         }
                     }
 
+
+
+
+
+
+
+
+
                 } else if (apc == 1) {
                     String quary2 = "SELECT\n" +
                             "adv_advertising.idAdv_Advertising\n" +

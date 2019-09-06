@@ -32,6 +32,7 @@ import modle.popup.BarcodeStatic;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.event.spi.LoadEventListener;
 import pojo.Customer;
 import pojo.Mixdata;
 import pojo.Receipt;
@@ -820,7 +821,15 @@ public class Mixincome implements Initializable {
 
         txt_combo.setText(null);
 
-        txt_val.setText("0");
+        txt_des.setText(null);
+
+        txt_val.setText("00");
+        txt_vat.setText("00");
+        txt_nbt.setText("00");
+        txt_stamp.setText("00");
+        txt_totalval.setText("00");
+        txt_tot.setText("00");
+
 
         ch_stamp.setSelected(false);
         ch_nbt.setSelected(false);
@@ -834,6 +843,7 @@ public class Mixincome implements Initializable {
         radio_cash.setSelected(false);
         txt_fullTot.setText(null);
 
+        // loadCombo(null);
 
     }
 
