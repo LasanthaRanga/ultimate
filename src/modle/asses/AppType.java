@@ -30,7 +30,7 @@ public class AppType {
     }
 
 
-    public String getRefNo(int appcatid, int officeid) {
+    public String getRefNoString(int appcatid, int officeid) {
         String refno = "";
         try {
             ResultSet data = DB.getData("SELECT\n" +
@@ -38,10 +38,31 @@ public class AppType {
                     "FROM\n" +
                     "referenceno_tbl\n" +
                     "WHERE application_catagory_idApplication_Catagory = 2 AND office_idOffice = 1");
+
+
             if (data.last()) {
                 refno = data.getString("refno");
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return refno;
+    }
+
+    public int getRefNoOder(int appcatid, int officeid) {
+        int refno = 0;
+        try {
+            ResultSet data1 = DB.getData("SELECT\n" +
+                    "MAX(referenceno.oder) as oder\n" +
+                    "FROM\n" +
+                    "referenceno\n" +
+                    "WHERE application_catagory_idApplication_Catagory = '" + appcatid + "' AND\n" +
+                    "office_id = " + officeid);
+            if (data1.last()) {
+                refno = data1.getInt("oder");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

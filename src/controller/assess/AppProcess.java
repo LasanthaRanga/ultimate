@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import modle.ComboItem;
 import modle.GetInstans;
+import modle.StaticViews;
 import modle.asses.AppType;
 import modle.asses.GetArrias;
 import modle.asses.HolderAssess;
@@ -105,6 +106,10 @@ public class AppProcess implements Initializable {
 
     @FXML
     private JFXButton btn_process;
+
+
+    @FXML
+    private Text txt_refno;
 
 
     @Override
@@ -215,9 +220,13 @@ public class AppProcess implements Initializable {
         try {
             String systemdate = GetInstans.getQuater().getSystemDateStringByQuary();
 
+            String refNo = GetInstans.getAppType().getRefNoString(2, StaticViews.getLogUser().getOfficeIdOffice());
+            int oder = GetInstans.getAppType().getRefNoOder(2, StaticViews.getLogUser().getOfficeIdOffice());
+            refNo += " " + (oder + 1);
+
             String appQuery = "INSERT INTO `ass_app` (  `assapp_date`, `assapp_user`, `assapp_step`, `assapp_description`, `assapp_status`, `assapp_type`, `assapp_refno`,`assapp_names` )\n" +
                     "VALUES\n" +
-                    "\t( '" + systemdate + "', '" + modle.StaticViews.getLogUser().getIdUser() + "', 1, '" + txt_description.getText() + "', 0, '" + com_for.getSelectionModel().getSelectedItem().getId() + "', '', '" + txt_names.getText() + "' )";
+                    "\t( '" + systemdate + "', '" + modle.StaticViews.getLogUser().getIdUser() + "', 1, '" + txt_description.getText() + "', 0, '" + com_for.getSelectionModel().getSelectedItem().getId() + "', '" + refNo + "', '" + txt_names.getText() + "' )";
             String query = "SELECT MAX(idAssapp) FROM ass_app";
             int appid = 0;
             conn.DB.setData(appQuery);
@@ -233,6 +242,11 @@ public class AppProcess implements Initializable {
                         "\t(  '" + idAssess + "', NULL, '" + appid + "', 1 )");
                 conn.DB.setData("UPDATE `assessment` SET `assessment_syn` = 3 WHERE `idAssessment` = '" + idAssess + "'");
             }
+            conn.DB.setData("INSERT INTO `referenceno` (  `app_id`, `refno`, `oder`,  `application_catagory_idApplication_Catagory`,`office_id` )\n" +
+                    "VALUES (  '" + appid + "', '" + refNo + "', '" + oder + "',  2, '"+modle.StaticViews.getLogUser().getOfficeIdOffice()+"')");
+
+            txt_refno.setText(refNo);
+
             modle.Allert.notificationGood("Process Start", com_for.getSelectionModel().getSelectedItem().getNamee());
             clearAll();
         } catch (Exception e) {

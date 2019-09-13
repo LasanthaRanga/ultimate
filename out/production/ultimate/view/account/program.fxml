@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="625.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.account.Program">
+   <children>
+      <JFXTextField fx:id="txt_program" labelFloat="true" layoutX="107.0" layoutY="34.0" promptText="Program English" />
+      <JFXTextField fx:id="txt_wedasatahana" labelFloat="true" layoutX="107.0" layoutY="104.0" promptText="වැඩසටහන සිංහලෙන්">
+         <font>
+            <Font name="Iskoola Pota" size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="txt_oder" labelFloat="true" layoutX="107.0" layoutY="180.0" promptText="Oder Number" />
+      <JFXButton fx:id="btn_addProgram" layoutX="107.0" layoutY="339.0" onMouseClicked="#clickOnAddProgram" prefHeight="31.0" prefWidth="170.0" style="-fx-background-color: #4CAF50;" text="Add Program" textFill="WHITE" />
+      <TableView fx:id="tbl_program" layoutX="615.0" layoutY="34.0" prefHeight="250.0" prefWidth="657.0">
+        <columns>
+          <TableColumn fx:id="col_program" prefWidth="203.0" text="Program" />
+          <TableColumn fx:id="col_wedasatahana" minWidth="0.0" prefWidth="170.0" text="වැඩසටහන" />
+            <TableColumn fx:id="col_oder" prefWidth="157.0" text="Oder" />
+            <TableColumn fx:id="col_code" prefWidth="125.0" text="Code" />
+        </columns>
+      </TableView>
+      <JFXTextField fx:id="txt_code" labelFloat="true" layoutX="107.0" layoutY="261.0" promptText="Program Code" />
+   </children>
+</AnchorPane>
