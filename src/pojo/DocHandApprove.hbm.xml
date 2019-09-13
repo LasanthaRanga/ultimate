@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 6, 2019 9:53:10 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.DocHandApprove" table="doc_hand_approve" catalog="ultimate2" optimistic-lock="version">
         <id name="approveDocHandId" type="java.lang.Integer">
@@ -47,6 +47,18 @@
         </property>
         <property name="docHandAcceptOrReject" type="java.lang.Integer">
             <column name="doc_hand_accept_or_reject" />
+        </property>
+        <property name="isAssign" type="java.lang.Integer">
+            <column name="is_assign" />
+        </property>
+        <property name="engineerUserId" type="java.lang.Integer">
+            <column name="engineer_user_id" />
+        </property>
+        <property name="engineerApproveDate" type="date">
+            <column name="engineer_approve_date" length="10" />
+        </property>
+        <property name="engineerApproveTime" type="time">
+            <column name="engineer_approve_time" length="8" />
         </property>
     </class>
 </hibernate-mapping>

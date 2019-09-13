@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 6, 2019 9:53:10 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.Customer" table="customer" catalog="ultimate2" optimistic-lock="version">
         <id name="idCustomer" type="java.lang.Integer">
@@ -10,6 +10,9 @@
         </id>
         <property name="cusName" type="string">
             <column name="cus_name" length="100" />
+        </property>
+        <property name="cusPersonTitle" type="string">
+            <column name="cus_person_title" />
         </property>
         <property name="cusNic" type="string">
             <column name="cus_nic" length="45" />

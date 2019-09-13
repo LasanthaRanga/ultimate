@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -14,6 +14,7 @@ public class Customer  implements java.io.Serializable {
 
      private Integer idCustomer;
      private String cusName;
+     private String cusPersonTitle;
      private String cusNic;
      private String cusMobile;
      private String cusTel;
@@ -50,8 +51,9 @@ public class Customer  implements java.io.Serializable {
     public Customer() {
     }
 
-    public Customer(String cusName, String cusNic, String cusMobile, String cusTel, String cusAddressL1, String cusAddressL2, String cusAddressL3, String cusSity, Integer cusStatus, Integer cusSyn, Date cusRegDate, Date cusUpdateDate, String cusNameSinhala, String cusAddressL1Sinhala, String cusAddressL2Sinhala, String cusAddressL3Sinhala, Set<Contact> contacts, Set<CustomerHasCusCat> customerHasCusCats, Set<Applications> applicationses, Set<SlDetails> slDetailses, Set<Bop> bops, Set<Streetline> streetlines, Set<Application> applications, Set<Environment> environments, Set<CustomerHasTradeLicense> customerHasTradeLicenses, Set<Uploads> uploadses, Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories, Set<Assessment> assessments, Set<Building> buildings, Set<SrShopHasCustomer> srShopHasCustomers, Set<CustomerHasSrShop> customerHasSrShops, Set<Gali> galis, Set<Referenceno> referencenos) {
+    public Customer(String cusName, String cusPersonTitle, String cusNic, String cusMobile, String cusTel, String cusAddressL1, String cusAddressL2, String cusAddressL3, String cusSity, Integer cusStatus, Integer cusSyn, Date cusRegDate, Date cusUpdateDate, String cusNameSinhala, String cusAddressL1Sinhala, String cusAddressL2Sinhala, String cusAddressL3Sinhala, Set<Contact> contacts, Set<CustomerHasCusCat> customerHasCusCats, Set<Applications> applicationses, Set<SlDetails> slDetailses, Set<Bop> bops, Set<Streetline> streetlines, Set<Application> applications, Set<Environment> environments, Set<CustomerHasTradeLicense> customerHasTradeLicenses, Set<Uploads> uploadses, Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories, Set<Assessment> assessments, Set<Building> buildings, Set<SrShopHasCustomer> srShopHasCustomers, Set<CustomerHasSrShop> customerHasSrShops, Set<Gali> galis, Set<Referenceno> referencenos) {
        this.cusName = cusName;
+       this.cusPersonTitle = cusPersonTitle;
        this.cusNic = cusNic;
        this.cusMobile = cusMobile;
        this.cusTel = cusTel;
@@ -99,6 +101,13 @@ public class Customer  implements java.io.Serializable {
     
     public void setCusName(String cusName) {
         this.cusName = cusName;
+    }
+    public String getCusPersonTitle() {
+        return this.cusPersonTitle;
+    }
+    
+    public void setCusPersonTitle(String cusPersonTitle) {
+        this.cusPersonTitle = cusPersonTitle;
     }
     public String getCusNic() {
         return this.cusNic;

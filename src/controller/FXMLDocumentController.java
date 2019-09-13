@@ -120,6 +120,20 @@ public class FXMLDocumentController implements Initializable {
         } finally {
         }
 
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Thread.sleep(3600);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                } finally {
+//                }
+//                Platform.exit();
+//                System.exit(0);
+//            }
+//        }).start();
+
 
     }
 

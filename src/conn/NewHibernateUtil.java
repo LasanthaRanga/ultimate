@@ -26,14 +26,10 @@ public class NewHibernateUtil {
     static {
         try {
 
-//            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-
-
             Configuration configuration = new Configuration().configure();
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().
                     applySettings(configuration.getProperties());
             sessionFactory = configuration.buildSessionFactory(builder.build());
-
 
         } catch (Throwable ex) {
             ex.printStackTrace();

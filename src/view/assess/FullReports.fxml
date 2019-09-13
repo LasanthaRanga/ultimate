@@ -61,7 +61,7 @@
                 <JFXCheckBox fx:id="cheack_customer" layoutX="12.0" layoutY="13.0" onAction="#cheackCustomer" text="Search with Customer Name" />
             </children>
         </AnchorPane>
-        <JFXButton layoutX="434.0" layoutY="525.0" onAction="#getKForm" prefHeight="21.0" prefWidth="183.0" style="-fx-background-color: #4CAF50;" text="Get K Form" textAlignment="CENTER" textFill="#fafafa">
+        <JFXButton layoutX="434.0" layoutY="492.0" onAction="#getKForm" prefHeight="21.0" prefWidth="183.0" style="-fx-background-color: #4CAF50;" text="Get K Form" textAlignment="CENTER" textFill="#fafafa">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
@@ -70,7 +70,7 @@
             <font>
                 <Font name="System Bold" size="14.0" />
             </font></JFXButton>
-        <Text fx:id="txt_selected" layoutX="434.0" layoutY="556.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="183.00000168383121" />
+        <Text fx:id="txt_selected" layoutX="650.0" layoutY="596.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="183.00000168383121" />
       <JFXButton fx:id="btn_arrias" layoutX="429.0" layoutY="355.0" onMouseClicked="#clickOnCurrentArrias" prefHeight="31.0" prefWidth="262.0" style="-fx-background-color: #4CAF50;" text="Current Arreas Report" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />

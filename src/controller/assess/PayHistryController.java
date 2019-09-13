@@ -146,9 +146,9 @@ public class PayHistryController implements Initializable {
             while (data.next()) {
                 list.add(new Histry(
                         data.getInt("idReceipt"), data.getString("ass_Payment_date"), data.getString("receipt_print_no"), data.getString("ass_check_no"),
-                        data.getDouble("ass_Payment_fullTotal")
+                        modle.Round.round(data.getDouble("ass_Payment_fullTotal")
                                 + data.getDouble("ass_Payment_goto_debit")
-                                + data.getDouble("cd_balance"))
+                                + data.getDouble("cd_balance")))
                 );
             }
             tbl_oldbill.setItems(list);

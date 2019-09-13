@@ -16,6 +16,7 @@ import pojo.AssCreditdebit;
 import pojo.AssUpdateHistry;
 import pojo.Assessment;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Set;
@@ -119,7 +120,7 @@ public class ChangeAllocation {
 
                 if (data1.last()) {
                     acc.txt_creditDebit.setText(modle.Round.roundToString(data1.getDouble("Ass_balance")));
-                }else{
+                } else {
                     acc.txt_creditDebit.setText("00");
                 }
 
@@ -242,7 +243,6 @@ public class ChangeAllocation {
                                 session.update(cdd);
                             }
 
-
                             AssCreditdebit acd = new AssCreditdebit();
                             acd.setAssessment(ass);
                             acd.setAssCreditDebitAmount(cd);
@@ -254,17 +254,19 @@ public class ChangeAllocation {
                                 acd.setAssCreditDebitCd(0);
                             }
                             acd.setAssCreditDebitDiscription(dis);
-                            acd.setAssBalance(lastBal+cd);
+                            acd.setAssBalance(lastBal + cd);
                             acd.setAssCreditDebitStatus(1);
                             acd.setAssCreditDebitDate(modle.GetInstans.getQuater().getSystemDateByQuary());
-                            session.save(acd);
+                            Serializable save = session.save(acd);
 
-                            acc.txt_creditDebit.setText(modle.Round.roundToString(lastBal+cd));
+                            int i = Integer.parseInt(save.toString());
 
+                            acc.txt_creditDebit.setText(modle.Round.roundToString(lastBal + cd));
 
                             transaction.commit();
+                            conn.DB.setData("UPDATE `ass_creditdebit` SET `user_id` = '"+modle.StaticViews.getLogUser().getIdUser()+"' WHERE `idAss_CreditDebit` ="+i);
 
-                            modle.Allert.notificationGood("Success", "New Balance"+(lastBal+cd));
+                            modle.Allert.notificationGood("Success", "New Balance" + (lastBal + cd));
                             acc.btn_Save.setDisable(true);
                         } catch (Exception e) {
                             transaction.rollback();

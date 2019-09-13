@@ -928,17 +928,32 @@ public class Mixincome implements Initializable {
         ObservableList<MixCombo> applist = FXCollections.observableArrayList();
         try {
 
+//            String quary = "SELECT\n" +
+//                    "mixintype.idMixintype,\n" +
+//                    "mixintype.mixintype_name,\n" +
+//                    "mixintype.account_receipt_title_idAccount_receipt_title,\n" +
+//                    "mixintype.mixintype_status,\n" +
+//                    "mixintype.bankinfo_idBank,\n" +
+//                    "mixintype.active_status\n" +
+//                    "FROM\n" +
+//                    "mixintype\n" +
+//                    "WHERE\n" +
+//                    "mixintype.active_status = 1 ";
+
             String quary = "SELECT\n" +
                     "mixintype.idMixintype,\n" +
                     "mixintype.mixintype_name,\n" +
                     "mixintype.account_receipt_title_idAccount_receipt_title,\n" +
                     "mixintype.mixintype_status,\n" +
                     "mixintype.bankinfo_idBank,\n" +
-                    "mixintype.active_status\n" +
+                    "mixintype.active_status,\n" +
+                    "mixintype.office_id\n" +
                     "FROM\n" +
-                    "mixintype\n" +
+                    "\tmixintype\n" +
                     "WHERE\n" +
-                    "mixintype.active_status = 1 ";
+                    "\tmixintype.active_status = 1\n" +
+                    "AND mixintype.office_id = ' " + modle.StaticViews.getLogUser().getOfficeIdOffice() + "' ";
+
             if (vote != null) {
                 quary += "AND  mixintype.mixintype_name LIKE '%" + vote + "%'";
             }

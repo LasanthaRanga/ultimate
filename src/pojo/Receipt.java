@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -30,6 +30,7 @@ public class Receipt  implements java.io.Serializable {
      private Integer officeIdOffice;
      private Integer receiptAccountId;
      private String ribno;
+     private Date receiptTime;
      private Set<Cheack> cheacks = new HashSet<Cheack>(0);
      private Set<AssPayment> assPayments = new HashSet<AssPayment>(0);
 
@@ -40,7 +41,7 @@ public class Receipt  implements java.io.Serializable {
     public Receipt(ApplicationCatagory applicationCatagory) {
         this.applicationCatagory = applicationCatagory;
     }
-    public Receipt(ApplicationCatagory applicationCatagory, User user, Integer receptApplicationId, String receiptPrintNo, Double cheack, Double cesh, Double receiptTotal, Date receiptDay, Integer receiptStatus, Integer receiptSyn, String chqueNo, Date chqueDate, String chqueBank, Integer oder, Integer officeIdOffice, Integer receiptAccountId, String ribno, Set<Cheack> cheacks, Set<AssPayment> assPayments) {
+    public Receipt(ApplicationCatagory applicationCatagory, User user, Integer receptApplicationId, String receiptPrintNo, Double cheack, Double cesh, Double receiptTotal, Date receiptDay, Integer receiptStatus, Integer receiptSyn, String chqueNo, Date chqueDate, String chqueBank, Integer oder, Integer officeIdOffice, Integer receiptAccountId, String ribno, Date receiptTime, Set<Cheack> cheacks, Set<AssPayment> assPayments) {
        this.applicationCatagory = applicationCatagory;
        this.user = user;
        this.receptApplicationId = receptApplicationId;
@@ -58,6 +59,7 @@ public class Receipt  implements java.io.Serializable {
        this.officeIdOffice = officeIdOffice;
        this.receiptAccountId = receiptAccountId;
        this.ribno = ribno;
+       this.receiptTime = receiptTime;
        this.cheacks = cheacks;
        this.assPayments = assPayments;
     }
@@ -187,6 +189,13 @@ public class Receipt  implements java.io.Serializable {
     
     public void setRibno(String ribno) {
         this.ribno = ribno;
+    }
+    public Date getReceiptTime() {
+        return this.receiptTime;
+    }
+    
+    public void setReceiptTime(Date receiptTime) {
+        this.receiptTime = receiptTime;
     }
     public Set<Cheack> getCheacks() {
         return this.cheacks;

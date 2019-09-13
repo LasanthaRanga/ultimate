@@ -59,6 +59,9 @@ public class ReportsController implements Initializable {
     @FXML
     private JFXComboBox<OfficeHolder> com_office;
 
+    @FXML
+    private JFXComboBox<OfficeHolder> com_office1;
+
 
     SimpleDateFormat format = null;
 
@@ -73,6 +76,7 @@ public class ReportsController implements Initializable {
         txt_date.setText(system);
         loadRiReports();
         com_office.setItems(modle.GetInstans.getOffice().loadOfficeCombo());
+        com_office1.setItems(modle.GetInstans.getOffice().loadOfficeCombo());
         modle.StaticViews.getMc().changeTitle("Assessment Payment Reports");
     }
 
@@ -161,7 +165,6 @@ public class ReportsController implements Initializable {
                 String from = simpleDateFormat.format(fromdate);
                 String to = simpleDateFormat.format(todate);
 
-                //  modle.GetInstans.getAssessReport().getRiShedule(from, to, selectedItem);
                 ariaswarantPayReport(from, to, selectedItem, 1);
             }
 
@@ -173,52 +176,105 @@ public class ReportsController implements Initializable {
 
 
     public void ariaswarantPayReport(String start, String end) {
-        String quary = "SELECT\n" +
-                "ass_payment.idass_Payment,\n" +
-                "ass_payment.ass_Payment_Q_Number,\n" +
-                "ass_payment.ass_Payment_ThisYear,\n" +
-                "ass_payment.ass_Payment_date,\n" +
-                "ass_payment.ass_Payment_LY_Arrears,\n" +
-                "ass_payment.ass_Payment_LY_Warrant,\n" +
-                "ass_payment.ass_Payment_fullTotal,\n" +
-                "ass_payment.ass_Payment_idUser,\n" +
-                "ass_payment.Assessment_idAssessment,\n" +
-                "ass_payment.Receipt_idReceipt,\n" +
-                "ass_payment.ass_nature_idass_nature,\n" +
-                "ass_payment.ass_allocation_idass_allocation,\n" +
-                "ass_payment.ass_Payment_goto_debit,\n" +
-                "ass_payment.ass_Payment_Status,\n" +
-                "ass_payment.ass_cash,\n" +
-                "ass_payment.ass_check,\n" +
-                "ass_payment.ass_check_no,\n" +
-                "ass_payment.ass_bank,\n" +
-                "ass_payment.pay_user_id,\n" +
-                "ass_payment.cd_balance,\n" +
-                "receipt.receipt_print_no,\n" +
-                "receipt.idReceipt,\n" +
-                "assessment.idAssessment,\n" +
-                "assessment.Customer_idCustomer,\n" +
-                "assessment.Ward_idWard,\n" +
-                "assessment.Street_idStreet,\n" +
-                "assessment.ass_nature_idass_nature,\n" +
-                "ass_nature.ass_nature_name,\n" +
-                "assessment.assessment_no,\n" +
-                "assessment.assessment_oder,\n" +
-                "customer.cus_name,\n" +
-                "street.street_name,\n" +
-                "ward.ward_no,\n" +
-                "receipt.receipt_status\n" +
-                "FROM\n" +
-                "ass_payment\n" +
-                "INNER JOIN receipt ON ass_payment.Receipt_idReceipt = receipt.idReceipt\n" +
-                "INNER JOIN assessment ON ass_payment.Assessment_idAssessment = assessment.idAssessment\n" +
-                "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
-                "INNER JOIN street ON assessment.Street_idStreet = street.idStreet\n" +
-                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN ass_nature ON ass_payment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
-                "WHERE\n" +
-                "ass_payment.ass_Payment_date BETWEEN '" + start + "' AND '" + end + "' AND\n" +
-                "ass_payment.ass_Payment_Status = 1\n";
+
+        OfficeHolder selectedItem = com_office1.getSelectionModel().getSelectedItem();
+        String quary = "";
+        if (selectedItem == null) {
+
+            quary = "SELECT\n" +
+                    "ass_payment.idass_Payment,\n" +
+                    "ass_payment.ass_Payment_Q_Number,\n" +
+                    "ass_payment.ass_Payment_ThisYear,\n" +
+                    "ass_payment.ass_Payment_date,\n" +
+                    "ass_payment.ass_Payment_LY_Arrears,\n" +
+                    "ass_payment.ass_Payment_LY_Warrant,\n" +
+                    "ass_payment.ass_Payment_fullTotal,\n" +
+                    "ass_payment.ass_Payment_idUser,\n" +
+                    "ass_payment.Assessment_idAssessment,\n" +
+                    "ass_payment.Receipt_idReceipt,\n" +
+                    "ass_payment.ass_nature_idass_nature,\n" +
+                    "ass_payment.ass_allocation_idass_allocation,\n" +
+                    "ass_payment.ass_Payment_goto_debit,\n" +
+                    "ass_payment.ass_Payment_Status,\n" +
+                    "ass_payment.ass_cash,\n" +
+                    "ass_payment.ass_check,\n" +
+                    "ass_payment.ass_check_no,\n" +
+                    "ass_payment.ass_bank,\n" +
+                    "ass_payment.pay_user_id,\n" +
+                    "ass_payment.cd_balance,\n" +
+                    "receipt.receipt_print_no,\n" +
+                    "receipt.idReceipt,\n" +
+                    "assessment.idAssessment,\n" +
+                    "assessment.Customer_idCustomer,\n" +
+                    "assessment.Ward_idWard,\n" +
+                    "assessment.Street_idStreet,\n" +
+                    "assessment.ass_nature_idass_nature,\n" +
+                    "ass_nature.ass_nature_name,\n" +
+                    "assessment.assessment_no,\n" +
+                    "assessment.assessment_oder,\n" +
+                    "customer.cus_name,\n" +
+                    "street.street_name,\n" +
+                    "ward.ward_no,\n" +
+                    "receipt.receipt_status\n" +
+                    "FROM\n" +
+                    "ass_payment\n" +
+                    "INNER JOIN receipt ON ass_payment.Receipt_idReceipt = receipt.idReceipt\n" +
+                    "INNER JOIN assessment ON ass_payment.Assessment_idAssessment = assessment.idAssessment\n" +
+                    "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+                    "INNER JOIN street ON assessment.Street_idStreet = street.idStreet\n" +
+                    "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                    "INNER JOIN ass_nature ON ass_payment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                    "WHERE\n" +
+                    "ass_payment.ass_Payment_date BETWEEN '" + start + "' AND '" + end + "' AND\n" +
+                    "ass_payment.ass_Payment_Status = 1 \n";
+        } else {
+            quary = "SELECT\n" +
+                    "ass_payment.idass_Payment,\n" +
+                    "ass_payment.ass_Payment_Q_Number,\n" +
+                    "ass_payment.ass_Payment_ThisYear,\n" +
+                    "ass_payment.ass_Payment_date,\n" +
+                    "ass_payment.ass_Payment_LY_Arrears,\n" +
+                    "ass_payment.ass_Payment_LY_Warrant,\n" +
+                    "ass_payment.ass_Payment_fullTotal,\n" +
+                    "ass_payment.ass_Payment_idUser,\n" +
+                    "ass_payment.Assessment_idAssessment,\n" +
+                    "ass_payment.Receipt_idReceipt,\n" +
+                    "ass_payment.ass_nature_idass_nature,\n" +
+                    "ass_payment.ass_allocation_idass_allocation,\n" +
+                    "ass_payment.ass_Payment_goto_debit,\n" +
+                    "ass_payment.ass_Payment_Status,\n" +
+                    "ass_payment.ass_cash,\n" +
+                    "ass_payment.ass_check,\n" +
+                    "ass_payment.ass_check_no,\n" +
+                    "ass_payment.ass_bank,\n" +
+                    "ass_payment.pay_user_id,\n" +
+                    "ass_payment.cd_balance,\n" +
+                    "receipt.receipt_print_no,\n" +
+                    "receipt.idReceipt, receipt.office_idOffice,\n" +
+                    "assessment.idAssessment,\n" +
+                    "assessment.Customer_idCustomer,\n" +
+                    "assessment.Ward_idWard,\n" +
+                    "assessment.Street_idStreet,\n" +
+                    "assessment.ass_nature_idass_nature,\n" +
+                    "ass_nature.ass_nature_name,\n" +
+                    "assessment.assessment_no,\n" +
+                    "assessment.assessment_oder,\n" +
+                    "customer.cus_name,\n" +
+                    "street.street_name,\n" +
+                    "ward.ward_no,\n" +
+                    "receipt.receipt_status\n" +
+                    "FROM\n" +
+                    "ass_payment\n" +
+                    "INNER JOIN receipt ON ass_payment.Receipt_idReceipt = receipt.idReceipt\n" +
+                    "INNER JOIN assessment ON ass_payment.Assessment_idAssessment = assessment.idAssessment\n" +
+                    "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+                    "INNER JOIN street ON assessment.Street_idStreet = street.idStreet\n" +
+                    "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                    "INNER JOIN ass_nature ON ass_payment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                    "WHERE\n" +
+                    "ass_payment.ass_Payment_date BETWEEN '" + start + "' AND '" + end + "' AND\n" +
+                    "ass_payment.ass_Payment_Status = 1 AND receipt.office_idOffice = '" + selectedItem.getIdOffice() + "'\n";
+        }
 
 
         ArrayList<RipHolder> list = new ArrayList<>();
@@ -288,20 +344,12 @@ public class ReportsController implements Initializable {
                             ripHolder.setQ4(payto.getDouble("ass_payto_arrears"), payto.getDouble("ass_payto_warrant"), 0, 0, payto.getDouble("ass_payto_discount_rate"), payto.getDouble("ass_payto_discount"), payto.getDouble("ass_payto_qvalue"));
                             break;
                     }
-
                     xs += payto.getDouble("ass_payto_qvalue");
-
-
                 }
                 System.out.println(xs);
-
                 list.add(ripHolder);
-
             }
-
             modle.GetInstans.getAssessReport().loadReportAWPayByDatasourc(list, start, end);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -345,7 +393,7 @@ public class ReportsController implements Initializable {
                 "\tcustomer.cus_name,\n" +
                 "\tstreet.street_name,\n" +
                 "\tward.ward_no,\n" +
-                "\treceipt.receipt_status,\n" +
+                "\treceipt.receipt_status, receipt.office_idOffice, \n" +
                 "\tass_payment.pay_user_id,\n" +
                 "\t`user`.idUser,\n" +
                 "\t`user`.user_full_name\n" +

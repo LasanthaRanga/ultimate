@@ -118,8 +118,7 @@ public class Pay {
         System.out.println(payid);
         try {
             conn.DB.setData("UPDATE `adv_advertising` SET   `adv_paid_notpaid`='1' WHERE (`receipt_idReceipt`='" + payid + "')");
-            conn.DB.setData("UPDATE `receipt` SET  `receipt_status`='1'  WHERE (`idReceipt`='" + payid + "')");
-
+            conn.DB.setData("UPDATE `receipt` SET  `receipt_status`='1', receipt_time='"+modle.Time.getTeime()+"' WHERE (`idReceipt`='" + payid + "')");
             ResultSet data = DB.getData("SELECT\n" +
                     "adv_advertising.idAdv_Advertising,\n" +
                     "adv_advertising.adv_total,\n" +
@@ -146,7 +145,6 @@ public class Pay {
                     "WHERE\n" +
                     "receipt.Application_Catagory_idApplication_Catagory = 1 AND\n" +
                     "receipt.idReceipt = " + payid);
-
             if (data.last()) {
                 double adv_total = data.getDouble("adv_total");
                 double adv_vat = data.getDouble("adv_vat");
@@ -163,7 +161,6 @@ public class Pay {
                 String receipt_day = data.getString("receipt_day");
                 int user_idUser = data.getInt("user_idUser");
                 int idAdv_advertising = data.getInt("idAdv_Advertising");
-
 
                 if (adv_total > 0) {
                     modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("AF"), 1, adv_total, user_idUser, idAdv_advertising, 1);
@@ -199,12 +196,10 @@ public class Pay {
                     modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CHQUE"), 1, adv_cash, user_idUser, idAdv_advertising, 1);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
         }
-
     }
 
 

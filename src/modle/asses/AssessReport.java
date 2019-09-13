@@ -36,7 +36,7 @@ public class AssessReport {
         }
     }
 
-    public void getKform(String list) { 
+    public void getKform(String list) {
         try {
             // String path = "C:\\UltimateCat\\Report\\adv_bill.jrxml";
             //  String path = "C:\\Users\\Punnajee\\JaspersoftWorkspace\\MyReports\\ultimate\\kfrom_1.jrxml";
@@ -807,13 +807,7 @@ public class AssessReport {
 
     public void RiBill(String idRibill, String billnos, String chequeno, boolean print) {
         try {
-
-
-            String RI_bill_path = KeyVal.getVal("RI_bill_path");
-
-            String path = RI_bill_path;// IN SYSTEM
-
-
+            String path = "C:\\Ultimate\\Report\\assessment\\cd_report.jrxml";
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, String>();
             param.put("idRibill", idRibill);
@@ -835,6 +829,22 @@ public class AssessReport {
         }
 
 
+    }
+
+    public void cdList(String from, String to) {
+        try {
+            String path = "C:\\Ultimate\\Report\\assessment\\cd_report.jrxml";// IN SYSTEM
+            JasperReport jr = JasperCompileManager.compileReport(path);
+            HashMap param = new HashMap<String, String>();
+            param.put("from", from);
+            param.put("to", to);
+            Connection connection = this.getConnection();
+            connection.commit();
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, connection);
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception jRException) {
+            jRException.printStackTrace();
+        }
     }
 
 

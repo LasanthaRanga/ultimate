@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 
@@ -12,13 +12,17 @@ public class SlUploadImages  implements java.io.Serializable {
      private Integer imageId;
      private String nicPath;
      private String docPath;
+     private String nvDocPath;
+     private String docWebPath;
 
     public SlUploadImages() {
     }
 
-    public SlUploadImages(String nicPath, String docPath) {
+    public SlUploadImages(String nicPath, String docPath, String nvDocPath, String docWebPath) {
        this.nicPath = nicPath;
        this.docPath = docPath;
+       this.nvDocPath = nvDocPath;
+       this.docWebPath = docWebPath;
     }
    
     public Integer getImageId() {
@@ -41,6 +45,20 @@ public class SlUploadImages  implements java.io.Serializable {
     
     public void setDocPath(String docPath) {
         this.docPath = docPath;
+    }
+    public String getNvDocPath() {
+        return this.nvDocPath;
+    }
+    
+    public void setNvDocPath(String nvDocPath) {
+        this.nvDocPath = nvDocPath;
+    }
+    public String getDocWebPath() {
+        return this.docWebPath;
+    }
+    
+    public void setDocWebPath(String docWebPath) {
+        this.docWebPath = docWebPath;
     }
 
 

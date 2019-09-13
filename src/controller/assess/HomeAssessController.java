@@ -6,6 +6,7 @@
 package controller.assess;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 
 import java.net.URL;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import conn.DB;
 import conn.NewHibernateUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +29,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import modle.asses.OfficeHolder;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import pojo.AssPayment;
@@ -69,6 +72,9 @@ public class HomeAssessController implements Initializable {
     @FXML
     private PieChart chart;
 
+    @FXML
+    private JFXComboBox<OfficeHolder> com_office;
+
     DecimalFormat df;
 
 
@@ -97,43 +103,88 @@ public class HomeAssessController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         modle.StaticViews.getMc().changeTitle("Dashboard");
-//        df = new DecimalFormat("#.00");
-
+        com_office.setItems(modle.GetInstans.getOffice().loadOfficeCombo());
     }
 
 
-
     public void getTotals() {
+
+        OfficeHolder selectedItem = com_office.getSelectionModel().getSelectedItem();
+        int officeid = 0;
+        if (selectedItem != null) {
+            officeid = selectedItem.getIdOffice();
+        }
+
+
         clear();
         if (day_form.getValue() != null && day_to.getValue() != null) {
             Date form = Date.from(day_form.getValue().atStartOfDay().atZone(ZoneId.of("Asia/Colombo")).toInstant());
             Date to = Date.from(day_to.getValue().atStartOfDay().atZone(ZoneId.of("Asia/Colombo")).toInstant());
-
             Session session = NewHibernateUtil.getSessionFactory().openSession();
             try {
                 List<AssPayment> list = session.createCriteria(AssPayment.class)
                         .add(Restrictions.eq("assPaymentStatus", 1))
                         .add(Restrictions.between("assPaymentDate", form, to)).list();
+
                 for (AssPayment ap : list) {
-                    warrant += ap.getAssPaymentLyWarrant();
-                    arrias += ap.getAssPaymentLyArrears();
 
-                    over += ap.getAssPaymentGotoDebit();
-                    total += ap.getAssPaymentFullTotal();
+                    int x = 0;
+                    boolean y = true;
+                    ResultSet data = DB.getData("SELECT\n" +
+                            "ass_payment.Receipt_idReceipt,\n" +
+                            "receipt.office_idOffice,\n" +
+                            "receipt.idReceipt\n" +
+                            "FROM\n" +
+                            "ass_payment\n" +
+                            "INNER JOIN receipt ON ass_payment.Receipt_idReceipt = receipt.idReceipt\n" +
+                            "WHERE\n" +
+                            "ass_payment.idass_Payment = " + ap.getIdassPayment());
 
+                    if (data.last()) {
+                        x = data.getInt("office_idOffice");
+                    } else {
+                        y = false;
+                    }
 
-                    Set<AssPayto> assPaytos = ap.getAssPaytos();
-                    for (AssPayto pt : assPaytos) {
-                        if (pt.getAssPaytoQno() == 1) {
-                            q1 += pt.getAssPaytoQvalue();
-                        } else if (pt.getAssPaytoQno() == 2) {
-                            q2 += pt.getAssPaytoQvalue();
-                        } else if (pt.getAssPaytoQno() == 3) {
-                            q3 += pt.getAssPaytoQvalue();
-                        } else if (pt.getAssPaytoQno() == 4) {
-                            q4 += pt.getAssPaytoQvalue();
+                    if (y) {
+                        if (officeid == 0) {
+                            warrant += ap.getAssPaymentLyWarrant();
+                            arrias += ap.getAssPaymentLyArrears();
+                            over += ap.getAssPaymentGotoDebit();
+                            total += ap.getAssPaymentFullTotal();
+                            Set<AssPayto> assPaytos = ap.getAssPaytos();
+                            for (AssPayto pt : assPaytos) {
+                                if (pt.getAssPaytoQno() == 1) {
+                                    q1 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 2) {
+                                    q2 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 3) {
+                                    q3 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 4) {
+                                    q4 += pt.getAssPaytoQvalue();
+                                }
+                            }
+                        } else if (x == officeid) {
+                            warrant += ap.getAssPaymentLyWarrant();
+                            arrias += ap.getAssPaymentLyArrears();
+                            over += ap.getAssPaymentGotoDebit();
+                            total += ap.getAssPaymentFullTotal();
+                            Set<AssPayto> assPaytos = ap.getAssPaytos();
+                            for (AssPayto pt : assPaytos) {
+                                if (pt.getAssPaytoQno() == 1) {
+                                    q1 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 2) {
+                                    q2 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 3) {
+                                    q3 += pt.getAssPaytoQvalue();
+                                } else if (pt.getAssPaytoQno() == 4) {
+                                    q4 += pt.getAssPaytoQvalue();
+                                }
+                            }
+
                         }
                     }
+
 
                 }
             } catch (Exception e) {
@@ -142,7 +193,7 @@ public class HomeAssessController implements Initializable {
                 session.close();
             }
 
-//            String.format("%,.2f", amount)
+
             txt_warrant.setText(String.format("%,.2f", warrant));
             txt_arrears.setText(String.format("%,.2f", arrias));
             q1pay.setText(String.format("%,.2f", q1));

@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -39,11 +39,10 @@ public class AssPayment  implements java.io.Serializable {
     }
 
 	
-    public AssPayment(AssAllocation assAllocation, AssNature assNature, Assessment assessment, Receipt receipt, int assPaymentIdUser) {
+    public AssPayment(AssAllocation assAllocation, AssNature assNature, Assessment assessment, int assPaymentIdUser) {
         this.assAllocation = assAllocation;
         this.assNature = assNature;
         this.assessment = assessment;
-        this.receipt = receipt;
         this.assPaymentIdUser = assPaymentIdUser;
     }
     public AssPayment(AssAllocation assAllocation, AssNature assNature, Assessment assessment, Receipt receipt, Integer assPaymentQNumber, Integer assPaymentThisYear, Date assPaymentDate, Double assPaymentLyArrears, Double assPaymentLyWarrant, Double assPaymentFullTotal, int assPaymentIdUser, Double assPaymentGotoDebit, Integer assPaymentStatus, Double assCash, Double assCheck, String assCheckNo, Integer assBank, Integer payUserId, Double cdBalance, Integer officeIdOffice, Set<AssPayto> assPaytos) {

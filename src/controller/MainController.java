@@ -161,7 +161,6 @@ public class MainController implements Initializable {
         System.out.println("EXIT");
         Platform.exit();
         System.exit(0);
-
     }
 
 

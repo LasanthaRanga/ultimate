@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -14,6 +14,7 @@ public class Bop  implements java.io.Serializable {
 
      private Integer idBop;
      private Customer customer;
+     private PersonTitle personTitle;
      private Date bopApplayDate;
      private String bopPlanNo;
      private String bopUrveyorsName;
@@ -32,6 +33,9 @@ public class Bop  implements java.io.Serializable {
      private String bopDbt;
      private String bopStamp;
      private String bopOther;
+     private String bopRefNo;
+     private Integer bopRefNoOrder;
+     private String bopPerpose;
      private Set<Applications> applicationses = new HashSet<Applications>(0);
      private Set<Bophascommettee> bophascommettees = new HashSet<Bophascommettee>(0);
      private Set<BopHasAssessment> bopHasAssessments = new HashSet<BopHasAssessment>(0);
@@ -44,8 +48,9 @@ public class Bop  implements java.io.Serializable {
     public Bop(Customer customer) {
         this.customer = customer;
     }
-    public Bop(Customer customer, Date bopApplayDate, String bopPlanNo, String bopUrveyorsName, String bopNo, String bopIsMarkonground, String bopDiscription, String bopOwnership, Double bopTotalPrice, Integer bopCompleteStatus, String bopCondtion, String bopRegulation, Double bopLandSize, Date bopSurveyDate, String bopVat, String bopNbt, String bopDbt, String bopStamp, String bopOther, Set<Applications> applicationses, Set<Bophascommettee> bophascommettees, Set<BopHasAssessment> bopHasAssessments, Set<Area> areas) {
+    public Bop(Customer customer, PersonTitle personTitle, Date bopApplayDate, String bopPlanNo, String bopUrveyorsName, String bopNo, String bopIsMarkonground, String bopDiscription, String bopOwnership, Double bopTotalPrice, Integer bopCompleteStatus, String bopCondtion, String bopRegulation, Double bopLandSize, Date bopSurveyDate, String bopVat, String bopNbt, String bopDbt, String bopStamp, String bopOther, String bopRefNo, Integer bopRefNoOrder, String bopPerpose, Set<Applications> applicationses, Set<Bophascommettee> bophascommettees, Set<BopHasAssessment> bopHasAssessments, Set<Area> areas) {
        this.customer = customer;
+       this.personTitle = personTitle;
        this.bopApplayDate = bopApplayDate;
        this.bopPlanNo = bopPlanNo;
        this.bopUrveyorsName = bopUrveyorsName;
@@ -64,6 +69,9 @@ public class Bop  implements java.io.Serializable {
        this.bopDbt = bopDbt;
        this.bopStamp = bopStamp;
        this.bopOther = bopOther;
+       this.bopRefNo = bopRefNo;
+       this.bopRefNoOrder = bopRefNoOrder;
+       this.bopPerpose = bopPerpose;
        this.applicationses = applicationses;
        this.bophascommettees = bophascommettees;
        this.bopHasAssessments = bopHasAssessments;
@@ -83,6 +91,13 @@ public class Bop  implements java.io.Serializable {
     
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    public PersonTitle getPersonTitle() {
+        return this.personTitle;
+    }
+    
+    public void setPersonTitle(PersonTitle personTitle) {
+        this.personTitle = personTitle;
     }
     public Date getBopApplayDate() {
         return this.bopApplayDate;
@@ -209,6 +224,27 @@ public class Bop  implements java.io.Serializable {
     
     public void setBopOther(String bopOther) {
         this.bopOther = bopOther;
+    }
+    public String getBopRefNo() {
+        return this.bopRefNo;
+    }
+    
+    public void setBopRefNo(String bopRefNo) {
+        this.bopRefNo = bopRefNo;
+    }
+    public Integer getBopRefNoOrder() {
+        return this.bopRefNoOrder;
+    }
+    
+    public void setBopRefNoOrder(Integer bopRefNoOrder) {
+        this.bopRefNoOrder = bopRefNoOrder;
+    }
+    public String getBopPerpose() {
+        return this.bopPerpose;
+    }
+    
+    public void setBopPerpose(String bopPerpose) {
+        this.bopPerpose = bopPerpose;
     }
     public Set<Applications> getApplicationses() {
         return this.applicationses;

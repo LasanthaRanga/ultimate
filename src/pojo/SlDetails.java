@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -15,6 +15,7 @@ public class SlDetails  implements java.io.Serializable {
      private int idStreetLine;
      private Customer customer;
      private Office office;
+     private Integer applicationCateg;
      private String assId;
      private Date slDate;
      private String sllotNo;
@@ -52,6 +53,7 @@ public class SlDetails  implements java.io.Serializable {
      private String slloanAmnt;
      private String slLandSize;
      private String slvillageName;
+     private String engineerApprove;
      private Set<SlDistance> slDistances = new HashSet<SlDistance>(0);
 
     public SlDetails() {
@@ -63,10 +65,11 @@ public class SlDetails  implements java.io.Serializable {
         this.customer = customer;
         this.office = office;
     }
-    public SlDetails(int idStreetLine, Customer customer, Office office, String assId, Date slDate, String sllotNo, String slPlanNo, String slDescription, Double slDeposit, Double slAmount, Double slVat, Double slNbt, Double slStamp, Double slOther1, Double slOther2, Integer slApproveToPay, String slServayOfficer, Date slServayDate, Integer slPersonTitle, Integer slYesNoId, Integer slYesNoId2, Integer slYesNoId3, Integer slYesNoId4, Integer slYesNoId5, Integer slYesNoId6, Integer slStatus, String slReferenceNo, String slApproveDescription, String slLandName, String slNotatyOfficer, Date slNotaryDate, String slDeedNo, String slApplicantName, Integer slGnId, String slPurpose, String slBnkorPlce, String slPlceAddress, String slloanAmnt, String slLandSize, String slvillageName, Set<SlDistance> slDistances) {
+    public SlDetails(int idStreetLine, Customer customer, Office office, Integer applicationCateg, String assId, Date slDate, String sllotNo, String slPlanNo, String slDescription, Double slDeposit, Double slAmount, Double slVat, Double slNbt, Double slStamp, Double slOther1, Double slOther2, Integer slApproveToPay, String slServayOfficer, Date slServayDate, Integer slPersonTitle, Integer slYesNoId, Integer slYesNoId2, Integer slYesNoId3, Integer slYesNoId4, Integer slYesNoId5, Integer slYesNoId6, Integer slStatus, String slReferenceNo, String slApproveDescription, String slLandName, String slNotatyOfficer, Date slNotaryDate, String slDeedNo, String slApplicantName, Integer slGnId, String slPurpose, String slBnkorPlce, String slPlceAddress, String slloanAmnt, String slLandSize, String slvillageName, String engineerApprove, Set<SlDistance> slDistances) {
        this.idStreetLine = idStreetLine;
        this.customer = customer;
        this.office = office;
+       this.applicationCateg = applicationCateg;
        this.assId = assId;
        this.slDate = slDate;
        this.sllotNo = sllotNo;
@@ -104,6 +107,7 @@ public class SlDetails  implements java.io.Serializable {
        this.slloanAmnt = slloanAmnt;
        this.slLandSize = slLandSize;
        this.slvillageName = slvillageName;
+       this.engineerApprove = engineerApprove;
        this.slDistances = slDistances;
     }
    
@@ -127,6 +131,13 @@ public class SlDetails  implements java.io.Serializable {
     
     public void setOffice(Office office) {
         this.office = office;
+    }
+    public Integer getApplicationCateg() {
+        return this.applicationCateg;
+    }
+    
+    public void setApplicationCateg(Integer applicationCateg) {
+        this.applicationCateg = applicationCateg;
     }
     public String getAssId() {
         return this.assId;
@@ -386,6 +397,13 @@ public class SlDetails  implements java.io.Serializable {
     
     public void setSlvillageName(String slvillageName) {
         this.slvillageName = slvillageName;
+    }
+    public String getEngineerApprove() {
+        return this.engineerApprove;
+    }
+    
+    public void setEngineerApprove(String engineerApprove) {
+        this.engineerApprove = engineerApprove;
     }
     public Set<SlDistance> getSlDistances() {
         return this.slDistances;

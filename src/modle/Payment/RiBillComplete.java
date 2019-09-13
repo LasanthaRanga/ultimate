@@ -95,7 +95,7 @@ public class RiBillComplete {
                     conn.DB.setData("UPDATE `receipt`\n" +
                             "SET\n" +
                             " `receipt_status` = '1',\n" +
-                            " `ribno` = '"+bill_no+"'\n" +
+                            " `ribno` = '"+bill_no+"', receipt_time='"+modle.Time.getTeime()+"'\n" +
                             "WHERE\n" +
                             "\t`idReceipt` = '"+idRicit+"'");
                 }

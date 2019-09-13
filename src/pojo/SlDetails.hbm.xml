@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 6, 2019 9:53:10 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.SlDetails" table="sl_details" catalog="ultimate2" optimistic-lock="version">
         <id name="idStreetLine" type="int">
@@ -14,6 +14,9 @@
         <many-to-one name="office" class="pojo.Office" fetch="select">
             <column name="office_idOffice" not-null="true" />
         </many-to-one>
+        <property name="applicationCateg" type="java.lang.Integer">
+            <column name="application_categ" />
+        </property>
         <property name="assId" type="string">
             <column name="ass_id" length="11" />
         </property>
@@ -24,7 +27,7 @@
             <column name="sllotNo" length="45" />
         </property>
         <property name="slPlanNo" type="string">
-            <column name="slPlanNo" length="45" />
+            <column name="slPlanNo" length="200" />
         </property>
         <property name="slDescription" type="string">
             <column name="slDescription" length="65535" />
@@ -124,6 +127,9 @@
         </property>
         <property name="slvillageName" type="string">
             <column name="slvillageName" />
+        </property>
+        <property name="engineerApprove" type="string">
+            <column name="engineer_approve" />
         </property>
         <set name="slDistances" table="sl_distance" inverse="true" lazy="true" fetch="select">
             <key>

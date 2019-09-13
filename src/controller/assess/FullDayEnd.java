@@ -162,6 +162,7 @@ public class FullDayEnd implements Initializable {
                             "\t\t'" + format + "',\n" +
                             "\t\t'Send To Day End','" + fde.getEla() + "'\n" +
                             "\t)";
+
                     conn.DB.setData(qu);
 
                     ResultSet data = DB.getData("SELECT\n" +
@@ -178,6 +179,7 @@ public class FullDayEnd implements Initializable {
                             "WHERE\n" +
                             "de.staus = 0 AND\n" +
                             "de.receipt_id = " + fde.getId());
+
                     int idde = 0;
                     if (data.last()) {
                         idde = data.getInt("idde");
@@ -189,6 +191,7 @@ public class FullDayEnd implements Initializable {
                             "FROM `receipt`\n" +
                             "WHERE\n" +
                             "receipt.idReceipt = " + fde.getId());
+
 
                     String receipt_day = "";
 

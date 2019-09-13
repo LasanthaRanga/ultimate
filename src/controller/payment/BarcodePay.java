@@ -1020,7 +1020,7 @@ public class BarcodePay implements Initializable {
         System.out.println(idRecipt);
         try {
             conn.DB.setData("UPDATE `receipt`\n" +
-                    "SET `receipt_status` = '1'\n" +
+                    "SET `receipt_status` = '1', receipt_time='"+modle.Time.getTeime()+"' \n" +
                     "WHERE\n" +
                     "\t`idReceipt` = '" + idRecipt + "'");
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 6, 2019 9:53:10 AM by Hibernate Tools 4.3.1 -->
+<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.Bop" table="bop" catalog="ultimate2" optimistic-lock="version">
         <id name="idBop" type="java.lang.Integer">
@@ -10,6 +10,9 @@
         </id>
         <many-to-one name="customer" class="pojo.Customer" fetch="select">
             <column name="Customer_idCustomer" not-null="true" />
+        </many-to-one>
+        <many-to-one name="personTitle" class="pojo.PersonTitle" fetch="select">
+            <column name="BOP_person_title" />
         </many-to-one>
         <property name="bopApplayDate" type="date">
             <column name="BOP_applay_date" length="10" />
@@ -64,6 +67,15 @@
         </property>
         <property name="bopOther" type="string">
             <column name="BOP_other" />
+        </property>
+        <property name="bopRefNo" type="string">
+            <column name="BOP_ref_no" length="50" />
+        </property>
+        <property name="bopRefNoOrder" type="java.lang.Integer">
+            <column name="BOP_ref_no_order" />
+        </property>
+        <property name="bopPerpose" type="string">
+            <column name="BOP_perpose" />
         </property>
         <set name="applicationses" table="applications" inverse="true" lazy="true" fetch="select">
             <key>

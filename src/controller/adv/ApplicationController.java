@@ -5,12 +5,7 @@
  */
 package controller.adv;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -163,6 +158,9 @@ public class ApplicationController implements Initializable {
     private JFXTextField txt_discription;
 
     @FXML
+    private JFXToggleButton btn_diposit;
+
+    @FXML
     private Text txt_dayCount;
 
     int idCus;
@@ -257,9 +255,9 @@ public class ApplicationController implements Initializable {
             }
             totalPrice += totalPrice * 0.75;// Both side presantage 
         }
-        txt_oneBoardSquare.setText( modle.Round.roundToString(unitSquerFeet));
+        txt_oneBoardSquare.setText(modle.Round.roundToString(unitSquerFeet));
         txt_total_Square.setText(modle.Round.roundToString(totSquerFeet));
-        txt_total_Price.setText(modle.Round.roundToString(totalPrice ));
+        txt_total_Price.setText(modle.Round.roundToString(totalPrice));
     }
 
     ObservableList<modle.adv.AdvTableRow> tableRows = FXCollections.observableArrayList();
@@ -649,7 +647,13 @@ public class ApplicationController implements Initializable {
         } catch (NumberFormatException e) {
         }
 
-        fullTOT += modle.Round.round(diposit);
+        if (btn_diposit.isSelected()) {
+
+        } else {
+            fullTOT += modle.Round.round(diposit);
+        }
+
+
         fullTOT += modle.Round.round(visitAndCheack);
         fullTOT += modle.Round.round(otherPrice);
 
@@ -689,6 +693,11 @@ public class ApplicationController implements Initializable {
     }
 
     @FXML
+    void removeDiposit(ActionEvent event) {
+        callFullTotal();
+    }
+
+    @FXML
     private void clickOnSave(MouseEvent event) {
         AdvAdvertising adv = new AdvAdvertising();
         adv.setCustomerIdCustomer(idCus);
@@ -704,7 +713,12 @@ public class ApplicationController implements Initializable {
         adv.setAdvStamp(stamp);
 
         adv.setAdvGroundTotal(groundTot);
-        adv.setAdvDiposit(diposit);
+        if (btn_diposit.isSelected()) {
+            adv.setAdvDiposit(0.0);
+        } else {
+            adv.setAdvDiposit(diposit);
+        }
+
         adv.setAdvOthers(otherPrice);
         adv.setAdvVisitingPrice(visitAndCheack);
         adv.setAdvFullTotal(fullTOT);

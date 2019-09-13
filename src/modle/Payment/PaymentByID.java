@@ -237,19 +237,54 @@ public class PaymentByID {
     public static boolean genarateRisiptNo(int applicationcat, String ricipt, int idApp) {
         boolean status = false;
         try {
+
+            int receipt_account_id = 0;
+            ResultSet acc = DB.getData("SELECT\n" +
+                    "receipt.receipt_account_id\n" +
+                    "FROM\n" +
+                    "receipt\n" +
+                    "Where Application_Catagory_idApplication_Catagory = '" + applicationcat + "' \n" +
+                    "AND recept_applicationId = " + idApp);
+
+            if (acc.last()) {
+                receipt_account_id = acc.getInt("receipt_account_id");
+            }
+
+// Without Account
+//            ResultSet data = DB.getData("SELECT\n" +
+//                    "MAX(receipt.oder)\n" +
+//                    "FROM `receipt`\n" +
+//                    "WHERE\n" +
+//                    "receipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' AND\n" +
+//                    "receipt.office_idOffice = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
+
+
+            // By Account
             ResultSet data = DB.getData("SELECT\n" +
-                    "MAX(receipt.oder)\n" +
-                    "FROM `receipt`\n" +
+                    "\tMax(receipt.oder)\t\n" +
+                    "FROM\n" +
+                    "\treceipt \n" +
                     "WHERE\n" +
-                    "receipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' AND\n" +
-                    "receipt.office_idOffice = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
+                    "\treceipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' \n" +
+                    "\tAND receipt.office_idOffice = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "' \n" +
+                    "\tAND receipt.receipt_account_id = '" + receipt_account_id + "'");
+
+
+//            ResultSet data3 = DB.getData("SELECT\n" +
+//                    "receipt_code_create.receipt_code\n" +
+//                    "FROM `receipt_code_create`\n" +
+//                    "WHERE\n" +
+//                    "receipt_code_create.application_id = '" + applicationcat + "' AND\n" +
+//                    "receipt_code_create.receipt_code_office_id = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
 
             ResultSet data3 = DB.getData("SELECT\n" +
-                    "receipt_code_create.receipt_code\n" +
-                    "FROM `receipt_code_create`\n" +
+                    "\treceipt_code_create.receipt_code \n" +
+                    "FROM\n" +
+                    "\treceipt_code_create \n" +
                     "WHERE\n" +
-                    "receipt_code_create.application_id = '" + applicationcat + "' AND\n" +
-                    "receipt_code_create.receipt_code_office_id = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
+                    "\treceipt_code_create.application_id = '" + applicationcat + "' \n" +
+                    "\tAND receipt_code_create.receipt_code_office_id = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "' \n" +
+                    "\tAND receipt_code_create.account_id = '" + receipt_account_id + "'");
 
             String receipt_code = "";
             if (data3.last()) {
@@ -266,7 +301,7 @@ public class PaymentByID {
                         " `receipt_print_no` = '" + rn + "',\n" +
                         " `receipt_status` = '1',\n" +
                         " `oder` = '" + anInt + "',\n" +
-                        " `office_idOffice` = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "'\n" +
+                        " `office_idOffice` = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "', receipt_time='" + modle.Time.getTeime() + "' \n" +
                         "WHERE\n" +
                         "\tApplication_Catagory_idApplication_Catagory = '" + applicationcat + "'\n" +
                         "AND recept_applicationId = '" + idApp + "'";

@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,11 +23,15 @@ public class DocHandApprove  implements java.io.Serializable {
      private Integer docHandSendUserId;
      private Integer docHandReceviedUserId;
      private Integer docHandAcceptOrReject;
+     private Integer isAssign;
+     private Integer engineerUserId;
+     private Date engineerApproveDate;
+     private Date engineerApproveTime;
 
     public DocHandApprove() {
     }
 
-    public DocHandApprove(Integer applicationDocHandCategoryId, Integer docHandSubjectId, Integer docHandSendUserCategory, Date docHandSendDate, Date docHandSendTime, Integer docHandReceviedUserCategory, Integer docHandCompleteStatus, Date docHandCompleteDate, Date docHandCompleteTime, Integer docHandSendUserId, Integer docHandReceviedUserId, Integer docHandAcceptOrReject) {
+    public DocHandApprove(Integer applicationDocHandCategoryId, Integer docHandSubjectId, Integer docHandSendUserCategory, Date docHandSendDate, Date docHandSendTime, Integer docHandReceviedUserCategory, Integer docHandCompleteStatus, Date docHandCompleteDate, Date docHandCompleteTime, Integer docHandSendUserId, Integer docHandReceviedUserId, Integer docHandAcceptOrReject, Integer isAssign, Integer engineerUserId, Date engineerApproveDate, Date engineerApproveTime) {
        this.applicationDocHandCategoryId = applicationDocHandCategoryId;
        this.docHandSubjectId = docHandSubjectId;
        this.docHandSendUserCategory = docHandSendUserCategory;
@@ -40,6 +44,10 @@ public class DocHandApprove  implements java.io.Serializable {
        this.docHandSendUserId = docHandSendUserId;
        this.docHandReceviedUserId = docHandReceviedUserId;
        this.docHandAcceptOrReject = docHandAcceptOrReject;
+       this.isAssign = isAssign;
+       this.engineerUserId = engineerUserId;
+       this.engineerApproveDate = engineerApproveDate;
+       this.engineerApproveTime = engineerApproveTime;
     }
    
     public Integer getApproveDocHandId() {
@@ -132,6 +140,34 @@ public class DocHandApprove  implements java.io.Serializable {
     
     public void setDocHandAcceptOrReject(Integer docHandAcceptOrReject) {
         this.docHandAcceptOrReject = docHandAcceptOrReject;
+    }
+    public Integer getIsAssign() {
+        return this.isAssign;
+    }
+    
+    public void setIsAssign(Integer isAssign) {
+        this.isAssign = isAssign;
+    }
+    public Integer getEngineerUserId() {
+        return this.engineerUserId;
+    }
+    
+    public void setEngineerUserId(Integer engineerUserId) {
+        this.engineerUserId = engineerUserId;
+    }
+    public Date getEngineerApproveDate() {
+        return this.engineerApproveDate;
+    }
+    
+    public void setEngineerApproveDate(Date engineerApproveDate) {
+        this.engineerApproveDate = engineerApproveDate;
+    }
+    public Date getEngineerApproveTime() {
+        return this.engineerApproveTime;
+    }
+    
+    public void setEngineerApproveTime(Date engineerApproveTime) {
+        this.engineerApproveTime = engineerApproveTime;
     }
 
 

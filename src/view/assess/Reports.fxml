@@ -42,15 +42,16 @@
             <JFXComboBox fx:id="com_office" layoutX="14.0" layoutY="27.0" prefHeight="31.0" prefWidth="204.0" promptText="Office" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="351.0" layoutY="375.0" prefHeight="84.0" prefWidth="598.0" style="-fx-border-color: #7B1FA2;">
+      <AnchorPane layoutX="247.0" layoutY="375.0" prefHeight="84.0" prefWidth="810.0" style="-fx-border-color: #7B1FA2;">
          <children>
-            <JFXDatePicker fx:id="from_awd" layoutX="14.0" layoutY="28.0" prefHeight="30.0" prefWidth="130.0" promptText="From" />
-            <JFXDatePicker fx:id="to_awd" layoutX="173.0" layoutY="27.0" prefHeight="30.0" prefWidth="130.0" promptText="To" />
-            <JFXButton fx:id="btn_awpay" layoutX="321.0" layoutY="23.0" onMouseClicked="#clickOnAWPay" prefHeight="39.0" prefWidth="257.0" style="-fx-background-color: #4CAF50;" text="Arrears Waran Pay Report" textFill="WHITE">
+            <JFXDatePicker fx:id="from_awd" layoutX="237.0" layoutY="28.0" prefHeight="30.0" prefWidth="130.0" promptText="From" />
+            <JFXDatePicker fx:id="to_awd" layoutX="386.0" layoutY="27.0" prefHeight="30.0" prefWidth="130.0" promptText="To" />
+            <JFXButton fx:id="btn_awpay" layoutX="540.0" layoutY="23.0" onMouseClicked="#clickOnAWPay" prefHeight="39.0" prefWidth="256.0" style="-fx-background-color: #4CAF50;" text="Arrears Waran Pay Report" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </JFXButton>
+            <JFXComboBox fx:id="com_office1" layoutX="14.0" layoutY="28.0" prefHeight="31.0" prefWidth="204.0" promptText="Office" />
          </children>
       </AnchorPane>
    </children>

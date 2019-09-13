@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import modle.GetInstans;
 import modle.asses.OfficeHolder;
+import modle.asses.PayNowModle;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojo.Mixintype;
@@ -204,18 +205,19 @@ public class Voteassign implements Initializable {
 
         try {
             ResultSet data = DB.getData("SELECT\n" +
-                    "\tmixintype.idMixintype,\n" +
-                    "\tmixintype.mixintype_name,\n" +
-                    "\tmixintype.account_receipt_title_idAccount_receipt_title,\n" +
-                    "\tmixintype.mixintype_status,\n" +
-                    "\tmixintype.bankinfo_idBank,\n" +
-                    "\tbank_info.acount_name,\n" +
-                    "\taccount_receipt_title.ART_vote_and_bal\n" +
+                    "mixintype.idMixintype,\n" +
+                    "mixintype.mixintype_name,\n" +
+                    "mixintype.account_receipt_title_idAccount_receipt_title,\n" +
+                    "mixintype.mixintype_status,\n" +
+                    "mixintype.bankinfo_idBank,\n" +
+                    "bank_info.acount_name,\n" +
+                    "account_receipt_title.ART_vote_and_bal,\n" +
+                    "mixintype.office_id\n" +
                     "FROM\n" +
-                    "\tmixintype\n" +
+                    "mixintype\n" +
                     "INNER JOIN bank_info ON bank_info.idBank_Info = mixintype.bankinfo_idBank\n" +
-                    "INNER JOIN account_receipt_title ON mixintype.account_receipt_title_idAccount_receipt_title = account_receipt_title.idAccount_receipt_title");
-
+                    "INNER JOIN account_receipt_title ON mixintype.account_receipt_title_idAccount_receipt_title = account_receipt_title.idAccount_receipt_title\n" +
+                    "WHERE office_id = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
             applist.clear();
             while (data.next()) {
                 applist.add(new AppTable(data.getInt("idMixintype"), data.getString("mixintype.mixintype_name"), data.getString("account_receipt_title.ART_vote_and_bal"), data.getInt("mixintype_status"), data.getString("acount_name")));

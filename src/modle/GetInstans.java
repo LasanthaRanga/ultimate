@@ -401,4 +401,23 @@ public class GetInstans {
         }
         return mixPrasaThre;
     }
+
+
+    public static CDlist cdList;
+
+    public static CDlist getCdlist() {
+        if (cdList == null) {
+            cdList = new CDlist();
+        }
+        return cdList;
+    }
+
+    public static AppType appType;
+
+    public static AppType getAppType() {
+        if (appType == null) {
+            appType = new AppType();
+        }
+        return appType;
+    }
 }

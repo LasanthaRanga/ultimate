@@ -63,8 +63,10 @@ public class DB {
 
 //    Pannala
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+////    public static final String DBPATH = "jdbc:mysql://localhost:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
-//    public static final String PASS = "3ta@kela#una@";
+////    public static final String PASS = "root";
+//   public static final String PASS = "3ta@kela#una@";
 
 //    Pannala local
 //    public static final String DBPATH = "jdbc:mysql://127.0.0.1:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";

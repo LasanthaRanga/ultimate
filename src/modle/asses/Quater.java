@@ -117,6 +117,29 @@ public class Quater {
         }
     }
 
+    public String getSystemDateStringByQuary(){
+        String qq = "SELECT\n" +
+                "systemdate.idSystemDate,\n" +
+                "systemdate.systemDate,\n" +
+                "systemdate.systemDate_status,\n" +
+                "systemdate.change_user_id\n" +
+                "FROM `systemdate`\n" +
+                "WHERE\n" +
+                "systemdate.systemDate_status = 1";
+        try {
+            ResultSet data = DB.getData(qq);
+            if(data.last()){
+                String systemDate = data.getString("systemDate");
+                return systemDate;
+            }else{
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public int cheackDiscountDate() {
         int currentDay = getCurrentDay();
         int currentMonth = getCurrentMonth();

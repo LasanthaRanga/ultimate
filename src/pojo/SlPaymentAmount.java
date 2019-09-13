@@ -1,5 +1,5 @@
 package pojo;
-// Generated Aug 6, 2019 9:53:07 AM by Hibernate Tools 4.3.1
+// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
 
 
 
@@ -10,6 +10,7 @@ public class SlPaymentAmount  implements java.io.Serializable {
 
 
      private int slPaymentAmountId;
+     private Integer slPaymentAppCatgry;
      private Double slPaymentAmount;
      private Double slPaymentAmountVat;
      private Double slPaymentAmountStamp;
@@ -26,8 +27,9 @@ public class SlPaymentAmount  implements java.io.Serializable {
     public SlPaymentAmount(int slPaymentAmountId) {
         this.slPaymentAmountId = slPaymentAmountId;
     }
-    public SlPaymentAmount(int slPaymentAmountId, Double slPaymentAmount, Double slPaymentAmountVat, Double slPaymentAmountStamp, Double slPaymentAmountNbt, Double slPaymentAmountOther, Double slPaymentAmountOther1, Double slPaymentAmountOther2, Double slPaymentAmountDeposit) {
+    public SlPaymentAmount(int slPaymentAmountId, Integer slPaymentAppCatgry, Double slPaymentAmount, Double slPaymentAmountVat, Double slPaymentAmountStamp, Double slPaymentAmountNbt, Double slPaymentAmountOther, Double slPaymentAmountOther1, Double slPaymentAmountOther2, Double slPaymentAmountDeposit) {
        this.slPaymentAmountId = slPaymentAmountId;
+       this.slPaymentAppCatgry = slPaymentAppCatgry;
        this.slPaymentAmount = slPaymentAmount;
        this.slPaymentAmountVat = slPaymentAmountVat;
        this.slPaymentAmountStamp = slPaymentAmountStamp;
@@ -44,6 +46,13 @@ public class SlPaymentAmount  implements java.io.Serializable {
     
     public void setSlPaymentAmountId(int slPaymentAmountId) {
         this.slPaymentAmountId = slPaymentAmountId;
+    }
+    public Integer getSlPaymentAppCatgry() {
+        return this.slPaymentAppCatgry;
+    }
+    
+    public void setSlPaymentAppCatgry(Integer slPaymentAppCatgry) {
+        this.slPaymentAppCatgry = slPaymentAppCatgry;
     }
     public Double getSlPaymentAmount() {
         return this.slPaymentAmount;
