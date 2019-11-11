@@ -16,7 +16,7 @@ public class ErrorFix {
         session.beginTransaction().commit();
         try {
 
-            AssPayhistry assPayhistry = (AssPayhistry) session.load(AssPayhistry.class, idAssess);
+//            AssPayhistry assPayhistry = (AssPayhistry) session.load(AssPayhistry.class, idAssess);
 
 
 

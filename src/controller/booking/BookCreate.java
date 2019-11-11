@@ -95,6 +95,7 @@ public class BookCreate implements Initializable {
         col_day.setCellValueFactory(new PropertyValueFactory<>("dayVal"));
         col_hour.setCellValueFactory(new PropertyValueFactory<>("hourVal"));
         loadResonsTable();
+        modle.StaticViews.getMc().changeTitle("Create Book");
     }
 
     @FXML
@@ -111,6 +112,10 @@ public class BookCreate implements Initializable {
                 conn.DB.setData(qu);
             }
             loadPlaceCombo();
+
+            modle.Allert.notificationGood("OK", "Success " + text);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -291,7 +296,7 @@ public class BookCreate implements Initializable {
 
             }
 
-
+            modle.Allert.notificationGood("OK", "Success " );
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

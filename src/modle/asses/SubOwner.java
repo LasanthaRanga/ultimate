@@ -6,6 +6,7 @@
 package modle.asses;
 
 import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
@@ -13,7 +14,6 @@ import pojo.AssSubowner;
 
 
 /**
- *
  * @author RM.LasanthaRanga@gmail.com
  */
 public class SubOwner {
@@ -67,13 +67,13 @@ public class SubOwner {
             session.close();
         }
     }
-    
-    
+
+
     public boolean updateSubOwner(int id, String name, String nic, int status) {
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            AssSubowner subowner = (AssSubowner)session.load(AssSubowner.class, id);
+            AssSubowner subowner = (AssSubowner) session.load(AssSubowner.class, id);
             subowner.setAssSubOwnerName(name);
             subowner.setAssSubOwnerNic(nic);
             subowner.setAssSubOwnerStatus(status);

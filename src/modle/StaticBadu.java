@@ -1,5 +1,7 @@
 package modle;
 
+import controller.assess.AppLaters;
+import controller.assess.Applications;
 import javafx.collections.ObservableList;
 import modle.asses.HolderAssess;
 import modle.asses.SearchHolder;
@@ -13,6 +15,7 @@ public class StaticBadu {
     private static int appcatid;
     private static int appid;
     private static SearchHolder sh;
+
 
     private static ObservableList<HolderAssess> selectedList;
 
@@ -49,9 +52,6 @@ public class StaticBadu {
     }
 
 
-
-
-
     public static SearchHolder getSH() {
         if (sh == null) {
             sh = new SearchHolder();
@@ -64,4 +64,67 @@ public class StaticBadu {
     }
 
 
+    private static int ass_app_id;
+
+
+    private static int ass_app_type;
+
+    public static void setAss_app_type(int ass_app_type) {
+        StaticBadu.ass_app_type = ass_app_type;
+    }
+
+    public static int getAss_app_type() {
+        return ass_app_type;
+    }
+
+    public static void setAss_app_id(int ass_app_id) {
+        StaticBadu.ass_app_id = ass_app_id;
+    }
+
+    public static int getAss_app_id() {
+        return ass_app_id;
+    }
+
+    public static Applications applications;
+
+    public static Applications getApplications() {
+        return applications;
+    }
+
+    public static int selectedNewAssess;
+    public static int selectedApp;
+
+    public static int getSelectedNewAssess() {
+        return selectedNewAssess;
+    }
+
+    public static int getSelectedApp() {
+        return selectedApp;
+    }
+
+    public static void setApplications(Applications applications) {
+        StaticBadu.applications = applications;
+    }
+
+    public static void setSelectedApp(int selectedApp) {
+        StaticBadu.selectedApp = selectedApp;
+    }
+
+    public static void setSelectedNewAssess(int selectedNewAssess) {
+        StaticBadu.selectedNewAssess = selectedNewAssess;
+    }
+
+    public static SearchHolder getSh() {
+        return sh;
+    }
+
+    public static AppLaters appLaters;
+
+    public static void setAppLaters(AppLaters appLaters) {
+        StaticBadu.appLaters = appLaters;
+    }
+
+    public static AppLaters getAppLaters() {
+        return appLaters;
+    }
 }

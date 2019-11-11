@@ -1,15 +1,18 @@
 package controller.assess;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import conn.DB;
+
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +25,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import modle.ComboItem;
+import modle.ComboLoad;
 import pojo.AssSubowner;
 
 /**
@@ -47,6 +52,8 @@ public class SubOwnersController implements Initializable {
     private TableColumn<Owner, String> col_nic;
     @FXML
     private TableColumn<Owner, String> col_status;
+    @FXML
+    private TableColumn<Owner, String> col_sinhala;
     /**
      * Initializes the controller class.
      */
@@ -64,6 +71,10 @@ public class SubOwnersController implements Initializable {
     private JFXRadioButton radio_no;
     @FXML
     private JFXButton btn_new;
+    @FXML
+    private JFXComboBox<ComboItem> com_title;
+    @FXML
+    private JFXTextField txt_owner_sinhala;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,10 +83,17 @@ public class SubOwnersController implements Initializable {
         subOwnerModle = new modle.asses.SubOwner();
         lbl_assessmant.setText(assessment.getAssessmentNo());
         loadSubOwnerTable();
+        com_title.setItems(ComboLoad.loadCombo("SELECT person_title.title_id, person_title.title_name FROM person_title"));
     }
 
     @FXML
     private void add(ActionEvent event) {
+
+        String title = null;
+        if (com_title.getSelectionModel().getSelectedItem() != null) {
+            title = com_title.getSelectionModel().getSelectedItem().getId() + "";
+        }
+
 
         int status = 1;
 
@@ -85,8 +103,8 @@ public class SubOwnersController implements Initializable {
             status = 0;
         }
         if (so == null) {
-            if (txt_owner.getText().length() > 1) {
-                AssSubowner subowner = new AssSubowner(assessment, txt_owner.getText(), txt_nic.getText(), status);
+            if (txt_owner.getText().length() > 2 && txt_owner_sinhala.getText().length()>2) {
+                AssSubowner subowner = new AssSubowner(assessment, txt_owner.getText(), txt_nic.getText(), status, title, txt_owner_sinhala.getText());
                 boolean saveSubOwner = subOwnerModle.saveSubOwner(subowner);
                 if (saveSubOwner) {
                     modle.Allert.notificationGood("Saved", txt_owner.getText());
@@ -126,17 +144,18 @@ public class SubOwnersController implements Initializable {
                     + "ass_subowner.ass_subOwner_name,\n"
                     + "ass_subowner.ass_subOwner_nic,\n"
                     + "ass_subowner.ass_subOwner_status,\n"
-                    + "ass_subowner.Assessment_idAssessment\n"
+                    + "ass_subowner.Assessment_idAssessment, ass_subowner.ass_subOwner_namesinhala \n"
                     + "FROM\n"
                     + "ass_subowner\n"
                     + "WHERE ass_subowner.Assessment_idAssessment = '" + modle.asses.StaticBadu.getAssessment().getIdAssessment() + "'");
 
             while (data.next()) {
-                obal.add(new Owner(data.getInt("idass_subOwner"), data.getString("ass_subOwner_name"), data.getString("ass_subOwner_nic"), data.getInt("ass_subOwner_status")));
+                obal.add(new Owner(data.getInt("idass_subOwner"), data.getString("ass_subOwner_name"), data.getString("ass_subOwner_nic"), data.getInt("ass_subOwner_status"),data.getString("ass_subOwner_namesinhala")));
             }
             col_sub.setCellValueFactory(new PropertyValueFactory<>("sname"));
             col_nic.setCellValueFactory(new PropertyValueFactory<>("snic"));
             col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+            col_sinhala.setCellValueFactory(new PropertyValueFactory<>("sinhala"));
             tbl_sub.setItems(obal);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -211,17 +230,32 @@ public class SubOwnersController implements Initializable {
             return snic.get();
         }
 
-        public Owner(int id, String sname, String snic, int status) {
+        public Owner(int id, String sname, String snic, int status,String sinhala) {
             this.id = id;
             this.sname = new SimpleStringProperty(sname);
             this.snic = new SimpleStringProperty(snic);
             this.status = status;
+            this.sinhala = new SimpleStringProperty(sinhala);
+
         }
 
         private final int id;
         private final SimpleStringProperty sname;
         private final SimpleStringProperty snic;
         private final int status;
+        private final SimpleStringProperty sinhala;
+
+        public void setSname(String sname) {
+            this.sname.set(sname);
+        }
+
+        public String getSinhala() {
+            return sinhala.get();
+        }
+
+        public SimpleStringProperty sinhalaProperty() {
+            return sinhala;
+        }
 
         /**
          * @return the status

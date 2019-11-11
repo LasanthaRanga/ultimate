@@ -190,4 +190,127 @@ public class Recipt {
         }
     }
 
+
+    public static void addToPrasa(int idrecipt) {
+        try {
+            String qq = "SELECT\n" +
+                    "receipt.idReceipt,\n" +
+                    "receipt.Application_Catagory_idApplication_Catagory,\n" +
+                    "receipt.recept_applicationId,\n" +
+                    "receipt.receipt_print_no,\n" +
+                    "receipt.cheack,\n" +
+                    "receipt.cesh,\n" +
+                    "receipt.receipt_total,\n" +
+                    "receipt.receipt_day,\n" +
+                    "receipt.receipt_status,\n" +
+                    "receipt.receipt_syn,\n" +
+                    "receipt.chque_no,\n" +
+                    "receipt.chque_date,\n" +
+                    "receipt.chque_bank,\n" +
+                    "receipt.oder,\n" +
+                    "receipt.office_idOffice,\n" +
+                    "receipt.receipt_account_id,\n" +
+                    "receipt.receipt_user_id,\n" +
+                    "receipt.ribno,\n" +
+                    "receipt.receipt_time\n" +
+                    "FROM\n" +
+                    "receipt WHERE idReceipt = " + idrecipt;
+
+
+            String receipt_day = null;
+            String receipt_print_no = null;
+            int idReceipt = 0;
+            int receipt_account_id = 0;
+            int receipt_user_id = 0;
+            int recept_applicationId = 0;
+
+
+            ResultSet data1 = DB.getData(qq);
+            if (data1.last()) {
+                receipt_day = data1.getString("receipt_day");
+                receipt_print_no = data1.getString("receipt_print_no");
+                idReceipt = data1.getInt("idReceipt");
+                receipt_account_id = data1.getInt("receipt_account_id");
+                receipt_user_id = data1.getInt("receipt_user_id");
+                recept_applicationId = data1.getInt("recept_applicationId");
+
+            }
+
+            String query = "SELECT\n" +
+                    "book.idbook,\n" +
+                    "book.book_date,\n" +
+                    "book.customer_idCustomer,\n" +
+                    "book.book_amount,\n" +
+                    "book.book_diposit,\n" +
+                    "book.book_vat,\n" +
+                    "book.book_nbt,\n" +
+                    "book.book_stamp,\n" +
+                    "book.book_total,\n" +
+                    "book.book_cash,\n" +
+                    "book.book_chque,\n" +
+                    "book.book_chque_no,\n" +
+                    "book.book_book_pay_status,\n" +
+                    "book.book_book_status,\n" +
+                    "book.book_idRecipt,\n" +
+                    "book.book_reson_idbook_reson,\n" +
+                    "book.book_place_idbook_place,\n" +
+                    "book.book_idUser,\n" +
+                    "book.book_pay_type,\n" +
+                    "book_reson.idbook_reson,\n" +
+                    "book_reson.book_reson_name,\n" +
+                    "book_reson.book_reson_dayprice,\n" +
+                    "book_reson.book_reson_houreprice,\n" +
+                    "book_reson.book_reson_idVote,\n" +
+                    "book_reson.book_reson_idAccount,\n" +
+                    "book_reson.book_reson_status,\n" +
+                    "book_reson.book_place_idbook_place,\n" +
+                    "book_reson.book_reson_diposit_vote,\n" +
+                    "book_reson.book_reson_diposit_amount\n" +
+                    "FROM\n" +
+                    "book\n" +
+                    "INNER JOIN book_reson ON book.book_reson_idbook_reson = book_reson.idbook_reson\n" +
+                    "WHERE\n" +
+                    "book.idbook = " + recept_applicationId;
+
+
+            ResultSet data = DB.getData(query);
+            if (data.last()) {
+
+                double book_amount = data.getDouble("book_amount");
+                int book_reson_idVote = data.getInt("book_reson_idVote");
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_idVote, receipt_account_id, book_amount, receipt_user_id, recept_applicationId, 10);
+
+
+                double book_diposit = data.getDouble("book_diposit");
+                int book_reson_diposit_vote = data.getInt("book_reson_diposit_vote");
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_diposit_vote, receipt_account_id, book_diposit, receipt_user_id, recept_applicationId, 10);
+
+                double book_vat = data.getDouble("book_vat");
+                int vatid = 33;
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, vatid, receipt_account_id, book_vat, receipt_user_id, recept_applicationId, 10);
+
+                double book_nbt = data.getDouble("book_nbt");
+                int nbt = 34;
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, nbt, receipt_account_id, book_nbt, receipt_user_id, recept_applicationId, 10);
+
+                double book_stamp = data.getDouble("book_stamp");
+                int stamp = 35;
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, stamp, receipt_account_id, book_stamp, receipt_user_id, recept_applicationId, 10);
+
+                double book_cash = data.getDouble("book_cash");
+                int cash = 65;
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, cash, receipt_account_id, book_cash, receipt_user_id, recept_applicationId, 10);
+
+                double book_chque = data.getDouble("book_chque");
+                int check = 66;
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, check, receipt_account_id, book_chque, receipt_user_id, recept_applicationId, 10);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 }

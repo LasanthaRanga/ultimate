@@ -12,13 +12,19 @@
             <column name="Assessment_idAssessment" not-null="true" />
         </many-to-one>
         <property name="assSubOwnerName" type="string">
-            <column name="ass_subOwner_name" length="200" />
+            <column name="ass_subOwner_name" length="255" />
         </property>
         <property name="assSubOwnerNic" type="string">
             <column name="ass_subOwner_nic" length="45" />
         </property>
         <property name="assSubOwnerStatus" type="java.lang.Integer">
             <column name="ass_subOwner_status" />
+        </property>
+        <property name="title" type="string">
+            <column name="title" length="45" />
+        </property>
+        <property name="assSubOwnerNamesinhala" type="string">
+            <column name="ass_subOwner_namesinhala" length="255" />
         </property>
     </class>
 </hibernate-mapping>

@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -151,5 +152,6 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
+      <JFXDatePicker fx:id="dp_app" layoutX="374.0" layoutY="464.0" promptText="Application Date" />
    </children>
 </AnchorPane>

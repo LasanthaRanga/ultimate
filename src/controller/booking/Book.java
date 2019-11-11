@@ -160,7 +160,6 @@ public class Book implements Initializable {
     private JFXComboBox<String> com_bank;
 
 
-
     int idcustomer = 0;
     boolean hasCustomer = false;
     String nic;
@@ -193,6 +192,7 @@ public class Book implements Initializable {
         col_amount.setCellValueFactory(new PropertyValueFactory<>("amout"));
         col_diposit.setCellValueFactory(new PropertyValueFactory<>("diposit"));
         btn_book.setDisable(true);
+        modle.StaticViews.getMc().changeTitle("Booking");
     }
 
 
@@ -773,8 +773,6 @@ public class Book implements Initializable {
             dp_chque.setDisable(false);
 
 
-
-
         } else {
             btn_book.setDisable(true);
             System.out.println(paytype);
@@ -783,7 +781,6 @@ public class Book implements Initializable {
 
 
     }
-
 
 
     @FXML
@@ -819,6 +816,20 @@ public class Book implements Initializable {
             }
         }
 
+        double cahs = 0;
+        double cheque = 0;
+        String chequeno = "";
+
+        if (radio_cheque.isSelected()) {
+            cheque = fulltotal;
+            chequeno = txt_chequeNo.getText() + " - " +com_bank.getSelectionModel().getSelectedItem();
+        }
+
+        if (radio_cash.isSelected()) {
+            cahs = fulltotal;
+        }
+
+
         if (idcustomer > 0) {
 
 
@@ -852,9 +863,9 @@ public class Book implements Initializable {
                     "\t\t'" + nbt + "',\n" +
                     "\t\t'" + stamp + "',\n" +
                     "\t\t'" + fulltotal + "',\n" +
-                    "\t\t'" + fulltotal + "',\n" +
-                    "\t\tNULL,\n" +
-                    "\t\tNULL,\n" +
+                    "\t\t'" + cahs + "',\n" +
+                    "\t\t'" + cheque + "',\n" +
+                    "\t\t'" + chequeno + "',\n" +
                     "\t\t'0',\n" +
                     "\t\t'" + booktype + "',\n" +
                     "\t\tNULL,\n" +
@@ -890,7 +901,7 @@ public class Book implements Initializable {
                     int appAccountByOffice = GetInstans.getAha().getAppAccountByOffice(10, StaticViews.getLogUser().getOfficeIdOffice());
 
 
-                    int riciptID = Recipt.insertReciptWithoutNo(10, idBook, 0.0, fulltotal, fulltotal, today, chno, chdate, idbank, StaticViews.getLogUser().getOfficeIdOffice(),appAccountByOffice,StaticViews.getLogUser().getIdUser());
+                    int riciptID = Recipt.insertReciptWithoutNo(10, idBook, cheque, cahs, fulltotal, today, chno, chdate, idbank, StaticViews.getLogUser().getOfficeIdOffice(), appAccountByOffice, StaticViews.getLogUser().getIdUser());
                     if (riciptID > 0) {
                         conn.DB.setData("UPDATE `book`\n" +
                                 "SET \n" +
@@ -993,9 +1004,6 @@ public class Book implements Initializable {
             btn_book.setDisable(false);
         }
     }
-
-
-
 
 
 }

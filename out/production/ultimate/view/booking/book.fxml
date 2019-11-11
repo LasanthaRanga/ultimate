@@ -108,13 +108,13 @@
             <TableColumn fx:id="col_from" prefWidth="120.0" text="From" />
             <TableColumn fx:id="col_to" prefWidth="153.0" text="To" />
             <TableColumn fx:id="col_amount" prefWidth="164.0" text="Amount" />
-            <TableColumn fx:id="col_diposit" prefWidth="125.0" text="Diposit" />
+            <TableColumn fx:id="col_diposit" prefWidth="125.0" text="Deposit" />
         </columns>
       </TableView>
       <JFXDatePicker fx:id="dp_day" layoutX="1025.0" layoutY="203.0" onAction="#dayOnAction" onMouseClicked="#clickOnCalander" />
       <HBox layoutX="80.0" layoutY="506.0" prefHeight="31.0" prefWidth="1184.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diposit Total" textAlignment="RIGHT" wrappingWidth="97.9999982714653">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Deposit Total" textAlignment="RIGHT" wrappingWidth="110.9999982714653">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -122,7 +122,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Text fx:id="txt_dipo" fill="#003fa4" strokeMiterLimit="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="90.0">
+            <Text fx:id="txt_dipo" fill="#003fa4" strokeMiterLimit="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00" wrappingWidth="83.0">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -235,7 +235,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXRadioButton>
-      <JFXTextField fx:id="txt_chequeNo" labelFloat="true" layoutX="392.0" layoutY="572.0" prefHeight="29.0" prefWidth="147.0" promptText="Check No" />
+      <JFXTextField fx:id="txt_chequeNo" labelFloat="true" layoutX="392.0" layoutY="572.0" prefHeight="29.0" prefWidth="147.0" promptText="Cheque No" />
       <JFXDatePicker fx:id="dp_chque" layoutX="599.0" layoutY="572.0" prefHeight="30.0" prefWidth="177.0" promptText="Cheque Date" />
       <JFXComboBox fx:id="com_bank" labelFloat="true" layoutX="822.0" layoutY="571.0" onAction="#selectBank" prefHeight="31.0" prefWidth="177.0" promptText="Bank" />
    </children>

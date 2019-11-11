@@ -3,7 +3,9 @@ package modle.mix;
 import conn.DB;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
+import modle.AmounToWord;
 import modle.KeyVal;
+import modle.Round;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import org.controlsfx.control.Notifications;
@@ -15,6 +17,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
+import modle.AmountToWord.Convert;
 
 public class GenarateRecipt {
 
@@ -86,7 +90,24 @@ public class GenarateRecipt {
                 int appid = data.getInt("recept_applicationId");
                 double receipt_total = data.getDouble("receipt_total");
                 int idRecipt = data.getInt("idReceipt");
+
+                String cus_address_l1 = data.getString("cus_address_l1");
+                String cus_address_l2 = data.getString("cus_address_l2");
+                String cus_address_l3 = data.getString("cus_address_l3");
+
+
                 String cusname = data.getString("cus_name");
+
+                if (cus_address_l1 != null && cus_address_l1.length()>1) {
+                    cusname += ", " + cus_address_l1 + "";
+                }
+                if (cus_address_l2!= null && cus_address_l2.length()>1) {
+                    cusname += ", " + cus_address_l2 + "";
+                }
+                if (cus_address_l3!= null && cus_address_l3.length()>1) {
+                    cusname += ", " + cus_address_l3 + ".";
+                }
+
                 String receipt_print_no = data.getString("receipt_print_no");
                 String receipt_day = data.getString("receipt_day");
 
@@ -96,7 +117,10 @@ public class GenarateRecipt {
                 param.put("receipt_print_no", receipt_print_no);
                 param.put("receipt_day", receipt_day);
                 param.put("receipt_total", modle.Round.roundToString(receipt_total));
+                String s = Round.roundFormat(modle.Round.round(receipt_total));
+                System.out.println(s);
 
+                param.put("word", Convert.convertToWord(receipt_total));
 
                 ResultSet dd = DB.getData("SELECT\n" +
                         "mixdata.idMixdata,\n" +
@@ -113,13 +137,15 @@ public class GenarateRecipt {
                         "mixintype.account_receipt_title_idAccount_receipt_title,\n" +
                         "mixintype.mixintype_status,\n" +
                         "mixintype.bankinfo_idBank,\n" +
-                        "bank_info.acount_no\n" +
+                        "bank_info.acount_no,\n" +
+                        "account_receipt_title.ART_vote_and_bal\n" +
                         "FROM\n" +
                         "mixdata\n" +
                         "INNER JOIN mixintype ON mixdata.mixintype_idMixintype = mixintype.idMixintype\n" +
                         "INNER JOIN bank_info ON bank_info.idBank_Info = mixintype.bankinfo_idBank\n" +
+                        "INNER JOIN account_receipt_title ON mixintype.account_receipt_title_idAccount_receipt_title = account_receipt_title.idAccount_receipt_title\n" +
                         "WHERE\n" +
-                        "\tmixdata.mixincome_IdMixincome = " + appid);
+                        "mixdata.mixincome_IdMixincome = " + appid);
 
                 int x = 1;
                 double vat = 0;
@@ -129,16 +155,13 @@ public class GenarateRecipt {
                 while (dd.next()) {
                     String dis = "dis" + x;
                     String val = "dis" + x + "val";
+                    String vote = "vote" + x;
                     String mixintype_name = dd.getString("mixintype_name") + " " + dd.getString("md_description");
                     double md_amount = dd.getDouble("md_amount");
                     param.put("acno", dd.getString("bank_info.acount_no"));
-
+                    param.put(vote, dd.getString("ART_vote_and_bal"));
                     if (appcat == 9) {
                         param.put(dis, mixintype_name);
-                    }
-                    if (appcat == 11) {
-                        param.put(dis, dd.getString("mixintype_name"));
-                        param.put("vno", dd.getString("md_description"));
                     }
 
 
@@ -156,19 +179,23 @@ public class GenarateRecipt {
                 if (param.get("dis1") == null) {
                     param.put("dis1", "");
                     param.put("dis1val", "");
+                    param.put("vote1", "");
                 }
 
                 if (param.get("dis2") == null) {
                     param.put("dis2", "");
                     param.put("dis2val", "");
+                    param.put("vote2", "");
                 }
                 if (param.get("dis3") == null) {
                     param.put("dis3", "");
                     param.put("dis3val", "");
+                    param.put("vote3", "");
                 }
                 if (param.get("dis4") == null) {
                     param.put("dis4", "");
                     param.put("dis4val", "");
+                    param.put("vote4", "");
                 }
             }
             getBook(param, appcat, print);

@@ -15,7 +15,7 @@
         <AnchorPane layoutX="88.0" layoutY="17.0" prefHeight="83.0" prefWidth="298.0" style="-fx-border-color: #E0E0E0;">
             <children>
                 <JFXCheckBox fx:id="cheack_ward" layoutX="14.0" layoutY="12.0" onAction="#cheackWard" text="Search with Ward" />
-                <JFXComboBox fx:id="com_ward" labelFloat="true" layoutX="22.0" layoutY="50.0" onAction="#selectWard" prefHeight="25.0" prefWidth="255.0" promptText="Ward" />
+                <JFXComboBox fx:id="com_ward" labelFloat="true" layoutX="22.0" layoutY="46.0" onAction="#selectWard" prefHeight="25.0" prefWidth="255.0" promptText="Ward" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="88.0" layoutY="115.0" prefHeight="87.0" prefWidth="298.0" style="-fx-border-color: #E0E0E0;">
@@ -61,34 +61,48 @@
                 <JFXCheckBox fx:id="cheack_customer" layoutX="12.0" layoutY="13.0" onAction="#cheackCustomer" text="Search with Customer Name" />
             </children>
         </AnchorPane>
-        <JFXButton layoutX="434.0" layoutY="492.0" onAction="#getKForm" prefHeight="21.0" prefWidth="183.0" style="-fx-background-color: #4CAF50;" text="Get K Form" textAlignment="CENTER" textFill="#fafafa">
+        <JFXButton layoutX="964.0" layoutY="498.0" onAction="#getKForm" prefHeight="30.0" prefWidth="275.0" style="-fx-background-color: #4CAF50;" text="Get K Form" textAlignment="CENTER" textFill="#fafafa">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </JFXButton>
-        <JFXButton fx:id="btn_paySelected" disable="true" layoutX="434.0" layoutY="575.0" onMouseClicked="#clickOnPay" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: FF9800;" text="Go To Pay" textFill="WHITE">
+        <JFXButton fx:id="btn_paySelected" disable="true" layoutX="1010.0" layoutY="560.0" onMouseClicked="#clickOnPay" prefHeight="30.0" prefWidth="183.0" style="-fx-background-color: FF9800;" text="Go To Pay" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font></JFXButton>
-        <Text fx:id="txt_selected" layoutX="650.0" layoutY="596.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="183.00000168383121" />
-      <JFXButton fx:id="btn_arrias" layoutX="429.0" layoutY="355.0" onMouseClicked="#clickOnCurrentArrias" prefHeight="31.0" prefWidth="262.0" style="-fx-background-color: #4CAF50;" text="Current Arreas Report" textFill="WHITE">
+        <Text fx:id="txt_selected" layoutX="429.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="183.00000168383121" />
+      <JFXButton fx:id="btn_arrias" layoutX="964.0" layoutY="379.0" onMouseClicked="#clickOnCurrentArrias" prefHeight="31.0" prefWidth="275.0" style="-fx-background-color: #4CAF50;" text="Current Arreas Warrant Report" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></JFXButton>
-      <JFXButton fx:id="btn_warrant" layoutX="1040.0" layoutY="297.0" onMouseClicked="#clickOnWarrant" prefHeight="31.0" prefWidth="220.0" style="-fx-background-color: #2196F3;" text="Quater End Warrant Report" textFill="WHITE">
+      <JFXButton fx:id="btn_warrant" layoutX="964.0" layoutY="439.0" onMouseClicked="#clickOnWarrant" prefHeight="31.0" prefWidth="275.0" style="-fx-background-color: #2196F3;" text="Quater End Arreas Warrant Report" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXTextField fx:id="txt_more" alignment="CENTER" labelFloat="true" layoutX="429.0" layoutY="311.0" prefHeight="29.0" prefWidth="117.0" promptText="More Then" text="0.00">
+      <JFXTextField fx:id="txt_more" alignment="CENTER" labelFloat="true" layoutX="964.0" layoutY="322.0" prefHeight="29.0" prefWidth="117.0" promptText="More Then" text="0.00">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txt_less" alignment="CENTER" labelFloat="true" layoutX="574.0" layoutY="311.0" prefHeight="29.0" prefWidth="117.0" promptText="Less Then" text="∞">
+      <JFXTextField fx:id="txt_less" alignment="CENTER" labelFloat="true" layoutX="1109.0" layoutY="322.0" prefHeight="29.0" prefWidth="117.0" promptText="Less Then" text="∞">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </JFXTextField>
+      <AnchorPane layoutX="429.0" layoutY="306.0" prefHeight="214.0" prefWidth="359.0" style="-fx-border-color: rgb(121,85,72);" visible="false">
+         <children>
+            <TableView fx:id="tbl_nature" layoutX="16.0" layoutY="14.0" prefHeight="186.0" prefWidth="327.0">
+              <columns>
+                <TableColumn fx:id="col_nchek" prefWidth="47.0">
+                     <graphic>
+                        <JFXCheckBox fx:id="tbl_check" onAction="#chechk_natureOnAction" selected="true" text=" " />
+                     </graphic>
+                  </TableColumn>
+                <TableColumn fx:id="col_nname" prefWidth="258.0" text="Nature" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

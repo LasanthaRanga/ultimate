@@ -190,10 +190,10 @@ public class Pay {
                     modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("Others"), 1, adv_others, user_idUser, idAdv_advertising, 1);
                 }
                 if(adv_cheque>0){
-                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CASH"), 1, adv_cheque, user_idUser, idAdv_advertising, 1);
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CHQUE"), 1, adv_cheque, user_idUser, idAdv_advertising, 1);
                 }
                 if(adv_cash>0){
-                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CHQUE"), 1, adv_cash, user_idUser, idAdv_advertising, 1);
+                    modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, payid, getVoteId("CASH"), 1, adv_cash, user_idUser, idAdv_advertising, 1);
                 }
             }
         } catch (Exception e) {

@@ -14,13 +14,13 @@
 
 <AnchorPane id="AnchorPane" fx:id="anchor_main" prefHeight="685.0" prefWidth="1300.0" style="-fx-background-radius: 12;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
     <children>
-        <AnchorPane fx:id="container" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#closeDrawer" onMouseEntered="#cloaseDrawerEnterd" prefHeight="625.0" prefWidth="1300.0" style="-fx-background-color: #ffff;">
+        <AnchorPane fx:id="container" layoutY="69.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#closeDrawer" onMouseEntered="#cloaseDrawerEnterd" prefHeight="625.0" prefWidth="1300.0" style="-fx-background-color: #ffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
          <children>
-            <WebView fx:id="wv_main" prefHeight="632.0" prefWidth="1300.0" />
+            <WebView fx:id="wv_main" prefHeight="632.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children></AnchorPane>
-        <AnchorPane onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" prefHeight="74.0" prefWidth="1300.0" style="-fx-background-color: #424242;">
+        <AnchorPane onMouseDragged="#mouseDragged" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" prefHeight="74.0" prefWidth="1300.0" style="-fx-background-color: #03A9F4;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label fx:id="txt_name" alignment="TOP_CENTER" layoutX="160.0" layoutY="13.0" prefHeight="46.0" prefWidth="1005.0" textAlignment="CENTER" textFill="WHITE">
+                <Label fx:id="txt_name" alignment="TOP_CENTER" layoutX="160.0" layoutY="13.0" prefHeight="46.0" prefWidth="1005.0" style="-fx-background-color: #03A9F4;" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Calibri Bold" size="40.0" />
                     </font>
@@ -60,6 +60,6 @@
             </Text>
             </children>
         </AnchorPane>
-        <JFXDrawer fx:id="drawer" defaultDrawerSize="-180.0" layoutX="-152.0" layoutY="76.0" onMouseEntered="#onMouseEnterToDraver" onMouseExited="#onMouseExitedFromDraver" prefHeight="625.0" prefWidth="200.0" style="-fx-background-color: #ffff;" />
+        <JFXDrawer fx:id="drawer" defaultDrawerSize="-180.0" layoutX="-152.0" layoutY="76.0" onMouseEntered="#onMouseEnterToDraver" onMouseExited="#onMouseExitedFromDraver" prefHeight="625.0" prefWidth="200.0" style="-fx-background-color: #ffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="74.0" />
     </children>
 </AnchorPane>

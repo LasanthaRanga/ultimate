@@ -13,9 +13,29 @@ public class DB {
     static Connection c = null;
 
 //    // LOCAL
-    public static final String DBPATH = "jdbc:mysql://127.0.0.1:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+    public static final String DBPATH = "jdbc:mysql://localhost:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
     public static final String USER = "root";
     public static final String PASS = "root";
+
+
+//    public static final String DBPATH = "jdbc:mysql://192.168.1.3:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String USER = "root";
+//    public static final String PASS = "root";
+
+
+    //    // LOCAL KULI UC
+//    public static final String DBPATH = "jdbc:mysql://localhost:3306/kuliuc?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String USER = "root";
+//    public static final String PASS = "root";
+
+
+
+    //    // LOCAL KULI UC
+//    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/kuliuc?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String USER = "root";
+//    public static final String PASS = "3ta@kela#una@";
+
+
 
 
 //    public static final String DBPATH = "jdbc:mysql://192.168.1.6:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
@@ -50,9 +70,18 @@ public class DB {
 
 
 ////    Polgahawela
-//    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/polgahawela?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+
+
+//    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "@Mck_#321";
+
+
+    ////    Polgahawela Local
+//    public static final String DBPATH = "jdbc:mysql://localhost:3306/polgahawela?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String USER = "root";
+//    public static final String PASS = "root";
+
 
 
 //    // CHILAW
@@ -63,17 +92,17 @@ public class DB {
 
 //    Pannala
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
-////    public static final String DBPATH = "jdbc:mysql://localhost:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String DBPATH = "jdbc:mysql://localhost:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
-////    public static final String PASS = "root";
-//   public static final String PASS = "3ta@kela#una@";
+//    public static final String PASS = "root";
+//    public static final String PASS = "3ta@kela#una@";
 
 //    Pannala local
 //    public static final String DBPATH = "jdbc:mysql://127.0.0.1:3306/pannala?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "root";
 
-// Kuliyapitiya
+//    Kuliyapitiya
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
 //    public static final String USER = "root";
 //    public static final String PASS = "3ta@kela#una@";

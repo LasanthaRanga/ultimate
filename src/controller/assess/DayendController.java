@@ -524,7 +524,18 @@ public class DayendController implements Initializable {
                             "WHERE\n" +
                             "\t(`report_ricipt_id` = '" + idRecipt + "')");
                     break;
-
+                case 10:
+                    conn.DB.setData("UPDATE `receipt`\n" +
+                            "SET \n" +
+                            " receipt_status = 2\n" +
+                            "WHERE\n" +
+                            "\t(`idReceipt` = '" + idRecipt + "')");
+                    conn.DB.setData("UPDATE `account_ps_three` \n" +
+                            "SET \n" +
+                            "`report_status` = 2\n" +
+                            "WHERE\n" +
+                            "\t`report_ricipt_id` = " + idRecipt);
+                    break;
 
                 default:
 //                    conn.DB.setData("UPDATE `receipt`\n" +
@@ -820,7 +831,7 @@ public class DayendController implements Initializable {
                     ResultSet d2 = DB.getData(quary2);
                     if (d2.last()) {
                         int idAdv_advertising = d2.getInt("idAdv_Advertising");
-                        modle.GetInstans.getAdvReport().pringAdvBill(idAdv_advertising,false);
+                        modle.GetInstans.getAdvReport().pringAdvBill(idAdv_advertising, false);
                     }
                 } else if (apc == 7) {
                     String quary2 = "SELECT\n" +
@@ -845,13 +856,13 @@ public class DayendController implements Initializable {
                     if (adv.last()) {
                         int recept_applicationId = adv.getInt("recept_applicationId");
                         System.out.println(recept_applicationId + " APP ID");
-                        modle.GetInstans.getAssessReport().getReciptPrintStrretLine(idRecipt,false);
+                        modle.GetInstans.getAssessReport().getReciptPrintStrretLine(idRecipt, false);
 //                        modle.GetInstans.getAdvReport().pringAdvBill(recept_applicationId);
                     }
                 } else if (apc == 9) {
-                    modle.GetInstans.getGenarateRecipt().genarateRecipt(Integer.parseInt(idRecipt),false);
+                    modle.GetInstans.getGenarateRecipt().genarateRecipt(Integer.parseInt(idRecipt), false);
                 } else if (apc == 8) {
-                    modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt,false);
+                    modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt, false);
                 } else if (apc == 4) {
                     modle.GetInstans.getBillComplete().loadShopRentBillView(idRecipt);
                 } else if (apc == 13) {
@@ -879,7 +890,7 @@ public class DayendController implements Initializable {
                     if (adv.last()) {
                         int recept_applicationId = adv.getInt("recept_applicationId");
                         System.out.println(recept_applicationId + " APP ID");
-                        modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt,false);
+                        modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt, false);
                     }
                 }
 
@@ -942,13 +953,6 @@ public class DayendController implements Initializable {
                     }
 
 
-
-
-
-
-
-
-
                 } else if (apc == 1) {
                     String quary2 = "SELECT\n" +
                             "adv_advertising.idAdv_Advertising\n" +
@@ -958,7 +962,7 @@ public class DayendController implements Initializable {
                     ResultSet d2 = DB.getData(quary2);
                     if (d2.last()) {
                         int idAdv_advertising = d2.getInt("idAdv_Advertising");
-                        modle.GetInstans.getAdvReport().pringAdvBill(idAdv_advertising,false);
+                        modle.GetInstans.getAdvReport().pringAdvBill(idAdv_advertising, false);
                     }
                 } else if (apc == 7) {
                     String quary2 = "SELECT\n" +
@@ -983,13 +987,13 @@ public class DayendController implements Initializable {
                     if (adv.last()) {
                         int recept_applicationId = adv.getInt("recept_applicationId");
                         System.out.println(recept_applicationId + " APP ID");
-                        modle.GetInstans.getAssessReport().getReciptPrintStrretLine(idRecipt,false);
+                        modle.GetInstans.getAssessReport().getReciptPrintStrretLine(idRecipt, false);
 //                        modle.GetInstans.getAdvReport().pringAdvBill(recept_applicationId);
                     }
                 } else if (apc == 9) {
-                    modle.GetInstans.getGenarateRecipt().genarateRecipt(Integer.parseInt(idRecipt),false);
+                    modle.GetInstans.getGenarateRecipt().genarateRecipt(Integer.parseInt(idRecipt), false);
                 } else if (apc == 8) {
-                    modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt,false);
+                    modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt, false);
                 } else if (apc == 4) {
                     modle.GetInstans.getBillComplete().loadShopRentBillView(idRecipt);
                 } else if (apc == 13) {
@@ -1017,7 +1021,7 @@ public class DayendController implements Initializable {
                     if (adv.last()) {
                         int recept_applicationId = adv.getInt("recept_applicationId");
                         System.out.println(recept_applicationId + " APP ID");
-                        modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt,false);
+                        modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt, false);
                     }
                 }
 

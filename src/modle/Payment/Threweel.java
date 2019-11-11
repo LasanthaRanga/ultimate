@@ -24,11 +24,13 @@ public class Threweel {
 
     public void getVehiclepassReport(String riciptID, boolean print) {
         System.out.println("awa");
+        System.out.println(riciptID);
         try {
             String path = "C:\\Ultimate\\Report\\mix\\threeweel.jrxml";// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, String>();
             param.put("idRecipt", riciptID);
+            this.getConnection().commit();
             JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
             if (print) {
                 JasperPrintManager.printReport(jp, false);

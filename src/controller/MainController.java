@@ -112,8 +112,8 @@ public class MainController implements Initializable {
                 while (true) {
 
 
-                    boolean b = CheckConnection.checkInternet();
-                    boolean local = CheckConnection.checkLocal();
+//                    boolean b = CheckConnection.checkInternet();
+//                    boolean local = CheckConnection.checkLocal();
 
 //                    if (!b) {
 //                        modle.Allert.notificationConnection("Connection", "Error");

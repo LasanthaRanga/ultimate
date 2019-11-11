@@ -27,7 +27,7 @@
             <Font name="Iskoola Pota" size="14.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="txt_customer" labelFloat="true" layoutX="58.0" layoutY="255.0" onKeyReleased="#cusNameKeyReleased" prefHeight="25.0" prefWidth="468.0" promptText="Customer Name">
+      <JFXTextField fx:id="txt_customer" labelFloat="true" layoutX="58.0" layoutY="255.0" onKeyReleased="#cusNameKeyReleased" prefHeight="26.0" prefWidth="353.0" promptText="Customer Name">
          <font>
             <Font name="Iskoola Pota" size="14.0" />
          </font>
@@ -100,5 +100,6 @@
             <TableColumn fx:id="col_print" prefWidth="120.0" text="Print Status" />
         </columns>
       </TableView>
+      <JFXComboBox fx:id="com_title" layoutX="448.0" layoutY="253.0" prefHeight="31.0" prefWidth="78.0" promptText="Titel" />
    </children>
 </AnchorPane>

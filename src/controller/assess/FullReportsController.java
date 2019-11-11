@@ -1,9 +1,6 @@
 package controller.assess;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import conn.DB;
 import controller.adv.Customer_regController;
 import javafx.collections.FXCollections;
@@ -21,10 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import modle.GetInstans;
-import modle.asses.HolderAssess;
-import modle.asses.PayNowModle;
-import modle.asses.ReportStaticMethod;
-import modle.asses.RipHolder;
+import modle.KeyVal;
+import modle.asses.*;
 import view.buttons.BTN;
 
 import java.io.IOException;
@@ -95,6 +90,15 @@ public class FullReportsController implements Initializable {
     private JFXTextField txt_more;
     @FXML
     private JFXTextField txt_less;
+    @FXML
+    private TableView<NatureHolder> tbl_nature;
+    @FXML
+    private TableColumn<NatureHolder, String> col_nname;
+    @FXML
+    private TableColumn<NatureHolder, JFXCheckBox> col_nchek;
+    @FXML
+    private JFXCheckBox tbl_check;
+
 
     int currentYear;
 
@@ -114,8 +118,12 @@ public class FullReportsController implements Initializable {
         tableCollomAssing();
 
         currentYear = GetInstans.getQuater().getCurrentYear();
-//        n = true;  // governmet office atha herima;
+//       n = true;  // governmet office atha herima;
         modle.StaticViews.getMc().changeTitle(" Assessment Reports ");
+
+        tbl_nature.setItems(modle.GetInstans.getNature().getNatureSelectList());
+
+
     }
 
     boolean w = false;
@@ -261,6 +269,21 @@ public class FullReportsController implements Initializable {
         }
     }
 
+    @FXML
+    void chechk_natureOnAction(ActionEvent event) {
+        ObservableList<NatureHolder> items = tbl_nature.getItems();
+        if (tbl_check.isSelected()) {
+            for (NatureHolder nh : items) {
+                nh.getCheckBox().setSelected(true);
+            }
+        } else {
+            for (NatureHolder nh : items) {
+                nh.getCheckBox().setSelected(false);
+            }
+        }
+    }
+
+
     public void searchAssessment() {
 
         boolean where = false;
@@ -377,6 +400,9 @@ public class FullReportsController implements Initializable {
         col_allocation.setCellValueFactory(new PropertyValueFactory<>("alocation"));
         col_owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        col_nname.setCellValueFactory(new PropertyValueFactory<>("nature"));
+        col_nchek.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
     }
 
     @FXML
@@ -508,7 +534,8 @@ public class FullReportsController implements Initializable {
                         }
                     }
                 }
-                modle.GetInstans.getAssessReport().loadReportByDataSource(list);
+                String current_arriars_report_path = KeyVal.getVal("current_arriars_report_path");
+                modle.GetInstans.getAssessReport().loadReportByDataSource(list, current_arriars_report_path);
             } else {
                 modle.Allert.notificationError("Enter Correct Value ", "Check Values");
             }
@@ -541,13 +568,14 @@ public class FullReportsController implements Initializable {
                 }
             }
         }
-        modle.GetInstans.getAssessReport().loadReportByDataSource(list);
+        String q_end_aw_report = KeyVal.getVal("Q_END_AW_REPORT");
+        modle.GetInstans.getAssessReport().loadReportByDataSource(list, q_end_aw_report);
     }
 
     public RipHolder getQendWarrantArriasByID(int assessID) {
 
 
-     //   int currentQuater = GetInstans.getQuater().getCurrentQuater();
+        //   int currentQuater = GetInstans.getQuater().getCurrentQuater();
 
 
         String query = "SELECT\n" +
@@ -634,8 +662,8 @@ public class FullReportsController implements Initializable {
                 ripHolder.setAssessData(assessID, data.getInt("ward_no"), data.getString("street_name"), data.getString("cus_name"));
                 ripHolder.setThisYearCurrentArrias(data.getDouble("ass_Qstart_tyold_arrias"));
                 ripHolder.setThisYearCurrentWarrant(data.getDouble("ass_Qstart_tyold_warant"));
-                ripHolder.setLasatYearArriars( data.getDouble("ass_Qstart_LYC_Arreas"),data.getDouble("ass_Qstart_LY_Arreas"), 0);
-                ripHolder.setLastYearWarrant( data.getDouble("ass_Qstart_LYC_Warrant"),data.getDouble("ass_Qstart_LY_Warrant"), 0);
+                ripHolder.setLasatYearArriars(data.getDouble("ass_Qstart_LYC_Arreas"), data.getDouble("ass_Qstart_LY_Arreas"), 0);
+                ripHolder.setLastYearWarrant(data.getDouble("ass_Qstart_LYC_Warrant"), data.getDouble("ass_Qstart_LY_Warrant"), 0);
             }
         } catch (Exception e) {
             e.printStackTrace();

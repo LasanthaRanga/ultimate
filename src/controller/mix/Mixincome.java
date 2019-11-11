@@ -482,14 +482,10 @@ public class Mixincome implements Initializable {
         int size = tbl.size();
 
         if (size < 4) {
-
-
             MixData mixData = new MixData(size + 1, com_type.getSelectionModel().getSelectedItem().getId(), com_type.getSelectionModel().getSelectedItem().getName(),
                     txt_des.getText(), value, vat, nbt, stamp, fulltotal);
             tbl.add(mixData);
             tbl_mix.setItems(tbl);
-
-
             for (MixData md : tbl) {
                 totalfull += md.getFulltot();
             }
@@ -500,6 +496,14 @@ public class Mixincome implements Initializable {
         } else {
             modle.Allert.notificationWorning("Too Load", "Can not add more thean 4");
         }
+
+        txt_des.setText("");
+        txt_val.setText("0");
+        cal();
+
+
+
+
     }
 
 
@@ -555,6 +559,49 @@ public class Mixincome implements Initializable {
 
                     Serializable save = session.save(mixincome);
                     int mixindi = Integer.parseInt(save.toString());
+
+
+
+                    for (MixData md : tbl) {
+
+                        Mixdata mixdata = new Mixdata();
+                        mixdata.setMixincome(mixincome);
+                        mixdata.setMixintype((pojo.Mixintype)session.load(pojo.Mixintype.class,md.getTypeid()));
+                        mixdata.setMdTotal(md.getFulltot());
+                        mixdata.setMdVat(md.getVat());
+                        mixdata.setMdNbt(md.getNbt());
+                        mixdata.setMdStamp(md.stamp);
+                        mixdata.setMdAmount(md.getValue());
+                        mixdata.setMdDescription(md.getDescription());
+                        session.save(mixdata);
+
+//                    conn.DB.setData("INSERT INTO `mixdata` (\n" +
+//                                "\t`md_description`,\n" +
+//                                "\t`md_amount`,\n" +
+//                                "\t`md_vat`,\n" +
+//                                "\t`md_nbt`,\n" +
+//                                "\t`md_stamp`,\n" +
+//                                "\t`md_total`,\n" +
+//                                "\t`mixintype_idMixintype`,\n" +
+//                                "\t`mixincome_IdMixincome`\n" +
+//                                ")\n" +
+//                                "VALUES\n" +
+//                                "\t(\n" +
+//                                "\t\t '" + md.getDescription() + "',\n" +
+//                                "\t\t'" + md.getValue() + "',\n" +
+//                                "\t\t'" + md.getVat() + "',\n" +
+//                                "\t\t'" + md.nbt + "',\n" +
+//                                "\t\t'" + md.stamp + "',\n" +
+//                                "\t\t'" + md.fulltot + "',\n" +
+//                                "\t\t'" + md.getTypeid() + "',\n" +
+//                                "\t\t'" + mixindi + "'\n" +
+//                                "\t)");
+
+
+                    }
+
+
+
 
 
                     double ca = 0;
@@ -665,36 +712,6 @@ public class Mixincome implements Initializable {
 
                     session.beginTransaction().commit();
 
-
-                    for (MixData md : tbl) {
-                        conn.DB.setData("INSERT INTO `mixdata` (\n" +
-                                "\t`md_description`,\n" +
-                                "\t`md_amount`,\n" +
-                                "\t`md_vat`,\n" +
-                                "\t`md_nbt`,\n" +
-                                "\t`md_stamp`,\n" +
-                                "\t`md_total`,\n" +
-                                "\t`mixintype_idMixintype`,\n" +
-                                "\t`mixincome_IdMixincome`\n" +
-                                ")\n" +
-                                "VALUES\n" +
-                                "\t(\n" +
-                                "\t\t '" + md.getDescription() + "',\n" +
-                                "\t\t'" + md.getValue() + "',\n" +
-                                "\t\t'" + md.getVat() + "',\n" +
-                                "\t\t'" + md.nbt + "',\n" +
-                                "\t\t'" + md.stamp + "',\n" +
-                                "\t\t'" + md.fulltot + "',\n" +
-                                "\t\t'" + md.getTypeid() + "',\n" +
-                                "\t\t'" + mixindi + "'\n" +
-                                "\t)");
-
-
-                    }
-//                    conn.DB.setData("UPDATE `mixincome`\n" +
-//                            "SET `mixincome_paytype` = '" + paytype + "'\n" +
-//                            "WHERE\n" +
-//                            "\tidMixincome = '" + mixindi + "'");
                 }
 
 

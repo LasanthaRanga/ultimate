@@ -82,6 +82,7 @@ public class BarcodePay implements Initializable {
         if (idrecit != null) {
 
         }
+        modle.StaticViews.getMc().changeTitle("Barcode Pay");
     }
 
 
@@ -110,7 +111,18 @@ public class BarcodePay implements Initializable {
                 modle.Allert.notificationGood("Completed", "Assessment " + idRecipt);
                 clearAll();
                 break;
+            case 3:
+                modle.Payment.PaymentByID.genarateRisiptNo(3, "", appid);
+                updateBOP(appid);
+                modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt + "", false);
+                modle.Allert.notificationGood("Completed", "BOP " + idRecipt);
+                clearAll();
+                break;
             case 4:
+
+
+                break;
+            case 5:
 
 
                 break;
@@ -131,8 +143,9 @@ public class BarcodePay implements Initializable {
 
             case 10:
                 modle.Payment.PaymentByID.genarateRisiptNo(10, "", appid);
-                modle.book.Recipt.genarateBookingRecipt(idRecipt + "",false);
+                modle.book.Recipt.genarateBookingRecipt(idRecipt + "", false);
                 modle.Allert.notificationGood("Completed", "Booking " + idRecipt);
+                modle.book.Recipt.addToPrasa(idRecipt);
                 clearAll();
                 break;
 
@@ -171,6 +184,10 @@ public class BarcodePay implements Initializable {
                 dec.reprintAssessBill(idRecipt + "", false);
                 clearAll();
                 break;
+            case 3:
+                modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt + "", false);
+                clearAll();
+                break;
 
             case 4:
 
@@ -182,13 +199,18 @@ public class BarcodePay implements Initializable {
                 clearAll();
                 break;
 
+            case 8:
+
+
+                break;
+
             case 9:
                 modle.GetInstans.getGenarateRecipt().genarateRecipt(idRecipt, false);
                 clearAll();
                 break;
 
             case 10:
-                modle.book.Recipt.genarateBookingRecipt(idRecipt + "",false);
+                modle.book.Recipt.genarateBookingRecipt(idRecipt + "", false);
                 clearAll();
                 break;
 
@@ -269,6 +291,9 @@ public class BarcodePay implements Initializable {
                         case 2:
                             assessmentTaxBil(text);
                             break;
+                        case 3:
+                            bop(text);
+                            break;
 
                         case 4:
                             shopRent(text);
@@ -280,9 +305,9 @@ public class BarcodePay implements Initializable {
 
                         case 8:
                             if (radio_print.isSelected()) {
-                                modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt + "", true);
+                                modle.GetInstans.getThreweel().getVehiclepassReport(text + "", true);
                             } else {
-                                modle.GetInstans.getThreweel().getVehiclepassReport(idRecipt + "", false);
+                                modle.GetInstans.getThreweel().getVehiclepassReport(text + "", false);
                             }
                             clearAll();
                             break;
@@ -360,8 +385,9 @@ public class BarcodePay implements Initializable {
                     double fullTot = data.getDouble("receipt_total");
                     if (radio_print.isSelected()) {
                         modle.Payment.PaymentByID.genarateRisiptNo(10, "", appid);
-                        modle.book.Recipt.genarateBookingRecipt(idRecipt + "",true);
+                        modle.book.Recipt.genarateBookingRecipt(idRecipt + "", true);
                         modle.Allert.notificationGood("Completed", "Booking " + idRecipt);
+                        modle.book.Recipt.addToPrasa(idRecipt);
                         clearAll();
                     } else {
                         payAnable();
@@ -475,6 +501,131 @@ public class BarcodePay implements Initializable {
 
 
     }
+
+
+    public void bop(String text) {
+        String query = "SELECT\n" +
+                "receipt.idReceipt,\n" +
+                "receipt.Application_Catagory_idApplication_Catagory,\n" +
+                "receipt.recept_applicationId,\n" +
+                "receipt.receipt_print_no,\n" +
+                "receipt.cheack,\n" +
+                "receipt.cesh,\n" +
+                "receipt.receipt_total,\n" +
+                "receipt.receipt_day,\n" +
+                "receipt.receipt_status,\n" +
+                "receipt.receipt_syn,\n" +
+                "receipt.chque_no,\n" +
+                "receipt.chque_date,\n" +
+                "receipt.chque_bank,\n" +
+                "receipt.oder,\n" +
+                "receipt.office_idOffice,\n" +
+                "receipt.receipt_account_id,\n" +
+                "receipt.receipt_user_id,\n" +
+                "bop.idBOP,\n" +
+                "customer.cus_name,\n" +
+                "bop.BOP_total_price\n" +
+                "FROM\n" +
+                "receipt\n" +
+                "INNER JOIN bop ON bop.idBOP = receipt.recept_applicationId\n" +
+                "INNER JOIN customer ON bop.Customer_idCustomer = customer.idCustomer WHERE idReceipt =" + text;
+        try {
+            ResultSet data = DB.getData(query);
+
+            if (data.last()) {
+                if (data.getInt("receipt_status") == 0) {
+                    catid = data.getInt("Application_Catagory_idApplication_Catagory");
+                    appid = data.getInt("recept_applicationId");
+                    double fullTot = data.getDouble("receipt_total");
+                    idRecipt = data.getInt("idReceipt");
+                    txt_dis1.setText(data.getString("cus_name"));
+                    txt_tot.setText(fullTot + "");
+                    if (radio_print.isSelected()) {
+                        modle.Payment.PaymentByID.genarateRisiptNo(3, "", appid);
+                        updateNonVesting(appid);
+                        modle.GetInstans.getAssessReport().getReciptPrintNonVesting(idRecipt + "", true);
+                        modle.Allert.notificationGood("Completed", "BOP " + idRecipt);
+                        clearAll();
+                    } else {
+                        payAnable();
+                    }
+                } else if (data.getInt("receipt_status") == 1) {
+                    catid = data.getInt("Application_Catagory_idApplication_Catagory");
+                    appid = data.getInt("recept_applicationId");
+                    double fullTot = data.getDouble("receipt_total");
+                    idRecipt = data.getInt("idReceipt");
+                    txt_dis1.setText(data.getString("cus_name"));
+                    txt_tot.setText(fullTot + "");
+                    printAnable();
+                } else {
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+
+    }
+
+
+    public void updateBOP(int appid) {
+        String ss = "SELECT\n" +
+                "bop.idBOP,\n" +
+                "doc_hand_approve.approve_doc_hand_id\n" +
+                "FROM\n" +
+                "bop\n" +
+                "INNER JOIN doc_hand_approve ON bop.idBOP = doc_hand_approve.doc_hand_subject_id\n" +
+                "WHERE\n" +
+                "bop.idBOP = " + appid;
+
+        try {
+            ResultSet data = DB.getData(ss);
+            if (data.last()) {
+                int approve_doc_hand_id = data.getInt("approve_doc_hand_id");
+
+                conn.DB.setData("UPDATE `doc_hand_approve`\n" +
+                        "SET `doc_hand_recevied_user_category` = '5',\n" +
+                        " `doc_hand_accept_or_reject` = '4'\n" +
+                        "WHERE\n" +
+                        "\t(`approve_doc_hand_id` = '" + approve_doc_hand_id + "')");
+            }
+
+            ResultSet data1 = DB.getData("SELECT\n" +
+                    "receipt.idReceipt,\n" +
+                    "receipt.receipt_print_no,\n" +
+                    "receipt.receipt_day,\n" +
+                    "bop.idBOP\n" +
+                    "FROM\n" +
+                    "receipt\n" +
+                    "INNER JOIN bop ON receipt.recept_applicationId = bop.idBOP\n" +
+                    "WHERE\n" +
+                    "receipt.Application_Catagory_idApplication_Catagory = 3 AND\n" +
+                    "bop.idBOP = " + appid);
+
+            if (data1.last()) {
+                int idReceipt = data1.getInt("idReceipt");
+                String receipt_day = data1.getString("receipt_day");
+                String receipt_print_no = data1.getString("receipt_print_no");
+                conn.DB.setData("UPDATE `account_ps_three`\n" +
+                        "SET `report_date` = '" + receipt_day + "',\n" +
+                        " `report_ricipt_no` = '" + receipt_print_no + "',\n" +
+                        " `report_status` = '1'\n" +
+                        "WHERE\n" +
+                        "\t`report_ricipt_id` = '" + idReceipt + "'");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+
+    }
+
 
     public void updateNonVesting(int appid) {
 
@@ -742,6 +893,26 @@ public class BarcodePay implements Initializable {
                 "INNER JOIN receipt ON sr_shop_payment.sr_receipt_no = receipt.receipt_print_no\n" +
                 "WHERE\n" +
                 "receipt.idReceipt = " + idRecipt;
+
+        qu = "SELECT\n" +
+                "\tsr_shop_payment.sr_shop_proc_id1,\n" +
+                "\tsr_shop_payment.sr_shop_paid_arrears_bal,\n" +
+                "\tsr_shop_payment.sr_shop_paid_fine_bal,\n" +
+                "\tsr_shop_payment.sr_shop_paid_rental_tot_bal,\n" +
+                "\tsr_shop_payment.sr_shop_paid_over_pay_bal,\n" +
+                "\tsr_shop_payment.sr_shop_paid_proc_complete,\n" +
+                "\tsr_shop_payment.sr_shop_last_year_arrears_bal,\n" +
+                "\tsr_shop_payment.sr_shop_last_year_fine_bal,\n" +
+                "\tsr_shop_payment.sr_shop_sc1_balance,\n" +
+                "\tsr_shop_payment.sr_shop_sc2_balance,\n" +
+                "\tsr_shop_payment.sr_shop_sc3_balance, receipt.receipt_print_no \n" +
+                "FROM\n" +
+                "\tsr_shop_payment\n" +
+                "\tINNER JOIN receipt ON sr_shop_payment.sr_receipt_no = receipt.receipt_print_no \n" +
+                "WHERE\n" +
+                "\treceipt.idReceipt = '" + idRecipt + "'";
+
+
         try {
             ResultSet data = DB.getData(qu);
             String reciptNo = "";
@@ -756,6 +927,22 @@ public class BarcodePay implements Initializable {
                         "\t(\n" +
                         "\t\t`sr_shop_proc_id` = '" + data.getString("sr_shop_proc_id1") + "'\n" +
                         "\t)";
+
+                qu2 = "UPDATE `sr_shop_proc` \n" +
+                        "SET `sr_shop_arrears_bal` = '" + data.getDouble("sr_shop_paid_arrears_bal") + "',\n" +
+                        "`sr_shop_fine_bal` = '" + data.getDouble("sr_shop_paid_fine_bal") + "',\n" +
+                        "`sr_shop_rental_tot_bal` = '" + data.getDouble("sr_shop_paid_rental_tot_bal") + "',\n" +
+                        "`sr_shop_over_pay_bal` = '" + data.getDouble("sr_shop_paid_over_pay_bal") + "',\n" +
+                        "`sr_shop_proc_complete` = '" + data.getString("sr_shop_paid_proc_complete") + "',\n" +
+                        "`sr_shop_last_year_arrears_bal` = '" + data.getDouble("sr_shop_last_year_arrears_bal") + "',\n" +
+                        "`sr_shop_last_year_fine_bal` = '" + data.getDouble("sr_shop_last_year_fine_bal") + "',\n" +
+                        "`sr_shop_sc1_balance` = '" + data.getDouble("sr_shop_sc1_balance") + "',\n" +
+                        "`sr_shop_sc2_balance` = '" + data.getDouble("sr_shop_sc2_balance") + "',\n" +
+                        "`sr_shop_sc3_balance` = '" + data.getDouble("sr_shop_sc3_balance") + "' \n" +
+                        "WHERE\n" +
+                        "\t( `sr_shop_proc_id` = '" + data.getString("sr_shop_proc_id1") + "' )";
+
+
                 conn.DB.setData(qu2);
                 reciptNo = data.getString("receipt_print_no");
             }
@@ -926,11 +1113,12 @@ public class BarcodePay implements Initializable {
                     idRecipt = data.getInt("idRibill");
                     txt_tot.setText(data.getString("billtotal"));
                     txt_dis1.setText(data.getString("user_full_name"));
-
+                    printAnable();
                 }
 
 
             }
+            System.out.println("XXXXXXXXXXXXXXXXX");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -1020,7 +1208,7 @@ public class BarcodePay implements Initializable {
         System.out.println(idRecipt);
         try {
             conn.DB.setData("UPDATE `receipt`\n" +
-                    "SET `receipt_status` = '1', receipt_time='"+modle.Time.getTeime()+"' \n" +
+                    "SET `receipt_status` = '1', receipt_time='" + modle.Time.getTeime() + "' \n" +
                     "WHERE\n" +
                     "\t`idReceipt` = '" + idRecipt + "'");
         } catch (Exception e) {

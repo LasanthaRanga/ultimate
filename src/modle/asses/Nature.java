@@ -62,4 +62,24 @@ public class Nature {
             return id;
         }
     }
+
+    public ObservableList<NatureHolder> getNatureSelectList() {
+        ObservableList<NatureHolder> arrayList = FXCollections.observableArrayList();
+        String quary = "SELECT  * FROM ass_nature";
+        try {
+            ResultSet data = conn.DB.getData(quary);
+            while (data.next()) {
+                int id = data.getInt("idass_nature");
+                String ass_nature_name = data.getString("ass_nature_name");
+                arrayList.add(new NatureHolder(id, ass_nature_name));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            Logger.getLogger(Ward.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arrayList;
+    }
+
+
 }
+

@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.assess.PayViewController">
+<AnchorPane id="AnchorPane" prefHeight="625.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.assess.PayViewController">
    <children>
       <VBox layoutX="93.0" layoutY="36.0" prefHeight="200.0" prefWidth="225.0">
          <children>
@@ -479,7 +479,7 @@
       <JFXTextField fx:id="txt_cash" disable="true" layoutX="895.0" layoutY="433.0" onKeyReleased="#onKeyRelesed" prefHeight="25.0" prefWidth="173.0" />
       <JFXTextField fx:id="txt_check" disable="true" layoutX="1109.0" layoutY="433.0" onKeyReleased="#onKeyRelesed" prefHeight="25.0" prefWidth="173.0" />
       <JFXComboBox fx:id="combo_bank" disable="true" labelFloat="true" layoutX="1109.0" layoutY="496.0" prefHeight="25.0" prefWidth="173.0" promptText="Bank" />
-      <JFXTextField fx:id="txt_chq_no" disable="true" labelFloat="true" layoutX="1109.0" layoutY="548.0" prefHeight="25.0" prefWidth="173.0" promptText="Cheack No" />
+      <JFXTextField fx:id="txt_chq_no" disable="true" labelFloat="true" layoutX="1109.0" layoutY="548.0" prefHeight="25.0" prefWidth="173.0" promptText="Cheque No" />
       <HBox layoutX="102.0" layoutY="1.0" prefHeight="35.0" prefWidth="338.0">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Assessment ID :" textAlignment="RIGHT" wrappingWidth="142.0">
@@ -521,6 +521,6 @@
             <ToggleGroup fx:id="CC" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="check" layoutX="1092.0" layoutY="398.0" onAction="#cbOnAction" text="Chque" toggleGroup="$CC" />
+      <JFXRadioButton fx:id="check" layoutX="1092.0" layoutY="398.0" onAction="#cbOnAction" text="Cheque" toggleGroup="$CC" />
    </children>
 </AnchorPane>

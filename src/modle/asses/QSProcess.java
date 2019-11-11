@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class QSProcess {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
     }
 
 
@@ -183,35 +183,35 @@ public class QSProcess {
                 quatervalue = modle.Maths.round2(quatervalue);
 
 
-                String getCD = "SELECT\n" +
-                        "ass_creditdebit.idAss_CreditDebit,\n" +
-                        "ass_creditdebit.Ass_CreditDebit_discription,\n" +
-                        "ass_creditdebit.Ass_CreditDebit_cd,\n" +
-                        "ass_creditdebit.Ass_CreditDebit_amount,\n" +
-                        "ass_creditdebit.Ass_balance,\n" +
-                        "ass_creditdebit.Ass_CreditDebit_date,\n" +
-                        "ass_creditdebit.Assessment_idAssessment,\n" +
-                        "ass_creditdebit.Ass_CreditDebit_status\n" +
-                        "FROM\n" +
-                        "\t`ass_creditdebit`\n" +
-                        "WHERE\n" +
-                        "\tass_creditdebit.Ass_CreditDebit_status = 1\n" +
-                        "AND ass_creditdebit.Assessment_idAssessment = '" + idAssessment + "'" +
-                        "  AND ass_creditdebit.Ass_balance < 0";
+//                String getCD = "SELECT\n" +
+//                        "ass_creditdebit.idAss_CreditDebit,\n" +
+//                        "ass_creditdebit.Ass_CreditDebit_discription,\n" +
+//                        "ass_creditdebit.Ass_CreditDebit_cd,\n" +
+//                        "ass_creditdebit.Ass_CreditDebit_amount,\n" +
+//                        "ass_creditdebit.Ass_balance,\n" +
+//                        "ass_creditdebit.Ass_CreditDebit_date,\n" +
+//                        "ass_creditdebit.Assessment_idAssessment,\n" +
+//                        "ass_creditdebit.Ass_CreditDebit_status\n" +
+//                        "FROM\n" +
+//                        "\t`ass_creditdebit`\n" +
+//                        "WHERE\n" +
+//                        "\tass_creditdebit.Ass_CreditDebit_status = 1\n" +
+//                        "AND ass_creditdebit.Assessment_idAssessment = '" + idAssessment + "'" +
+//                        "  AND ass_creditdebit.Ass_balance < 0";
 
 
-                ResultSet cddata = DB.getData(getCD);
-                if (cddata.last()) {
-                    credit = cddata.getDouble("Ass_balance");
-                    System.out.println("Credit ==================================================================================================");
-                    idAss_creditDebit = cddata.getInt("idAss_CreditDebit");
-                    credit = -1 * credit;
-                    System.out.println(credit);
-                    hasCredit = true;
-
-
-                    System.out.println("Credit ==================================================================================================");
-                }
+//                ResultSet cddata = DB.getData(getCD);
+//                if (cddata.last()) {
+//                    credit = cddata.getDouble("Ass_balance");
+//                    System.out.println("Credit ==================================================================================================");
+//                    idAss_creditDebit = cddata.getInt("idAss_CreditDebit");
+//                    credit = -1 * credit;
+//                    System.out.println(credit);
+//                    hasCredit = true;
+//
+//
+//                    System.out.println("Credit ==================================================================================================");
+//                }
 
                 String getQstart = "SELECT\n"
                         + "assessment.idAssessment,\n"
@@ -284,22 +284,22 @@ public class QSProcess {
                     qslyca = data.getDouble("ass_Qstart_LYC_Arreas");
                     qslycw = data.getDouble("ass_Qstart_LYC_Warrant");
 
-                    if (hasCredit) {
-                        if (qslycw > credit) {
-                            qslycw = qslycw - credit;
-                            credit = 0;
-                        } else {
-                            credit = credit - qslycw;
-                            qslycw = 0;
-                        }
-                        if (qslyca > credit) {
-                            qslyca = qslyca - credit;
-                            credit = 0;
-                        } else {
-                            credit = credit - qslyca;
-                            qslyca = 0;
-                        }
-                    }
+//                    if (hasCredit) {
+//                        if (qslycw > credit) {
+//                            qslycw = qslycw - credit;
+//                            credit = 0;
+//                        } else {
+//                            credit = credit - qslycw;
+//                            qslycw = 0;
+//                        }
+//                        if (qslyca > credit) {
+//                            qslyca = qslyca - credit;
+//                            credit = 0;
+//                        } else {
+//                            credit = credit - qslyca;
+//                            qslyca = 0;
+//                        }
+//                    }
 
 
                     if (priviasQuater != 1) {
@@ -312,64 +312,12 @@ public class QSProcess {
                 }
 
 
-                String tycaq = "SELECT\n" +
-                        "\tass_qstart.idass_Qstart,\n" +
-                        "\tass_qstart.ass_Qstart_QuaterNumber,\n" +
-                        "\tass_qstart.ass_Qstart_process_date,\n" +
-                        "\tass_qstart.ass_Qstart_LQC_Arreas,\n" +
-                        "\tass_qstart.ass_Qstart_LQC_Warrant\n" +
-                        "FROM\n" +
-                        "\tass_qstart\n" +
-                        "WHERE\n" +
-                        "\tass_Qstart_year = '" + currentYear + "'\n" +
-                        "AND Assessment_idAssessment = '" + idAssessment + "'";
-
-                ResultSet tyaw = DB.getData(tycaq);
-
-
-                while (tyaw.next()) {
-                    int qsid = tyaw.getInt("idass_Qstart");
-                    int qn = tyaw.getInt("ass_Qstart_QuaterNumber");
-                    if (qn == 2) {
-                        double qca = tyaw.getDouble("ass_Qstart_LQC_Arreas");
-                        double qcw = tyaw.getDouble("ass_Qstart_LQC_Warrant");
-                        if (hasCredit) {
-                            if (credit > 0) {
-                                updateQstartLQCAW(qcw, qca, qsid, qn);
-
-                            }
-                        }
-                    }
-                    if (qn == 3) {
-                        double qca = tyaw.getDouble("ass_Qstart_LQC_Arreas");
-                        double qcw = tyaw.getDouble("ass_Qstart_LQC_Warrant");
-                        if (hasCredit) {
-                            if (credit > 0) {
-                                updateQstartLQCAW(qcw, qca, qsid, qn);
-                            }
-                        }
-                    }
-                    if (qn == 4) {
-                        double qca = tyaw.getDouble("ass_Qstart_LQC_Arreas");
-                        double qcw = tyaw.getDouble("ass_Qstart_LQC_Warrant");
-                        if (hasCredit) {
-                            if (credit > 0) {
-                                updateQstartLQCAW(qcw, qca, qsid, qn);
-                            }
-                        }
-                    }
-                }
-
-
-
-
-
-                if (hasCredit) {
-                    ResultSet data1 = DB.getData(getQstart);
-                    if (data1.last()) {
-                        newHaveToPay = data1.getDouble("ass_Qstart_HaveToQPay");
-                    }
-                }
+//                if (hasCredit) {
+//                    ResultSet data1 = DB.getData(getQstart);
+//                    if (data1.last()) {
+//                        newHaveToPay = data1.getDouble("ass_Qstart_HaveToQPay");
+//                    }
+//                }
 
 
                 int q1s = 0;
@@ -383,6 +331,7 @@ public class QSProcess {
                 while (hd.next()) {
 
                     int idass_payHistry = hd.getInt("idass_PayHistry");
+
                     if (q1s == 0) {
                         q1s = hd.getInt("ass_payhistry.ass_PayHistry_Q1Status");
                     }
@@ -444,28 +393,28 @@ public class QSProcess {
                     if (priviasQuater == 1) {
                         if (q1s == 0) {
                             newWarrant = modle.Maths.round2(quatervalue * warantRate / 100);
-                        }else{
+                        } else {
                             newHaveToPay = 0;
                         }
                     }
                     if (priviasQuater == 2) {
                         if (q2s == 0) {
                             newWarrant = modle.Maths.round2(quatervalue * warantRate / 100);
-                        }else{
+                        } else {
                             newHaveToPay = 0;
                         }
                     }
                     if (priviasQuater == 3) {
                         if (q3s == 0) {
                             newWarrant = modle.Maths.round2(quatervalue * warantRate / 100);
-                        }else{
+                        } else {
                             newHaveToPay = 0;
                         }
                     }
                     if (priviasQuater == 4) {
                         if (q4s == 0) {
                             newWarrant = modle.Maths.round2(quatervalue * warantRate / 100);
-                        }else{
+                        } else {
                             newHaveToPay = 0;
                         }
                     }
@@ -482,6 +431,56 @@ public class QSProcess {
 
                 saveQstart(idAssessment, qslyca, qslycw, newHaveToPay, newWarrant, qsHtoPay, qsLqPaid, 0, qsLqPaidQtot, qsLqPaidFullTot);
                 updateQstartOld(idQstart);
+
+
+                String tycaq = "SELECT\n" +
+                        "\tass_qstart.idass_Qstart,\n" +
+                        "\tass_qstart.ass_Qstart_QuaterNumber,\n" +
+                        "\tass_qstart.ass_Qstart_process_date,\n" +
+                        "\tass_qstart.ass_Qstart_LQC_Arreas,\n" +
+                        "\tass_qstart.ass_Qstart_LQC_Warrant\n" +
+                        "FROM\n" +
+                        "\tass_qstart\n" +
+                        "WHERE\n" +
+                        "\tass_Qstart_year = '" + currentYear + "'\n" +
+                        "AND Assessment_idAssessment = '" + idAssessment + "'";
+
+                ResultSet tyaw = DB.getData(tycaq);
+
+
+                while (tyaw.next()) {
+                    int qsid = tyaw.getInt("idass_Qstart");
+                    int qn = tyaw.getInt("ass_Qstart_QuaterNumber");
+
+                    double tyfa = 0;
+                    double tyfw = 0;
+
+                    if (qn == 2) {
+                        tyfa += tyaw.getDouble("ass_Qstart_LQC_Arreas");
+                        tyfw += tyaw.getDouble("ass_Qstart_LQC_Warrant");
+
+                    }
+
+                    if (qn == 3) {
+                        tyfa += tyaw.getDouble("ass_Qstart_LQC_Arreas");
+                        tyfw += tyaw.getDouble("ass_Qstart_LQC_Warrant");
+
+                    }
+
+                    if (qn == 4) {
+                        tyfa += tyaw.getDouble("ass_Qstart_LQC_Arreas");
+                        tyfw += tyaw.getDouble("ass_Qstart_LQC_Warrant");
+                    }
+
+                    conn.DB.setData("UPDATE `ultimate2`.`ass_qstart` \n" +
+                            "SET \n" +
+                            "`ass_Qstart_tyold_arrias` = '" + modle.Round.round(tyfa) + "',\n" +
+                            "`ass_Qstart_tyold_warant` = '" + modle.Round.round(tyfw) + "' \n" +
+                            "WHERE\t\n" +
+                            "\tAssessment_idAssessment = '" + idAssessment + "'\n" +
+                            "\tAND\n" +
+                            "\tass_Qstart_status = 1");
+                }
 
 
                 if (q1s == 0) {
@@ -545,72 +544,73 @@ public class QSProcess {
                 }
 
 
-                if (hasCredit) {
-                    if (credit > 0) {
+//                if (hasCredit) {
+//                    if (credit > 0) {
+//
+//                        if (q1s == 0 && q2s == 0 && q3s == 0 && q4s == 0) {
+//                            if (credit >= qv10 * 4) {
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv10 * 4, qv10, qv10, qv10, qv10, credit, 10, 10, 10, 10, 1, 1, 1, 1);
+//                            } else if (credit >= qv5 * 3) {
+//                                credit = credit - qv5 * 3;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 3 + credit, qv5, qv5, qv5, credit, 0, 5, 5, 5, 0, 1, 1, 1, 0);
+//                            } else if (credit >= qv5 * 2) {
+//                                credit = credit - qv5 * 2;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, qv5, qv5, credit, 0, 0, 5, 5, 0, 0, 1, 1, 0, 0);
+//                            } else if (credit >= qv5) {
+//                                credit = credit - qv5;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, qv5, credit, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0);
+//                            } else {
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, credit, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+//                            }
+//                        } else if (q1s == 1 && q2s == 0 && q3s == 0 && q4s == 0) {
+//                            if (credit >= qv5 * 3) {
+//                                credit = credit - qv5 * 3;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 3 + credit, 0, qv5, qv5, qv5, credit, 0, 5, 5, 5, 1, 1, 1, 1);
+//                            } else if (credit >= qv5 * 2) {
+//                                credit = credit - qv5 * 2;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, 0, qv5, qv5, credit, 0, 0, 5, 5, 0, 1, 1, 1, 0);
+//                            } else if (credit >= qv5) {
+//                                credit = credit - qv5;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, qv5, credit, 0, 0, 0, 5, 0, 0, 1, 1, 0, 0);
+//                            } else {
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, credit, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
+//                            }
+//
+//                        } else if (q1s == 1 && q2s == 1 && q3s == 0 && q4s == 0) {
+//
+//                            if (credit >= qv5 * 2) {
+//                                credit = credit - qv5 * 2;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, 0, 0, qv5, qv5, credit, 0, 0, 5, 5, 1, 1, 1, 1);
+//                            } else if (credit >= qv5) {
+//                                credit = credit - qv5;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, 0, qv5, credit, 0, 0, 0, 5, 0, 1, 1, 1, 0);
+//                            } else {
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, credit, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0);
+//                            }
+//
+//
+//                        } else if (q1s == 1 && q2s == 1 && q3s == 1 && q4s == 0) {
+//                            if (credit >= qv5) {
+//                                credit = credit - qv5;
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, 0, 0, qv5, credit, 0, 0, 0, 5, 1, 1, 1, 1);
+//                            } else {
+//                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, 0, credit, 0, 0, 0, 0, 0, 1, 1, 1, 0);
+//                            }
+//
+//                        } else if (q1s == 1 && q2s == 1 && q3s == 1 && q4s == 1) {
+//                            saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, 0, 0, credit, 0, 0, 0, 0, 1, 1, 1, 1);
+//                        }
+//
+//                    } else {
+//                        saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, q1s, q2s, q3s, q4s);
+//                    }
+//
+//                    updateCredit(idAss_creditDebit);
+//
+//                } else {
+                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, q1s, q2s, q3s, q4s);
 
-                        if (q1s == 0 && q2s == 0 && q3s == 0 && q4s == 0) {
-                            if (credit >= qv10 * 4) {
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv10 * 4, qv10, qv10, qv10, qv10, credit, 10, 10, 10, 10, 1, 1, 1, 1);
-                            } else if (credit >= qv5 * 3) {
-                                credit = credit - qv5 * 3;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 3 + credit, qv5, qv5, qv5, credit, 0, 5, 5, 5, 0, 1, 1, 1, 0);
-                            } else if (credit >= qv5 * 2) {
-                                credit = credit - qv5 * 2;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, qv5, qv5, credit, 0, 0, 5, 5, 0, 0, 1, 1, 0, 0);
-                            } else if (credit >= qv5) {
-                                credit = credit - qv5;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, qv5, credit, 0, 0, 0, 5, 0, 0, 0, 1, 0, 0, 0);
-                            } else {
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, credit, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                            }
-                        } else if (q1s == 1 && q2s == 0 && q3s == 0 && q4s == 0) {
-                            if (credit >= qv5 * 3) {
-                                credit = credit - qv5 * 3;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 3 + credit, 0, qv5, qv5, qv5, credit, 0, 5, 5, 5, 1, 1, 1, 1);
-                            } else if (credit >= qv5 * 2) {
-                                credit = credit - qv5 * 2;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, 0, qv5, qv5, credit, 0, 0, 5, 5, 0, 1, 1, 1, 0);
-                            } else if (credit >= qv5) {
-                                credit = credit - qv5;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, qv5, credit, 0, 0, 0, 5, 0, 0, 1, 1, 0, 0);
-                            } else {
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, credit, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
-                            }
-
-                        } else if (q1s == 1 && q2s == 1 && q3s == 0 && q4s == 0) {
-
-                            if (credit >= qv5 * 2) {
-                                credit = credit - qv5 * 2;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 * 2 + credit, 0, 0, qv5, qv5, credit, 0, 0, 5, 5, 1, 1, 1, 1);
-                            } else if (credit >= qv5) {
-                                credit = credit - qv5;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, 0, qv5, credit, 0, 0, 0, 5, 0, 1, 1, 1, 0);
-                            } else {
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, credit, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0);
-                            }
-
-
-                        } else if (q1s == 1 && q2s == 1 && q3s == 1 && q4s == 0) {
-                            if (credit >= qv5) {
-                                credit = credit - qv5;
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, qv5 + credit, 0, 0, 0, qv5, credit, 0, 0, 0, 5, 1, 1, 1, 1);
-                            } else {
-                                saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, 0, credit, 0, 0, 0, 0, 0, 1, 1, 1, 0);
-                            }
-
-                        } else if (q1s == 1 && q2s == 1 && q3s == 1 && q4s == 1) {
-                            saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, credit, 0, 0, 0, 0, credit, 0, 0, 0, 0, 1, 1, 1, 1);
-                        }
-
-                    } else {
-                        saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, q1s, q2s, q3s, q4s);
-                    }
-
-                    updateCredit(idAss_creditDebit);
-
-                } else {
-                    saveNewPayHistory(idAssessment, currentQuater, currentYear, stringDate, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, q1s, q2s, q3s, q4s);
-                }
+//                }
 
                 System.out.println(x);
                 System.out.println(pro);
@@ -654,19 +654,19 @@ public class QSProcess {
                 "\t(\n" +
                 "\t\t'" + currentQuater + "',\n" +
                 "\t\t'" + stringDate + "',\n" +
-                "\t\t'" + lya + "',\n" +
-                "\t\t'" + lyw + "',\n" +
-                "\t\t'" + lya + "',\n" +
-                "\t\t'" + lyw + "',\n" +
-                "\t\t'" + lqa + "',\n" +
-                "\t\t'" + lqa + "',\n" +
-                "\t\t'" + lqw + "',\n" +
-                "\t\t'" + lqw + "',\n" +
-                "\t\t'" + hvpay + "',\n" +
-                "\t\t'" + pay + "',\n" +
-                "\t\t'" + discount + "',\n" +
-                "\t\t'" + qtot + "',\n" +
-                "\t\t'" + fulltot + "',\n" +
+                "\t\t'" + modle.Round.round(lya)+ "',\n" +
+                "\t\t'" + modle.Round.round(lyw) + "',\n" +
+                "\t\t'" + modle.Round.round(lya) + "',\n" +
+                "\t\t'" + modle.Round.round(lyw) + "',\n" +
+                "\t\t'" + modle.Round.round(lqa) + "',\n" +
+                "\t\t'" + modle.Round.round(lqa) + "',\n" +
+                "\t\t'" + modle.Round.round(lqw) + "',\n" +
+                "\t\t'" + modle.Round.round(lqw )+ "',\n" +
+                "\t\t'" + modle.Round.round(hvpay) + "',\n" +
+                "\t\t'" + modle.Round.round(pay )+ "',\n" +
+                "\t\t'" + modle.Round.round(discount) + "',\n" +
+                "\t\t'" + modle.Round.round(qtot) + "',\n" +
+                "\t\t'" + modle.Round.round(fulltot) + "',\n" +
                 "\t\t'1',\n" +
                 "\t\t'" + idAssessment + "',\n" +
                 "\t\t'" + currentYear + "'\n" +
@@ -709,13 +709,13 @@ public class QSProcess {
 
 
         try {
-            String comment ="Credit"+qno;
+            String comment = "Credit" + qno;
             conn.DB.setData("UPDATE `ass_qstart`\n" +
                     "SET `ass_Qstart_LQC_Arreas` = '" + qca + "',\n" +
                     " `ass_Qstart_LQC_Warrant` = '" + qcw + "',\n" +
                     " `process_update_warant` = '" + qcw + "',\n" +
                     " `process_update_arrears` = '" + qca + "',\n" +
-                    "`process_update_comment` = '"+comment+"'\n" +
+                    "`process_update_comment` = '" + comment + "'\n" +
                     "WHERE\n" +
                     "\t(`idass_Qstart` = '" + qsid + "')");
         } catch (Exception e) {
@@ -783,7 +783,7 @@ public class QSProcess {
     }
 
     public static void updateCredit(int idcd) {
-        String quary = "UPDATE `ultimate2`.`ass_creditdebit`\n" +
+        String quary = "UPDATE `ass_creditdebit`\n" +
                 "SET `Ass_balance` = '0',\n" +
                 " `Ass_CreditDebit_status` = '0'\n" +
                 "WHERE\n" +
@@ -799,4 +799,3 @@ public class QSProcess {
 
 
 }
-// '"+  +"'      "+ +"

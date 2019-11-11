@@ -28,13 +28,13 @@
       <TableView fx:id="tbl_reson" layoutX="81.0" layoutY="267.0" prefHeight="291.0" prefWidth="1191.0">
         <columns>
           <TableColumn fx:id="col_place" prefWidth="239.0" text="Place" />
-          <TableColumn fx:id="col_reson" prefWidth="255.0" text="Reson" />
+          <TableColumn fx:id="col_reson" prefWidth="255.0" text="Reason" />
             <TableColumn fx:id="col_account" prefWidth="126.0" text="Account" />
-            <TableColumn fx:id="col_avot" prefWidth="129.0" text="Ammount Vote" />
+            <TableColumn fx:id="col_avot" prefWidth="129.0" text="Amount Vote" />
             <TableColumn fx:id="col_day" prefWidth="110.0" text="Full Day" />
             <TableColumn fx:id="col_hour" prefWidth="110.0" text="Hour" />
-            <TableColumn fx:id="col_dvot" prefWidth="113.0" text="Diposit Vote" />
-            <TableColumn fx:id="col_dip" prefWidth="96.0" text="Diposit" />
+            <TableColumn fx:id="col_dvot" prefWidth="113.0" text="Deposit Vote" />
+            <TableColumn fx:id="col_dip" prefWidth="96.0" text="Deposit" />
         </columns>
       </TableView>
       <JFXButton fx:id="btn_reson" layoutX="1103.0" layoutY="209.0" onMouseClicked="#clickOnReson" prefHeight="31.0" prefWidth="169.0" style="-fx-background-color: #4CAF50;" text="Create Reason" textFill="WHITE">
@@ -42,6 +42,6 @@
             <Font name="System Bold" size="15.0" />
          </font></JFXButton>
       <JFXTextField fx:id="txt_diposit" labelFloat="true" layoutX="921.0" layoutY="130.0" promptText="Diposit Value" text="0" />
-      <JFXComboBox fx:id="com_vote_dip" labelFloat="true" layoutX="1113.0" layoutY="129.0" prefHeight="31.0" prefWidth="148.0" promptText="Diposit Vote" />
+      <JFXComboBox fx:id="com_vote_dip" labelFloat="true" layoutX="1113.0" layoutY="129.0" prefHeight="31.0" prefWidth="148.0" promptText="Deposit Vote" />
    </children>
 </AnchorPane>

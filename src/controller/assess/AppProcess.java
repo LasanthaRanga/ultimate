@@ -20,6 +20,10 @@ import modle.asses.HolderAssess;
 
 import java.net.URL;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import static modle.Allert.*;
@@ -112,6 +116,10 @@ public class AppProcess implements Initializable {
     private Text txt_refno;
 
 
+    @FXML
+    private JFXDatePicker dp_app;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableCollomAssing();
@@ -183,8 +191,11 @@ public class AppProcess implements Initializable {
     void clickOnStart(MouseEvent event) {
         if (tbl_assess1.getItems().size() > 0) {
             ComboItem selectedItem = com_for.getSelectionModel().getSelectedItem();
+
+            LocalDate value = dp_app.getValue();
+
             if (selectedItem != null) {
-                if (txt_description.getText().length() > 2 && txt_names.getText().length() > 1) {
+                if (txt_description.getText().length() > 2 && txt_names.getText().length() > 1 && value!=null) {
                     crateNewApp();
                 }
             }
@@ -222,11 +233,16 @@ public class AppProcess implements Initializable {
 
             String refNo = GetInstans.getAppType().getRefNoString(2, StaticViews.getLogUser().getOfficeIdOffice());
             int oder = GetInstans.getAppType().getRefNoOder(2, StaticViews.getLogUser().getOfficeIdOffice());
-            refNo += " " + (oder + 1);
+            oder = oder+1;
+            refNo += " " + (oder);
+
+            Date from = Date.from(dp_app.getValue().atStartOfDay().atZone(ZoneId.of("Asia/Colombo")).toInstant());
+
+            String format = new SimpleDateFormat("yyyy-MM-dd").format(from);
 
             String appQuery = "INSERT INTO `ass_app` (  `assapp_date`, `assapp_user`, `assapp_step`, `assapp_description`, `assapp_status`, `assapp_type`, `assapp_refno`,`assapp_names` )\n" +
                     "VALUES\n" +
-                    "\t( '" + systemdate + "', '" + modle.StaticViews.getLogUser().getIdUser() + "', 1, '" + txt_description.getText() + "', 0, '" + com_for.getSelectionModel().getSelectedItem().getId() + "', '" + refNo + "', '" + txt_names.getText() + "' )";
+                    "\t( '" + format + "', '" + modle.StaticViews.getLogUser().getIdUser() + "', 1, '" + txt_description.getText() + "', 0, '" + com_for.getSelectionModel().getSelectedItem().getId() + "', '" + refNo + "', '" + txt_names.getText() + "' )";
             String query = "SELECT MAX(idAssapp) FROM ass_app";
             int appid = 0;
             conn.DB.setData(appQuery);

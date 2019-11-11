@@ -420,4 +420,13 @@ public class GetInstans {
         }
         return appType;
     }
+
+    public static ApplicationsModle applicationsModle;
+
+    public static ApplicationsModle getApplicationsModle() {
+        if(applicationsModle==null){
+            applicationsModle = new ApplicationsModle();
+        }
+        return applicationsModle;
+    }
 }

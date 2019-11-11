@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -36,6 +37,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import modle.ComboItem;
+import modle.ComboLoad;
+import modle.GetInstans;
+import modle.StaticBadu;
 import modle.asses.OldDataSave;
 import modle.asses.TableAsses;
 import org.controlsfx.control.textfield.TextFields;
@@ -114,6 +119,9 @@ public class Update_excelController implements Initializable {
     @FXML
     private TableColumn<Subowner, String> col_print;
 
+    @FXML
+    private JFXComboBox<ComboItem> com_title;
+
 
     /**
      * Initializes the controller class.
@@ -121,6 +129,14 @@ public class Update_excelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
+        int ass_app_id = StaticBadu.getAss_app_id();
+        if (ass_app_id > 0) {
+            String obsalutNumbers = GetInstans.getApplicationsModle().getObsalutNumbers(ass_app_id);
+            txt_obserloot.setText(obsalutNumbers);
+        }
+
+
         btn_subOwner.setDisable(true);
         loadWardCombo();
         loadNatureCombo();
@@ -140,6 +156,11 @@ public class Update_excelController implements Initializable {
         col_owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
         col_nic.setCellValueFactory(new PropertyValueFactory<>("nic"));
         col_print.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        ObservableList<ComboItem> comboItems = ComboLoad.loadCombo("SELECT person_title.title_id, person_title.title_name FROM person_title");
+
+        com_title.setItems(comboItems);
+
 
     }
 
@@ -164,6 +185,7 @@ public class Update_excelController implements Initializable {
     public double book;
     public AssDiscription disPojo;
     public Assessment a;
+    public String persanalTitle = null;
 
     private void collectData() {
         book_no = txt_book_no.getText();
@@ -173,6 +195,10 @@ public class Update_excelController implements Initializable {
             ward = com_ward.getSelectionModel().getSelectedItem();
             street = com_street.getSelectionModel().getSelectedItem();
             nature = com_nature.getSelectionModel().getSelectedItem();
+            if (com_title.getSelectionModel().getSelectedItem() != null) {
+                persanalTitle = com_title.getSelectionModel().getSelectedItem().getId()+"";
+            }
+
             //===
             String[] split = txt_assessment.getText().split(" ");
             if (split.length > 1) {
@@ -211,7 +237,23 @@ public class Update_excelController implements Initializable {
                             if (a == null) {
                                 if (saveall()) {
 
-                                    cleareAll();
+
+                                    int ass_app_id = StaticBadu.getAss_app_id();
+                                    if (ass_app_id > 0) {
+                                        if (modle.StaticBadu.getAss_app_type() == 2) {
+                                            cleareAll();
+                                        }
+                                        if (modle.StaticBadu.getAss_app_type() == 2) {
+                                            cleareAll();
+                                            String obsalutNumbers = GetInstans.getApplicationsModle().getObsalutNumbers(ass_app_id);
+                                            txt_obserloot.setText(obsalutNumbers);
+                                        }
+
+                                    } else {
+                                        cleareAll();
+                                    }
+
+
                                 }
                             } else {
                                 if (update()) {
@@ -246,6 +288,7 @@ public class Update_excelController implements Initializable {
 
             }
         } catch (Exception e) {
+            e.printStackTrace();
             modle.Allert.notificationError("Error", "please Cheack Book No");
         }
 
@@ -276,13 +319,14 @@ public class Update_excelController implements Initializable {
 
                 //customer
                 if (customer.length() > 1 && assessmant.length() > 0) {
-                    Customer cus = new Customer();
+                    pojo.Customer cus = new pojo.Customer();
                     cus.setCusName(customer);
                     cus.setCusNic(nic);
                     cus.setCusAddressL1(adl1);
                     cus.setCusAddressL2(adl2);
                     cus.setCusAddressL3(adl3);
                     cus.setCusMobile(mobile);
+                    cus.setCusPersonTitle(persanalTitle);
                     session.save(cus);
 
                     //assessment
@@ -299,7 +343,7 @@ public class Update_excelController implements Initializable {
                     asess.setAssessmentObsolete(obsaloot);
                     asess.setAssessmentSyn(0);
                     asess.setAssessmentComment(others);
-                    session.save(asess);
+                    Serializable save = session.save(asess);
 
                     //allocation
                     modle.asses.StaticBadu.setAssessment(asess);
@@ -309,6 +353,17 @@ public class Update_excelController implements Initializable {
                     session.save(allocation);
 
                     transaction.commit();
+
+                    if (modle.StaticBadu.getAss_app_type() == 2) {
+                        modle.GetInstans.getApplicationsModle().amalgamation(modle.StaticBadu.getAss_app_id(), Integer.parseInt(save.toString())); //Amalgamation
+                        modle.StaticBadu.getApplications().loadAssesTable2();
+                    }
+
+                    if (modle.StaticBadu.getAss_app_type() == 1) {
+                        modle.GetInstans.getApplicationsModle().subDivition(modle.StaticBadu.getAss_app_id(), Integer.parseInt(save.toString())); //Amalgamation
+                        modle.StaticBadu.getApplications().loadAssesTable2();
+                    }
+
                     modle.Allert.notificationGood("Save", assessmant);
                     return true;
                 } else {
@@ -354,7 +409,10 @@ public class Update_excelController implements Initializable {
 
             if (customer.length() > 1 && assessmant.length() > 0) {
 
-                Customer cus = (Customer) session.load(Customer.class, a.getCustomer().getIdCustomer());
+                Integer idCustomer = a.getCustomer().getIdCustomer();
+                System.out.println(idCustomer);
+                pojo.Customer cus = (pojo.Customer) session.load(pojo.Customer.class, a.getCustomer().getIdCustomer());
+                System.out.println(cus);
                 cus.setCusName(customer);
                 cus.setCusNic(nic);
                 cus.setCusAddressL1(adl1);
@@ -362,6 +420,7 @@ public class Update_excelController implements Initializable {
                 cus.setCusAddressL3(adl3);
                 cus.setCusMobile(mobile);
                 cus.setCusStatus(status);
+                cus.setCusPersonTitle(persanalTitle);
                 session.save(cus);
 
                 Assessment asess = (Assessment) session.load(Assessment.class, a.getIdAssessment());
@@ -720,6 +779,14 @@ public class Update_excelController implements Initializable {
         btn_save.setText("Save");
         btn_subOwner.setDisable(true);
         loadTabel();
+
+        int ass_app_id = StaticBadu.getAss_app_id();
+        if (ass_app_id > 0) {
+            String obsalutNumbers = GetInstans.getApplicationsModle().getObsalutNumbers(ass_app_id);
+            txt_obserloot.setText(obsalutNumbers);
+        }
+
+
     }
 
     public void cleareAll() {

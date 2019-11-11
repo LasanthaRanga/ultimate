@@ -41,11 +41,106 @@ public class AssessReport {
             // String path = "C:\\UltimateCat\\Report\\adv_bill.jrxml";
             //  String path = "C:\\Users\\Punnajee\\JaspersoftWorkspace\\MyReports\\ultimate\\kfrom_1.jrxml";
 //            String path = "C:\\Ultimate\\Report\\assessment\\kfrom_1.jrxml";// IN SYSTEM
-            String path = "C:\\Ultimate\\Report\\assessment\\kfrom_wattegama.jrxml";// IN SYSTEM
+            // String path = "C:\\Ultimate\\Report\\assessment\\kfrom_wattegama.jrxml";// IN SYSTEM
+
+            String path = KeyVal.getVal("KFORM");
+
+            System.out.println(path);
+
+            String kform_type = KeyVal.getVal("KFORM_Type");
+
+            if (2 == Integer.parseInt(kform_type)) {
+                kformType2(list);
+            } else {
+                JasperReport jr = JasperCompileManager.compileReport(path);
+                HashMap param = new HashMap<String, Integer>();
+                param.put("assList", list);
+                JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
+                JasperViewer.viewReport(jp, false);
+            }
+
+
+        } catch (Exception jRException) {
+            jRException.printStackTrace();
+            Notifications.create()
+                    .title("Warning")
+                    .text("Can not generate report. Something went wrong.\n(" + jRException.getMessage() + ")")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BOTTOM_RIGHT).showWarning();
+        }
+    }
+
+
+    public void kformType2(String list) {
+        String institute_sinhala = "";
+        String institute_english = "";
+        String institute_tamil = "";
+        String act_sinhala = "";
+        String act_english = "";
+        String act_tamil = "";
+        String year = "";
+        String des = "";
+        String day = "";
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "kform_data.idkfom,\n" +
+                    "kform_data.`key`,\n" +
+                    "kform_data.valueSinhala,\n" +
+                    "kform_data.valueEnglish,\n" +
+                    "kform_data.valueTemil\n" +
+                    "FROM\n" +
+                    "kform_data\n");
+
+            while (data.next()) {
+                String key = data.getString("key");
+
+                if (key.equals("institute_name")) {
+                    institute_sinhala = data.getString("valueSinhala");
+                    institute_english = data.getString("valueEnglish");
+                    institute_tamil = data.getString("valueTemil");
+                }
+
+                if (key.equals("year")) {
+                    year = data.getString("valueEnglish");
+                }
+
+                if (key.equals("act")) {
+                    act_sinhala = data.getString("valueSinhala");
+                    act_english = data.getString("valueEnglish");
+                    act_tamil = data.getString("valueTemil");
+                }
+
+                if (key.equals("arriars_day")) {
+                    des = data.getString("valueSinhala");
+                    day = data.getString("valueEnglish");
+                   // act_tamil = data.getString("valueTemil");
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+
+        try {
+            String path = KeyVal.getVal("KFORM");
+            // String path = "C:\\Ultimate\\Report\\test_kform.jrxml";// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, Integer>();
+            param.put("nameSinhala", institute_sinhala);
+            param.put("nameEnglish", institute_english);
+            param.put("nameTamil", institute_tamil);
+            param.put("year", year);
+            param.put("act_s", act_sinhala);
+            param.put("act_e", act_english);
+            param.put("act_t", act_tamil);
             param.put("assList", list);
-            JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
+            param.put("des", des);
+            param.put("day", day);
+
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, getConnection());
             JasperViewer.viewReport(jp, false);
 
         } catch (Exception jRException) {
@@ -57,6 +152,7 @@ public class AssessReport {
                     .position(Pos.BOTTOM_RIGHT).showWarning();
         }
     }
+
 
     public void getBook(String list) {
         try {
@@ -739,12 +835,12 @@ public class AssessReport {
     }
 
 
-    public static void loadReportByDataSource(ArrayList<RipHolder> list) {
+    public static void loadReportByDataSource(ArrayList<RipHolder> list, String path) {
 
         try {
-            String current_arriars_report_path = KeyVal.getVal("current_arriars_report_path");
 
-            String path = current_arriars_report_path;// IN SYSTEM
+
+//            String path = current_arriars_report_path;// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, String>();
 
@@ -807,7 +903,7 @@ public class AssessReport {
 
     public void RiBill(String idRibill, String billnos, String chequeno, boolean print) {
         try {
-            String path = "C:\\Ultimate\\Report\\assessment\\cd_report.jrxml";
+            String path = KeyVal.getVal("RI_bill_path");
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, String>();
             param.put("idRibill", idRibill);
@@ -843,6 +939,39 @@ public class AssessReport {
             JasperPrint jp = JasperFillManager.fillReport(jr, param, connection);
             JasperViewer.viewReport(jp, false);
         } catch (Exception jRException) {
+            jRException.printStackTrace();
+        }
+    }
+
+
+    public void ownership(int id, String myno, String youno,
+                          String address, String persontitle,
+                          String title,
+                          String ward, String street, String assessment,
+                          String later1, String date2) {
+        try {
+            String path = "C:\\Ultimate\\Report\\assessment\\OwnerRegister.jrxml";// IN SYSTEM
+            JasperReport jr = JasperCompileManager.compileReport(path);
+            HashMap param = new HashMap<String, String>();
+            param.put("id", id);
+            param.put("myno", myno);
+            param.put("youno", youno);
+            param.put("address", address);
+            param.put("persontitle", persontitle);
+            param.put("title", title);
+            param.put("ward", ward);
+            param.put("street", street);
+            param.put("assessment", assessment);
+            param.put("later1", later1);
+            param.put("date2", date2);
+
+
+            Connection connection = this.getConnection();
+            connection.commit();
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, connection);
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception jRException) {
+            jRException.printStackTrace();
             jRException.printStackTrace();
         }
     }
