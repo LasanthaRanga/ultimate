@@ -787,13 +787,32 @@ public class DayendController implements Initializable {
                 int apc = data.getInt("Application_Catagory_idApplication_Catagory");
                 if (apc == 2) {
                     String quary = "SELECT\n" +
-                            "\tass_payment.idass_Payment\n" +
+                            "\tass_payment.idass_Payment, ass_payment.Assessment_idAssessment \n" +
                             "FROM\n" +
                             "\tass_payment\n" +
                             "WHERE\n" +
                             "\tass_payment.Receipt_idReceipt =" + idRecipt;
                     ResultSet d = DB.getData(quary);
                     if (d.last()) {
+
+
+                        int idAssessment = d.getInt("Assessment_idAssessment");
+
+                        ResultSet sub = DB.getData("SELECT\n" +
+                                "ass_subowner.ass_subOwner_name\n" +
+                                "FROM\n" +
+                                "ass_subowner\n" +
+                                "WHERE\n" +
+                                "ass_subowner.Assessment_idAssessment = " + idAssessment + " AND\n" +
+                                "ass_subowner.ass_subOwner_status = 1");
+
+                        String subowners = "";
+                        while (sub.next()) {
+                            subowners += ", " + sub.getString("ass_subOwner_name");
+                        }
+
+
+
                         String idass_payment = d.getString("idass_Payment");
                         ResultSet d2 = DB.getData("SELECT * FROM\n" +
                                 "ass_payment\n" +
@@ -812,7 +831,7 @@ public class DayendController implements Initializable {
 
                         String assessbilltype = KeyVal.getVal("assessbilltype");
                         if (assessbilltype.equals("short")) {
-                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, false);
+                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, false,subowners);
                         } else if (assessbilltype.equals("long")) {
                             modle.GetInstans.getAssessReport().longBill(idass_payment, false);
                         } else if (assessbilltype.equals("plane")) {
@@ -917,13 +936,30 @@ public class DayendController implements Initializable {
                 int apc = data.getInt("Application_Catagory_idApplication_Catagory");
                 if (apc == 2) {
                     String quary = "SELECT\n" +
-                            "\tass_payment.idass_Payment\n" +
+                            "\tass_payment.idass_Payment, ass_payment.Assessment_idAssessment \n" +
                             "FROM\n" +
                             "\tass_payment\n" +
                             "WHERE\n" +
                             "\tass_payment.Receipt_idReceipt =" + idRecipt;
                     ResultSet d = DB.getData(quary);
                     if (d.last()) {
+
+                        int idAssessment = d.getInt("Assessment_idAssessment");
+
+                        ResultSet sub = DB.getData("SELECT\n" +
+                                "ass_subowner.ass_subOwner_name\n" +
+                                "FROM\n" +
+                                "ass_subowner\n" +
+                                "WHERE\n" +
+                                "ass_subowner.Assessment_idAssessment = " + idAssessment + " AND\n" +
+                                "ass_subowner.ass_subOwner_status = 1");
+
+                        String subowners = "";
+                        while (sub.next()) {
+                            subowners += ", " + sub.getString("ass_subOwner_name");
+                        }
+
+
                         String idass_payment = d.getString("idass_Payment");
                         ResultSet d2 = DB.getData("SELECT * FROM\n" +
                                 "ass_payment\n" +
@@ -942,7 +978,7 @@ public class DayendController implements Initializable {
 
                         String assessbilltype = KeyVal.getVal("assessbilltype");
                         if (assessbilltype.equals("short")) {
-                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print);
+                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print, subowners);
                         } else if (assessbilltype.equals("long")) {
                             modle.GetInstans.getAssessReport().longBill(idass_payment, print);
                         } else if (assessbilltype.equals("plane")) {

@@ -67,8 +67,6 @@
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/lucene-queryparser-4.5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mchange-commons-java-0.2.3.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mondrian-3.1.1.12687.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.23-bin.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.46.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/slf4j-api-1.6.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/slf4j-simple-1.6.1.jar!/" />
     </CLASSES>

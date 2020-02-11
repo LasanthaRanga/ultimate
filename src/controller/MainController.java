@@ -177,7 +177,7 @@ public class MainController implements Initializable {
                 txt_systemdate.setText(db);
             } else {
                 txt_systemdate.setFill(Color.RED);
-                txt_systemdate.setText(db + "  : System Date Dosn't match please cheack ");
+                txt_systemdate.setText(db + "  : System Date Doesn't match please check ");
             }
         } catch (Exception e) {
             e.printStackTrace();

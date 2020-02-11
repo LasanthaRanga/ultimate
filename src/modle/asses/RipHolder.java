@@ -10,65 +10,84 @@ public class RipHolder {
     private String customerName;
 
     private Double LYA = 0.0;
-    private Double LYW= 0.0;
-    private Double LYAP= 0.0;
-    private Double LYCA= 0.0;
-    private Double LYCW= 0.0;
-    private Double LYWP= 0.0;
+    private Double LYW = 0.0;
+    private Double LYAP = 0.0;
+    private Double LYCA = 0.0;
+    private Double LYCW = 0.0;
+    private Double LYWP = 0.0;
 
-    private Double Q1A= 0.0;
-    private Double Q1W= 0.0;
-    private Double Q1CA= 0.0;
-    private Double Q1CW= 0.0;
-    private Double Q1DR= 0.0;
-    private Double Q1DP= 0.0;
-    private Double Q1P= 0.0;
+    private Double Q1A = 0.0;
+    private Double Q1W = 0.0;
+    private Double Q1CA = 0.0;
+    private Double Q1CW = 0.0;
+    private Double Q1DR = 0.0;
+    private Double Q1DP = 0.0;
+    private Double Q1P = 0.0;
 
-    private Double Q2A= 0.0;
-    private Double Q2W= 0.0;
-    private Double Q2CA= 0.0;
-    private Double Q2CW= 0.0;
-    private Double Q2DR= 0.0;
-    private Double Q2DP= 0.0;
-    private Double Q2P= 0.0;
+    private Double Q2A = 0.0;
+    private Double Q2W = 0.0;
+    private Double Q2CA = 0.0;
+    private Double Q2CW = 0.0;
+    private Double Q2DR = 0.0;
+    private Double Q2DP = 0.0;
+    private Double Q2P = 0.0;
 
-    private Double Q3A= 0.0;
-    private Double Q3W= 0.0;
-    private Double Q3CA= 0.0;
-    private Double Q3CW= 0.0;
-    private Double Q3DR= 0.0;
-    private Double Q3DP= 0.0;
-    private Double Q3P= 0.0;
+    private Double Q3A = 0.0;
+    private Double Q3W = 0.0;
+    private Double Q3CA = 0.0;
+    private Double Q3CW = 0.0;
+    private Double Q3DR = 0.0;
+    private Double Q3DP = 0.0;
+    private Double Q3P = 0.0;
 
-    private Double Q4A= 0.0;
-    private Double Q4W= 0.0;
-    private Double Q4CA= 0.0;
-    private Double Q4CW= 0.0;
-    private Double Q4DR= 0.0;
-    private Double Q4DP= 0.0;
-    private Double Q4P= 0.0;
+    private Double Q4A = 0.0;
+    private Double Q4W = 0.0;
+    private Double Q4CA = 0.0;
+    private Double Q4CW = 0.0;
+    private Double Q4DR = 0.0;
+    private Double Q4DP = 0.0;
+    private Double Q4P = 0.0;
 
-    private Double debit= 0.0; // +
-    private Double credit= 0.0; // -
+    private Double debit = 0.0; // +
+    private Double credit = 0.0; // -
 
-    private Double cd= 0.0; // credit debit total + -
+    private Double cd = 0.0; // credit debit total + -
 
 
     private int idPayment;
     private int idRecipt;
     private String reciptNo;
 
-    private Double overPay= 0.0;
-    private Double tyFullPay= 0.0;
-    private Double fullTotalPay= 0.0;
+    private Double overPay = 0.0;
+    private Double tyFullPay = 0.0;
+    private Double fullTotalPay = 0.0;
 
     private String chequeNo;
 
 
-    private Double cash= 0.0;
-    private Double cheque= 0.0;
+    private Double cash = 0.0;
+    private Double cheque = 0.0;
 
-    private Double quaterVal= 0.0;
+    private Double quaterVal = 0.0;
+
+    private int cq = 0;
+    private int cy = 0;
+
+    public void setCy(int cy) {
+        this.cy = cy;
+    }
+
+    public int getCy() {
+        return cy;
+    }
+
+    public int getCq() {
+        return cq;
+    }
+
+    public void setCq(int cq) {
+        this.cq = cq;
+    }
 
     public void setQuaterVal(Double quaterVal) {
         this.quaterVal = quaterVal;

@@ -19,6 +19,7 @@ import modle.GetInstans;
 import modle.StaticBadu;
 import modle.StaticViews;
 import modle.book.Recipt;
+import modle.popup.BarcodeStatic;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojo.Customer;
@@ -36,6 +37,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Book implements Initializable {
@@ -788,6 +790,8 @@ public class Book implements Initializable {
         Date systemDate = GetInstans.getQuater().getSystemDate();
         String today = new SimpleDateFormat("yyyy-MM-dd").format(systemDate);
 
+
+
         if (!hasCustomer) {
             if (txt_name.getText().length() > 2) {
                 Session session = NewHibernateUtil.getSessionFactory().openSession();
@@ -938,17 +942,63 @@ public class Book implements Initializable {
             } finally {
             }
 
-            modle.Allert.notificationGood("OK", "Success " + idReciptShow);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Receipt Number");
-            alert.setHeaderText(null);
-            alert.setContentText("This Booking Payment ID IS :   " + idReciptShow);
+          //  modle.Allert.notificationGood("OK", "Success " + idReciptShow);
+          //  Alert alert = new Alert(Alert.AlertType.INFORMATION);
+          //  alert.setTitle("Receipt Number");
+         //   alert.setHeaderText(null);
+         //   alert.setContentText("This Booking Payment ID IS :   " + idReciptShow);
 
-            alert.showAndWait();
+        //    alert.showAndWait();
+
+
+            BarcodeStatic.customerName = txt_name.getText();
+            BarcodeStatic.idRecipt = idReciptShow + "";
+            BarcodeStatic.reTotal = fulltotal;
+            BarcodeStatic.subject = "Mix Income";
+            popup();
+
+
+
             clear();
         }
 
     }
+
+    public void popup() {
+
+
+        System.out.println("Print Barcode");
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+        alert.setTitle("Print Barcode");
+
+        alert.setHeaderText(null);
+
+        alert.setContentText(BarcodeStatic.idRecipt + "");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+
+
+            modle.GetInstans.getPrintBarcode().print(BarcodeStatic.customerName, BarcodeStatic.idRecipt + "", modle.Round.roundToString(BarcodeStatic.reTotal), BarcodeStatic.subject);
+            BarcodeStatic.customerName = null;
+            BarcodeStatic.subject = null;
+            BarcodeStatic.idRecipt = 0 + "";
+            BarcodeStatic.reTotal = 0;
+
+        } else {
+
+//            modle.GetInstans.getPrintBarcode().print(BarcodeStatic.customerName, BarcodeStatic.idRecipt + "", modle.Round.roundToString(BarcodeStatic.reTotal), BarcodeStatic.subject);
+            BarcodeStatic.customerName = null;
+            BarcodeStatic.subject = null;
+            BarcodeStatic.idRecipt = 0 + "";
+            BarcodeStatic.reTotal = 0;
+
+        }
+
+    }
+
 
     public void clear() {
         idcustomer = 0;

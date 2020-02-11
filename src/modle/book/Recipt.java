@@ -124,6 +124,32 @@ public class Recipt {
 
     }
 
+    public static void waterRecipt(HashMap hm, boolean print) {
+       // System.out.println("print");
+        try {
+            String path = "C:\\Ultimate\\Report\\water\\water.jrxml";// IN SYSTEM
+            JasperReport jr = JasperCompileManager.compileReport(path);
+            HashMap param = hm;
+            getConnection().commit();
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, getConnection());
+            if (print) {
+                JasperPrintManager.printReport(jp, false);
+            } else {
+                JasperViewer.viewReport(jp, false);
+            }
+
+        } catch (Exception jRException) {
+            //       modle.ErrorLog.writeLog(jRException.getMessage(), "AssessReport", "getBook", "modle.assess.AssessReport");
+            jRException.printStackTrace();
+            Notifications.create()
+                    .title("Warning")
+                    .text("Can not generate report. Something went wrong.\n(" + jRException.getMessage() + ")")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BOTTOM_RIGHT).showWarning();
+        }
+    }
+
+
     public static void bookingRecipt(HashMap hm, boolean print) {
         try {
             String path = "C:\\Ultimate\\Report\\booking\\booking.jrxml";// IN SYSTEM

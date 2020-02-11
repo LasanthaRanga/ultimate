@@ -108,8 +108,12 @@ public class Search_assessController implements Initializable {
         tableCollomAssing();
         modle.StaticViews.getMc().changeTitle("Search Assessment");
 
-
-        loadOldSearch();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadOldSearch();
+            }
+        }).start();
 
 
     }

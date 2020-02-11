@@ -42,24 +42,36 @@ Contributor(s):
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-
-      <!--<property name="hibernate.connection.url">jdbc:mysql://MCK_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
-      <!--<property name="hibernate.connection.password">@Mck_#321</property>-->
+    <!--<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>-->
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 
 
+    <!--<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>-->
+    <!--<property name="hibernate.connection.password">root</property>-->
 
-    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+
+    <property name="hibernate.connection.url">jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.password">@Mck_#321</property>
+
+
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
     <!--<property name="hibernate.connection.password">@Mck_#321</property>-->
 
 
-    <!--Kuliyapitiya-->
-    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
-    <!--<property name="hibernate.connection.password">3ta@kela#una@</property>-->
 
 
 
-    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+
+
+
+
+              <!--<property name="dialect">org.hibernate.dialect.Mysqldialect</property>-->
+
+
+
+
+
+      <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
 
 
     <!--Cat 2020 Local Server-->
@@ -71,23 +83,65 @@ Contributor(s):
     <!--jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true-->
     <!--</property>-->
 
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>
-    <property name="hibernate.connection.password">root</property>
 
-    <!--<property name="hibernate.connection.url">jdbc:mysql://192.168.1.3:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
-    <!--<property name="hibernate.connection.password">root</property>-->
 
     <!--<property name="hibernate.connection.url">-->
     <!--jdbc:mysql://192.168.1.6:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true-->
     <!--</property>-->
 
+    <!--=========================================================================================================================================================-->
+    <!--Kuliyapitiya-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>-->
+    <!--<property name="hibernate.connection.password">3ta@kela#una@</property>-->
+
+
+    <!--MCK-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://MCK_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">@Mck_#321</property>-->
+
+    <!--Galgamuwa-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://GPS_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">root</property>-->
+
+    <!--Waththegama-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://ASSESSMENT-TAX:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">root</property>-->
+
+    <!--Polgahawela-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.9.57:3306/polgahawela?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">@Mck_#321</property>-->
+
+    <!--Narammala PS-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3307/narammalaps?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">3ta@kela#una@</property>-->
+
+    <!--Pannala PS-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">3ta@kela#una@</property>-->
+
+    <!--puujaapitiya-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://PUJ_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->
+    <!--<property name="hibernate.connection.password">root</property>-->
+
+    <!--Digital Ocean-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://157.245.87.168:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>-->
+    <!--<property name="hibernate.connection.password">Us@Do$mys*Narammala88</property>-->
+
+
+      <!--<property name="hibernate.connection.url">jdbc:mysql://157.245.152.224:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>-->
+      <!--<property name="hibernate.connection.password">Cat2020@mysql</property>-->
+      <!--<property name="hibernate.connection.username">doadmin</property>-->
+
+
+
+
     <property name="hibernate.connection.username">root</property>
-
-
     <!--<property name="hibernate.connection.password">@Mck_#321</property>-->
 
     <property name="hibernate.connection.CharSet">utf8</property>
     <property name="hibernate.connection.characterEncoding">utf8</property>
+
+    <!--<property name="hibernate.connection.socketFactory">com.mysql.jdbc.NamedPipeSocketFactory</property>-->
 
     <mapping resource="pojo/SlSabhaType.hbm.xml"/>
     <mapping resource="pojo/SrShopPayment.hbm.xml"/>

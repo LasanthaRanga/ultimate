@@ -63,7 +63,7 @@ public class billComplete {
                     "INNER JOIN receipt ON sr_shop_payment.sr_receipt_no = receipt.receipt_print_no\n" +
                     "WHERE\n" +
                     "sr_shop_payment.sr_shop_paid_proc_complete = 1 AND\n" +
-                    "receipt.idReceipt = '"+idRecipt+"'\n" +
+                    "receipt.idReceipt = '" + idRecipt + "'\n" +
                     "ORDER BY\n" +
                     "sr_shop_payment.sr_shop_paid_id ASC\n");
 
@@ -150,6 +150,42 @@ public class billComplete {
             jRException.printStackTrace();
         }
 
+
+    }
+
+    public void shopRentBillPrintAndComplete(String idRecipt, boolean print) {
+
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "tl_pay.tl_pay_detail_tbl_id,\n" +
+                    "tl_pay_details.tl_pay_subtype_id,\n" +
+                    "tl_pay.tl_ricipt_id,\n" +
+                    "tl_pay.idTL_pay\n" +
+                    "FROM\n" +
+                    "tl_pay\n" +
+                    "INNER JOIN tl_pay_details ON tl_pay.tl_pay_detail_tbl_id = tl_pay_details.idTL_pay_details\n" +
+                    "WHERE\n" +
+                    "tl_pay_details.tl_paid_status = '0' AND\n" +
+                    "tl_pay.tl_ricipt_id = '" + idRecipt + "'\n");
+
+            conn.DB.setData("UPDATE `tl_pay` SET `tl_pay_status`='1'  WHERE `tl_ricipt_id`='" + idRecipt + "'");
+            conn.DB.setData("UPDATE `receipt` SET `receipt_status`='1'  WHERE `idReceipt`='" + idRecipt + "'");
+            conn.DB.setData("UPDATE `account_ps_three` SET `report_status`='1'  WHERE `report_ricipt_id`='" + idRecipt + "'");
+
+            while (data.next()) {
+                int tl_pay_detail_tbl_id = data.getInt("tl_pay_detail_tbl_id");
+                conn.DB.setData("UPDATE ` tl_cross_tbl_details` \n" +
+                        "SET `tl_paid_status` = '1',\n" +
+                        "`tl_date` = '' \n" +
+                        "WHERE\n" +
+                        "\t`tl_pay_details_id` = '" + tl_pay_detail_tbl_id + "'");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
 
     }
 

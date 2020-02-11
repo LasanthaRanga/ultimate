@@ -17,6 +17,7 @@ public class KeyVal {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            value = "/grafics/disconnect.jpg";
         }
         return value;
     }

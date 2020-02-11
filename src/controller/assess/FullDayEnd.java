@@ -207,6 +207,8 @@ public class FullDayEnd implements Initializable {
                                 + " `staus` = '1' \n"
                                 + "WHERE\n"
                                 + "\t(`idde` = '" + idde + "')");
+                    } else {
+                        conn.DB.setData("DELETE from de WHERE idde = " + idde);
                     }
                     x++;
                     i = x / size;
@@ -215,7 +217,16 @@ public class FullDayEnd implements Initializable {
                 }
             }
 
-            loadAllRecipt(format);
+            if (dp.getValue() != null) {
+                Date selectDate = Date.from(dp.getValue().atStartOfDay().atZone(ZoneId.of("Asia/Colombo")).toInstant());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String day = simpleDateFormat.format(selectDate);
+                loadAllRecipt(day);
+            } else {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String day = simpleDateFormat.format(new Date());
+                loadAllRecipt(day);
+            }
 
 
         } catch (Exception e) {
@@ -245,7 +256,7 @@ public class FullDayEnd implements Initializable {
     ObservableList<FDE> List = FXCollections.observableArrayList();
 
     public void loadAllRecipt(String day) {
-
+        System.out.println("call day end table");
         Integer officeIdOffice = StaticViews.getLogUser().getOfficeIdOffice();
 
         String qu = "SELECT\n" +

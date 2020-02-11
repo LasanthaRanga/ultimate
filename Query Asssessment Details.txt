@@ -1,0 +1,18 @@
+SELECT
+assessment.idAssessment,
+ward.ward_name,
+street.street_name,
+assessment.assessment_no,
+customer.cus_name,
+ass_nature.ass_nature_name,
+ass_allocation.ass_allocation,
+ROUND(ass_nature.ass_nature_year_rate * ass_allocation.ass_allocation /400 ,2) AS quater
+FROM
+assessment
+INNER JOIN ward ON assessment.Ward_idWard = ward.idWard
+INNER JOIN street ON street.Ward_idWard = ward.idWard AND assessment.Street_idStreet = street.idStreet
+INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature
+INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer
+INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment
+WHERE
+ass_allocation.ass_allocation_status = 1

@@ -153,6 +153,9 @@ public class Mixincome implements Initializable {
     private JFXRadioButton radio_cheque;
 
     @FXML
+    private JFXRadioButton radio_no;
+
+    @FXML
     private ToggleGroup cc;
 
     @FXML
@@ -502,8 +505,6 @@ public class Mixincome implements Initializable {
         cal();
 
 
-
-
     }
 
 
@@ -518,6 +519,7 @@ public class Mixincome implements Initializable {
     int print = 0;
 
     public void payment() {
+        int cusid = 0;
         int size = tbl.size();
         if (size > 0) {
             Session session = NewHibernateUtil.getSessionFactory().openSession();
@@ -529,6 +531,7 @@ public class Mixincome implements Initializable {
 
                 if (hasCustomer) {
                     cus = (pojo.Customer) session.load(Customer.class, idcustomer);
+                    cusid = cus.getIdCustomer();
                 } else {
                     if (txt_name.getText().length() > 2) {
                         cus = new Customer();
@@ -540,11 +543,13 @@ public class Mixincome implements Initializable {
                         cus.setCusAddressL3(txt_adl3.getText());
                         Serializable save = session.save(cus);
                         cus = (pojo.Customer) session.load(pojo.Customer.class, save);
+                        cusid = cus.getIdCustomer();
                     } else {
                         modle.Allert.notificationError("Customer Name", "Please Check Customer Name");
                     }
                 }
                 int riciptid = 0;
+
                 if (cus != null) {
                     pojo.Mixincome mixincome = new pojo.Mixincome();
                     mixincome.setMixincomeDate(modle.GetInstans.getQuater().getSystemDate());
@@ -561,12 +566,11 @@ public class Mixincome implements Initializable {
                     int mixindi = Integer.parseInt(save.toString());
 
 
-
                     for (MixData md : tbl) {
 
                         Mixdata mixdata = new Mixdata();
                         mixdata.setMixincome(mixincome);
-                        mixdata.setMixintype((pojo.Mixintype)session.load(pojo.Mixintype.class,md.getTypeid()));
+                        mixdata.setMixintype((pojo.Mixintype) session.load(pojo.Mixintype.class, md.getTypeid()));
                         mixdata.setMdTotal(md.getFulltot());
                         mixdata.setMdVat(md.getVat());
                         mixdata.setMdNbt(md.getNbt());
@@ -601,17 +605,18 @@ public class Mixincome implements Initializable {
                     }
 
 
-
-
-
                     double ca = 0;
                     double cq = 0;
+                    double nc = 0;
 
                     if (paytype == 1) {
                         ca = Double.parseDouble(txt_fullTot.getText());
                     }
                     if (paytype == 2) {
                         cq = Double.parseDouble(txt_fullTot.getText());
+                    }
+                    if (paytype == 3) {
+                        nc = Double.parseDouble(txt_fullTot.getText());
                     }
 
 
@@ -666,7 +671,7 @@ public class Mixincome implements Initializable {
                             "\t`chque_bank`,\n" +
                             "\t`office_idOffice`,\n" +
                             "\t`receipt_account_id`,\n" +
-                            "\t`receipt_user_id` \n" +
+                            "\t`receipt_user_id`, `cus_id` \n" +
                             ")\n" +
                             "VALUES\n" +
                             "\t(\n" +
@@ -689,7 +694,7 @@ public class Mixincome implements Initializable {
                     qq += "\t\t'" + idbank + "',\n" +
                             "\t\t'" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "',\n" +
                             "\t\t'" + bankinfoIdBank + "',\n" +
-                            "\t'" + modle.StaticViews.getLogUser().getIdUser() + "' \n" +
+                            "\t'" + modle.StaticViews.getLogUser().getIdUser() + "', '" + cusid + "' \n" +
                             "\t)";
 
                     conn.DB.setData(qq);
@@ -1061,8 +1066,17 @@ public class Mixincome implements Initializable {
     @FXML
     void radioOnAction(ActionEvent event) {
 
+        if (radio_no.isSelected()) {
+            btn_pay.setDisable(false);
+            System.out.println("NO");
+            paytype = 3;
 
-        if (radio_cash.isSelected()) {
+            txt_chequeNo.setDisable(true);
+            com_bank.setDisable(true);
+            dp_chque.setDisable(true);
+
+
+        } else if (radio_cash.isSelected()) {
             btn_pay.setDisable(false);
             System.out.println("CASH");
             paytype = 1;

@@ -39,6 +39,27 @@ public class Quater {
         return q;
     }
 
+
+    public int getCurrentQuaterByDate(Date date) {
+        int q = 0;
+        if (date != null) {
+            int month = Integer.parseInt(new SimpleDateFormat("MM").format(date));
+            if (month <= 3) {
+                q = 1;
+            } else if (month <= 6) {
+                q = 2;
+            } else if (month <= 9) {
+                q = 3;
+            } else if (month <= 12) {
+                q = 4;
+            }
+        }
+        return q;
+    }
+
+
+
+
     public int getCurrentMonth() {
         int m = 0;
         Date sd = getSystemDateByQuary();

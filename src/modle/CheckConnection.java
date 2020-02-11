@@ -29,17 +29,17 @@ public class CheckConnection {
     }
 
 
-    public static boolean checkLocal() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection c = DriverManager.getConnection(DB.DBPATH, DB.USER, DB.PASS);
-            c = null;
-            System.gc();
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+//    public static boolean checkLocal() {
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            Connection c = DriverManager.getConnection(DB.DBPATH, DB.USER, DB.PASS);
+//            c = null;
+//            System.gc();
+//
+//            return true;
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
 
 }

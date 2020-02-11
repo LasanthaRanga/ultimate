@@ -101,7 +101,7 @@ public class FullReportsController implements Initializable {
 
 
     int currentYear;
-
+    int cq = 0;
 
     /**
      * Initializes the controller class.
@@ -122,7 +122,7 @@ public class FullReportsController implements Initializable {
         modle.StaticViews.getMc().changeTitle(" Assessment Reports ");
 
         tbl_nature.setItems(modle.GetInstans.getNature().getNatureSelectList());
-
+        cq = GetInstans.getQuater().getPrviasQuater();
 
     }
 
@@ -575,9 +575,6 @@ public class FullReportsController implements Initializable {
     public RipHolder getQendWarrantArriasByID(int assessID) {
 
 
-        //   int currentQuater = GetInstans.getQuater().getCurrentQuater();
-
-
         String query = "SELECT\n" +
                 "\tass_qstart.idass_Qstart,\n" +
                 "\tass_qstart.ass_Qstart_QuaterNumber,\n" +
@@ -635,7 +632,12 @@ public class FullReportsController implements Initializable {
                 "ass_allocation.ass_allocation_status = 1 AND\n" +
                 "assessment.idAssessment = " + assessID;
 
+
         RipHolder ripHolder = new RipHolder();
+
+        ripHolder.setCq(cq);
+        ripHolder.setCy(currentYear - 1);
+
         try {
             ResultSet data = DB.getData(query);
 
@@ -660,8 +662,14 @@ public class FullReportsController implements Initializable {
                 int ass_qstart_quaterNumber = data.getInt("ass_Qstart_QuaterNumber");
                 int ass_qstart_status = data.getInt("ass_Qstart_status");
                 ripHolder.setAssessData(assessID, data.getInt("ward_no"), data.getString("street_name"), data.getString("cus_name"));
-                ripHolder.setThisYearCurrentArrias(data.getDouble("ass_Qstart_tyold_arrias"));
-                ripHolder.setThisYearCurrentWarrant(data.getDouble("ass_Qstart_tyold_warant"));
+                int qn = data.getInt("ass_Qstart_QuaterNumber");
+                if (qn != 1) {
+                    ripHolder.setThisYearCurrentArrias(data.getDouble("ass_Qstart_tyold_arrias"));
+                    ripHolder.setThisYearCurrentWarrant(data.getDouble("ass_Qstart_tyold_warant"));
+                } else {
+                    ripHolder.setThisYearCurrentArrias(0.0);
+                    ripHolder.setThisYearCurrentWarrant(0.0);
+                }
                 ripHolder.setLasatYearArriars(data.getDouble("ass_Qstart_LYC_Arreas"), data.getDouble("ass_Qstart_LY_Arreas"), 0);
                 ripHolder.setLastYearWarrant(data.getDouble("ass_Qstart_LYC_Warrant"), data.getDouble("ass_Qstart_LY_Warrant"), 0);
             }

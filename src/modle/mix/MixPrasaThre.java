@@ -1,9 +1,11 @@
 package modle.mix;
 
 import conn.DB;
+import controller.payment.UpdateStatus;
 import modle.GetInstans;
 import modle.StaticViews;
 
+import java.awt.*;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +17,7 @@ public class MixPrasaThre {
     final static int STAMPID = 35;
     final static int CASH = 65;
     final static int CHQUE = 66;
+    final static int NOCASH = 145;
 
     public void updateMixIncomeStatus(int appid, int appcat) {
         try {
@@ -30,7 +33,7 @@ public class MixPrasaThre {
                     "\tmixincome.idMixincome,\n" +
                     "\tmixincome.mixincome_userid,\n" +
                     "\treceipt.cheack,\n" +
-                    "\treceipt.cesh\n" +
+                    "\treceipt.cesh, receipt_total\n" +
                     "FROM\n" +
                     "\treceipt\n" +
                     "INNER JOIN mixincome ON mixincome.idMixincome = receipt.recept_applicationId\n" +
@@ -41,6 +44,7 @@ public class MixPrasaThre {
             String reciptNo = null;
             int idRecipt = 0;
             int mixincome_userid = 0;
+            double receipt_total = 0;
 
             double cheack = 0;
             double cesh = 0;
@@ -51,6 +55,7 @@ public class MixPrasaThre {
 
                 cheack = data1.getDouble("cheack");
                 cesh = data1.getDouble("cesh");
+                 receipt_total = data1.getDouble("receipt_total");
 
 
             }
@@ -109,10 +114,17 @@ public class MixPrasaThre {
 
             if (cesh > 0) {
                 modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat);
+                UpdateStatus.updateRecipt(idRecipt + "", 1, 0, 1, cesh); // update Recipt Status
             }
 
             if (cheack > 0) {
                 modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat);
+                UpdateStatus.updateRecipt(idRecipt + "", 2, 0, 1, cheack); // update Recipt Status
+            }
+
+            if (cheack == 0 && cesh == 0) {
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NOCASH, bankinfo_idBank, receipt_total, mixincome_userid, appid, appcat);
+                UpdateStatus.updateRecipt(idRecipt + "", 3, 0, 1, receipt_total); // update Recipt Status
             }
 
             conn.DB.setData("UPDATE \n" +

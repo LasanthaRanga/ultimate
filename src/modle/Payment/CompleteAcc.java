@@ -19,7 +19,7 @@ public class CompleteAcc {
                 "\t`report_user_id`,\n" +
                 "\t`report_application_id`,\n" +
                 "\t`report_application_cat_id`,\n" +
-                "\t`report_status`,`office_idOffice`\n" +
+                "\t`report_status`,`office_idOffice`,income_or_expence\n" +
                 ")\n" +
                 "VALUES\n" +
                 "\t(\n" +
@@ -32,7 +32,7 @@ public class CompleteAcc {
                 "\t\t'" + user_id + "',\n" +
                 "\t\t'" + app_id + "',\n" +
                 "\t\t'" + appcatid + "',\n" +
-                "\t\t'1','" + StaticViews.getLogUser().getOfficeIdOffice() + "'\n" +
+                "\t\t'1','" + StaticViews.getLogUser().getOfficeIdOffice() + "', '1' \n" +
                 "\t);";
         try {
             conn.DB.setData(quary);

@@ -2,18 +2,23 @@ package controller.mix;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import conn.DB;
 import conn.NewHibernateUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import modle.ComboItem;
+import modle.ComboLoad;
 import modle.GetInstans;
 import modle.asses.OfficeHolder;
 import modle.asses.PayNowModle;
@@ -54,10 +59,31 @@ public class Voteassign implements Initializable {
     @FXML
     private JFXComboBox<OfficeHolder> com_office;
 
+    @FXML
+    private JFXRadioButton income;
+
+    @FXML
+    private ToggleGroup types;
+
+    @FXML
+    private JFXRadioButton expences;
+
+    @FXML
+    private JFXRadioButton balance;
+
+    @FXML
+    private JFXComboBox<ComboItem> title;
+
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadVoteCombo();
         loadAccountCombo();
+        title.setDisable(true);
+
+
 
         col_appname.setCellValueFactory(new PropertyValueFactory<>("appname"));
         col_votnumber.setCellValueFactory(new PropertyValueFactory<>("voteid"));
@@ -66,6 +92,64 @@ public class Voteassign implements Initializable {
         modle.StaticViews.getMc().changeTitle("Create Mix Income Type");
         loadOfficeCombo();
     }
+
+    @FXML
+    void selectType(ActionEvent event) {
+
+        if (income.isSelected()) {
+            // income title
+            loadVoteCombo(1);
+            title.setDisable(true);
+
+        }
+
+        if (expences.isSelected()) {
+            loadVoteCombo(2);
+            title.setDisable(true);
+
+        }
+
+        if (balance.isSelected()) {
+            //balance title
+            title.setDisable(false);
+            loadBalanceSheetTitle();
+        }
+
+        if (!income.isSelected() && !expences.isSelected() && !balance.isSelected()) {
+            title.setDisable(true);
+
+        }
+
+
+    }
+
+    public void loadBalanceSheetTitle() {
+        ObservableList<ComboItem> comboItems = ComboLoad.loadCombo("SELECT\n" +
+                "acc_bal_sheet_title.bal_sheet_title_id,\n" +
+                "acc_bal_sheet_title.bal_sheet_title_name\n" +
+                "FROM\n" +
+                "acc_bal_sheet_title\n");
+        title.setItems(comboItems);
+
+
+    }
+
+    @FXML
+    void titleOnAction(ActionEvent event) {
+        int x = title.getSelectionModel().getSelectedItem().getId();
+        loadVoteComboByTitle(x);
+
+        ObservableList<ComboItem> comboItems = ComboLoad.loadCombo("SELECT\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_subtitle_id,\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_subtitle_name\n" +
+                "FROM\n" +
+                "acc_bal_sheet_subtitle\n" +
+                "WHERE\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_title_id = " + x);
+
+    }
+
+
 
     public void loadOfficeCombo() {
         ObservableList<OfficeHolder> list = GetInstans.getOffice().loadOfficeCombo();
@@ -104,6 +188,77 @@ public class Voteassign implements Initializable {
                     "\taccount_receipt_title\n" +
                     "ORDER BY\n" +
                     "\taccount_receipt_title.ART_vote_and_bal ASC");
+            vlist.clear();
+            while (data.next()) {
+                String art_vote_and_bal = data.getString("ART_vote_and_bal");
+                vlist.add(art_vote_and_bal);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        com_vote.setItems(vlist);
+    }
+
+
+    public void loadVoteComboByTitle(int id) {
+        ObservableList<String> vlist = FXCollections.observableArrayList();
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "account_receipt_title.idAccount_receipt_title,\n" +
+                    "account_receipt_title.ART_vote_and_bal\n" +
+                    "FROM\n" +
+                    "account_receipt_title\n" +
+                    "WHERE\n" +
+                    "account_receipt_title.ART_Title_id = '" + id + "' AND\n" +
+                    "account_receipt_title.ART_vote_or_bal = 2");
+            vlist.clear();
+            while (data.next()) {
+                String art_vote_and_bal = data.getString("ART_vote_and_bal");
+                vlist.add(art_vote_and_bal);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        com_vote.setItems(vlist);
+    }
+
+
+    public void loadVoteComboBySubTitle(int id) {
+        ObservableList<String> vlist = FXCollections.observableArrayList();
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "account_receipt_title.idAccount_receipt_title,\n" +
+                    "account_receipt_title.ART_vote_and_bal\n" +
+                    "FROM\n" +
+                    "account_receipt_title\n" +
+                    "WHERE\n" +
+                    "account_receipt_title.ART_Sub_title_id = '" + id + "' AND\n" +
+                    "account_receipt_title.ART_vote_or_bal = 2");
+            vlist.clear();
+            while (data.next()) {
+                String art_vote_and_bal = data.getString("ART_vote_and_bal");
+                vlist.add(art_vote_and_bal);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        com_vote.setItems(vlist);
+    }
+
+
+    public void loadVoteCombo(int type) {
+        ObservableList<String> vlist = FXCollections.observableArrayList();
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "account_receipt_title.idAccount_receipt_title,\n" +
+                    "account_receipt_title.ART_vote_and_bal\n" +
+                    "FROM\n" +
+                    "account_receipt_title\n" +
+                    "WHERE\n" +
+                    "account_receipt_title.ex_income_or_expence = '" + type + "' AND\n" +
+                    "account_receipt_title.ART_vote_or_bal = 1\n" +
+                    "ORDER BY\n" +
+                    "account_receipt_title.ART_vote_and_bal ASC");
             vlist.clear();
             while (data.next()) {
                 String art_vote_and_bal = data.getString("ART_vote_and_bal");

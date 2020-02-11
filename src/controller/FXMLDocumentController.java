@@ -64,7 +64,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private JFXButton btn_foget;
 
-    private final int version = 2;
+    private final int version = 3;
 
     String urll = "";
 
@@ -83,6 +83,18 @@ public class FXMLDocumentController implements Initializable {
             e.printStackTrace();
         }
         try {
+
+            ResultSet datas = DB.getData("SHOW VARIABLES LIKE 'max_connections'");
+            if (datas.last()) {
+                int max_connections = datas.getInt("Value");
+                System.out.println("Max Connecton "+ max_connections);
+                if (max_connections < 10000) {
+                    DB.setData("SET GLOBAL max_connections = 100000");
+                    System.out.println("Max Connection Reset to 100000");
+                }
+            }
+
+
             ResultSet data = DB.getData("SELECT\n" +
                     "version.idVersion,\n" +
                     "version.vnoint,\n" +
@@ -117,6 +129,8 @@ public class FXMLDocumentController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
+
+
         } finally {
         }
 
@@ -254,6 +268,13 @@ public class FXMLDocumentController implements Initializable {
         } finally {
         }
 
+        System.out.println("EXIT");
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @FXML
+    void close(ActionEvent event) {
         System.out.println("EXIT");
         Platform.exit();
         System.exit(0);

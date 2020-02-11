@@ -3,6 +3,7 @@ package modle.Payment;
 import conn.DB;
 import conn.NewHibernateUtil;
 import modle.GetInstans;
+import org.apache.tools.ant.taskdefs.Get;
 import org.hibernate.Session;
 
 import java.sql.ResultSet;
@@ -258,6 +259,7 @@ public class PaymentByID {
 //                    "receipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' AND\n" +
 //                    "receipt.office_idOffice = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
 
+            int currentYear = GetInstans.getQuater().getCurrentYear();
 
             // By Account
             ResultSet data = DB.getData("SELECT\n" +
@@ -267,7 +269,8 @@ public class PaymentByID {
                     "WHERE\n" +
                     "\treceipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' \n" +
                     "\tAND receipt.office_idOffice = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "' \n" +
-                    "\tAND receipt.receipt_account_id = '" + receipt_account_id + "'");
+                    "\tAND receipt.receipt_account_id = '" + receipt_account_id + "' AND" +
+                    " EXTRACT(YEAR FROM receipt.receipt_day)= " + currentYear);
 
 
 //            ResultSet data3 = DB.getData("SELECT\n" +
@@ -292,21 +295,23 @@ public class PaymentByID {
             }
 
             String rn = "";
+            int anInt = 1;
             if (data.last()) {
-                int anInt = data.getInt("MAX(receipt.oder)");
+                anInt = data.getInt("MAX(receipt.oder)");
                 anInt++;
-                rn = receipt_code + anInt;
-                String qu = "UPDATE `receipt`\n" +
-                        "SET `Application_Catagory_idApplication_Catagory` = '" + applicationcat + "',\n" +
-                        " `receipt_print_no` = '" + rn + "',\n" +
-                        " `receipt_status` = '1',\n" +
-                        " `oder` = '" + anInt + "',\n" +
-                        " `office_idOffice` = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "', receipt_time='" + modle.Time.getTeime() + "' \n" +
-                        "WHERE\n" +
-                        "\tApplication_Catagory_idApplication_Catagory = '" + applicationcat + "'\n" +
-                        "AND recept_applicationId = '" + idApp + "'";
-                conn.DB.setData(qu);
             }
+
+            rn = receipt_code + currentYear + "/ " + anInt;
+            String qu = "UPDATE `receipt`\n" +
+                    "SET `Application_Catagory_idApplication_Catagory` = '" + applicationcat + "',\n" +
+                    " `receipt_print_no` = '" + rn + "',\n" +
+                    " `receipt_status` = '1',\n" +
+                    " `oder` = '" + anInt + "',\n" +
+                    " `office_idOffice` = '" + modle.StaticViews.getLogUser().getOfficeIdOffice() + "', receipt_time='" + modle.Time.getTeime() + "' \n" +
+                    "WHERE\n" +
+                    "\tApplication_Catagory_idApplication_Catagory = '" + applicationcat + "'\n" +
+                    "AND recept_applicationId = '" + idApp + "'";
+            conn.DB.setData(qu);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -315,14 +320,6 @@ public class PaymentByID {
         }
         return status;
     }
-
-
-
-
-
-
-
-
 
 
 }

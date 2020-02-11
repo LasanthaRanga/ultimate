@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import modle.BUP;
+import modle.GetInstans;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -27,6 +28,10 @@ public class DayEndProcess {
 
 
     public void pras3process(String text) {
+        System.out.println(" PS3 Running =============");
+
+        int currentYear = GetInstans.getQuater().getCurrentYear();
+
         getVoteAndID();
         String quer = "SELECT\n" +
                 "ass_payment.idass_Payment,\n" +
@@ -73,14 +78,18 @@ public class DayEndProcess {
 
         try {
             ResultSet data = DB.getData(quer);
-
+            System.out.println(" PS3 Running =============  4");
             if (data.last()) {
+                System.out.println(" PS3 Running =============  5");
                 String recitno = data.getString("receipt_print_no");
                 String day = data.getString("receipt_day");
                 int office_idOffice = data.getInt("office_idOffice");
                 int ass_payment_idUser = data.getInt("ass_Payment_idUser");
                 int recept_applicationId = data.getInt("recept_applicationId");
 
+                int assessment_idAssessment = data.getInt("Assessment_idAssessment");
+
+                System.out.println(" PS3 Running =============  6");
 
                 double ass_payment_ly_arrears = data.getDouble("ass_Payment_LY_Arrears");
                 double ass_payment_ly_warrant = data.getDouble("ass_Payment_LY_Warrant");
@@ -104,9 +113,14 @@ public class DayEndProcess {
                         "aha.appcat_id = 2 AND\n" +
                         "aha.office_id = " + office_idOffice);
 
+                System.out.println(" PS3 Running =============  7");
+
                 int ACCOUNTID = 0;
                 if (data1.last()) {
                     ACCOUNTID = data1.getInt("bankinfo_id");
+
+                    System.out.println(" PS3 Running =============  8");
+
                 }
 
 
@@ -126,6 +140,8 @@ public class DayEndProcess {
                         "ass_payto.ass_Payment_idass_Payment = " + idass_payment;
                 ResultSet d = DB.getData(q2);
 
+                System.out.println(" PS3 Running =============  8");
+
                 double typ = 0.0;
                 double dis = 0.0;
                 double tya = 0.0;
@@ -136,7 +152,10 @@ public class DayEndProcess {
                     dis += d.getDouble("ass_payto_discount");
                     tya += d.getDouble("ass_payto_arrears");
                     tyw += d.getDouble("ass_payto_warrant");
+
+                    System.out.println(" PS3 Running =============  9");
                 }
+
 
                 if (ass_payment_ly_arrears > 0) {// Last Year Arrias
                     insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("LYA"), ACCOUNTID, modle.Round.round(ass_payment_ly_arrears), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
@@ -154,8 +173,41 @@ public class DayEndProcess {
                     insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("TYW"), ACCOUNTID, modle.Round.round(tyw), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
                 }
 
-                if (typ > 0) {// quater pay
-                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("QP"), ACCOUNTID, modle.Round.round(typ), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
+                if (cd_balance < 0) {
+
+                    System.out.println("PS3 ================= from last year");
+
+
+                    conn.DB.setData("UPDATE ass_qstart \n" +
+                            "SET ass_qstart.process_update_arrears = 0,\n" +
+                            "ass_qstart.process_update_warant = " + cd_balance + " \n" +
+                            "WHERE\n" +
+                            "\tass_qstart.Assessment_idAssessment = " + assessment_idAssessment + " \n" +
+                            "\tAND ass_qstart.ass_Qstart_QuaterNumber = 1 \n" +
+                            "\tAND ass_Qstart_year = " + currentYear);
+
+
+                    if (typ > 0) {// quater pay
+                        insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("QP"), ACCOUNTID, modle.Round.round(typ + cd_balance), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
+                    }
+
+
+                } else {
+                    System.out.println("PS3 ================= No Balance");
+                    if (typ > 0) {// quater pay
+                        insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("QP"), ACCOUNTID, modle.Round.round(typ), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
+                    }
+                    // if (cd_balance > 0) {// credit debit balance
+                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CD"), ACCOUNTID, modle.Round.round(cd_balance), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
+                    // }
+                }
+
+                if (ass_cash > 0) {// Cahs
+                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CASH"), ACCOUNTID, modle.Round.round(ass_cash), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
+                }
+
+                if (ass_check > 0) {// chque
+                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CHQUE"), ACCOUNTID, modle.Round.round(ass_check), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
                 }
 
                 if (dis > 0) {// discount
@@ -166,17 +218,6 @@ public class DayEndProcess {
                     insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("OP"), ACCOUNTID, modle.Round.round(ass_payment_goto_debit), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
                 }
 
-                // if (cd_balance > 0) {// credit debit balance
-                insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CD"), ACCOUNTID, modle.Round.round(cd_balance), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
-                // }
-
-                if (ass_cash > 0) {// Cahs
-                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CASH"), ACCOUNTID, modle.Round.round(ass_cash), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
-                }
-
-                if (ass_check > 0) {// chque
-                    insertToPrasa3(day, recitno, Integer.parseInt(text), vids.get("CHQUE"), ACCOUNTID, modle.Round.round(ass_check), ass_payment_idUser, recept_applicationId, 2, 1, office_idOffice);
-                }
 
             }
 
@@ -223,7 +264,7 @@ public class DayEndProcess {
                 "\t`report_application_id`,\n" +
                 "\t`report_application_cat_id`,\n" +
                 "\t`report_status`,\n" +
-                "\t`office_idOffice`\n" +
+                "\t`office_idOffice`, income_or_expence\n" +
                 ")\n" +
                 "VALUES\n" +
                 "\t(\t\t\n" +
@@ -237,7 +278,7 @@ public class DayEndProcess {
                 "\t\t'" + appid + "',\n" +
                 "\t\t'" + appcatid + "',\n" +
                 "\t\t'" + status + "',\n" +
-                "\t\t'" + officeid + "'\n" +
+                "\t\t'" + officeid + "', '1'\n" +
                 "\t)";
 
         try {
@@ -249,8 +290,6 @@ public class DayEndProcess {
 
 
     }
-
-
 
 
     public boolean dayEndProcessForOne(int idPay, Date day) {
@@ -307,6 +346,7 @@ public class DayEndProcess {
         int oq4s = 0;
 
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
+        Transaction tr = session.beginTransaction();
         System.out.println(1 + " ================");
         try {
 
@@ -314,15 +354,28 @@ public class DayEndProcess {
 
             Integer idReceipt = re.getIdReceipt();
 
+
             re.setReceiptStatus(1);
             session.update(re);
+
+
+            System.out.println("---------------");
+            System.out.println(systemDate);
+            String format = new SimpleDateFormat("yyyy-MM-dd").format(systemDate);
+            System.out.println(format + "    format");
+
+            System.out.println(re.getReceiptDay());
+            System.out.println("---------------");
+
             Criteria cry = session.createCriteria(AssPayment.class);
-            cry.add(Restrictions.eq("assPaymentDate", systemDate));
+        //    cry.add(Restrictions.eq("assPaymentDate", systemDate));
             cry.add(Restrictions.eq("assPaymentStatus", 0));
             cry.add(Restrictions.eq("receipt", re));
             List<AssPayment> list = cry.list();
 
             System.out.println(2 + " ================");
+
+            System.out.println(list.size() + "  ===================== size");
 
             for (AssPayment assPayment : list) {
                 System.out.println(3 + " ================");
@@ -334,6 +387,8 @@ public class DayEndProcess {
                 Assessment assessment = assPayment.getAssessment();
 
                 Criteria payHisCry = session.createCriteria(AssPayhistry.class);
+
+
                 payHisCry.add(Restrictions.eq("assPayHistryYear", systemYear));
                 payHisCry.add(Restrictions.eq("assPayHistryStatus", 1));
                 payHisCry.add(Restrictions.eq("assessment", assessment));
@@ -574,15 +629,20 @@ public class DayEndProcess {
                 }
 
                 assPayment.setAssPaymentStatus(1); // Tempery Payment Table Eke Status Eka maru karanawa day end eka awasan
-                Transaction tr = session.beginTransaction();
-                tr.commit();
-            }
 
-            pras3process(idReceipt + ""); // prasa 3 comment
-            return true;
+                tr.commit();
+
+                System.out.println("PS3   ====================================== ");
+                pras3process(idReceipt + ""); // prasa 3 comment
+                System.out.println("PS3   ====================================== ");
+                return true;
+            }
+            return false;
+
         } catch (Exception e) {
             modle.ErrorLog.writeLog(e.getMessage(), "dayEndProcess", "dayEndProcess", "modle.assess");
             e.printStackTrace();
+            tr.rollback();
             return false;
 
         } finally {

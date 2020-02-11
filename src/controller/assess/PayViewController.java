@@ -130,6 +130,8 @@ public class PayViewController implements Initializable {
     public Text q3pidv;
     @FXML
     public Text q4pidv;
+    @FXML
+    public Text balance;
 
 
     @FXML
@@ -314,6 +316,7 @@ public class PayViewController implements Initializable {
     public void cleare() {
 
         try {
+            balance.setText("");
             txt_idAssess.setText("");
             txt_ward.setText("");
             txt_street.setText("");
@@ -321,7 +324,7 @@ public class PayViewController implements Initializable {
             txt_Obsaloot.setText("");
             txt_customer.setText("");
             txt_allocation.setText("");
-//            txt_status.setText("");
+//          txt_status.setText("");
             txt_currentQuater.setText("");
             txt_currentYear.setText("");
 

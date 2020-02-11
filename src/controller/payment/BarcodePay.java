@@ -13,7 +13,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import modle.GetInstans;
 import modle.Payment.StaticPay;
+import modle.StaticBadu;
+import modle.StaticViews;
+import modle.book.Recipt;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import pojo.AdvAdvertising;
@@ -23,6 +27,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class BarcodePay implements Initializable {
@@ -147,6 +152,13 @@ public class BarcodePay implements Initializable {
                 modle.Allert.notificationGood("Completed", "Booking " + idRecipt);
                 modle.book.Recipt.addToPrasa(idRecipt);
                 clearAll();
+                break;
+
+
+            case 12:
+
+                System.out.println("Water");
+
                 break;
 
 
@@ -316,6 +328,14 @@ public class BarcodePay implements Initializable {
                             mixIncomeBillData(text);
                             break;
 
+                        case 12:
+                            System.out.println("Water Bill" + text);
+                            waterBillInfo(receipt_status, text);
+
+
+                            break;
+
+
                         case 10:
                             viewBookingDetails(text);
                             break;
@@ -335,6 +355,102 @@ public class BarcodePay implements Initializable {
             } finally {
             }
         }
+    }
+
+
+    public void waterBillInfo(int status, String text) {
+
+        if (status == 0) {
+            // payAnable();
+            waterBill(text, true);
+        } else {
+            //  printAnable();
+            waterBill(text, false);
+        }
+
+
+    }
+
+
+    public void waterBill(String text, boolean pay) {
+        //print recipt
+        HashMap<String, String> hm = new HashMap<>();
+        hm.put("id", text);
+        modle.book.Recipt.waterRecipt(hm, false);
+        if (pay) {
+            try {
+                ResultSet selected = DB.getData("SELECT\n" +
+                        "\twb_process_pay.wb_process_pay_LYA_bal,\n" +
+                        "\twb_process_pay.wb_process_pay_LMA_bal,\n" +
+                        "\twb_process_pay.wb_process_pay_TMA_bal,\n" +
+                        "\twb_process_pay.wb_process_pay_VAT,\n" +
+                        "\twb_process_pay.wb_process_pay_NBT,\n" +
+                        "\twb_process_pay.wb_process_pay_STAMP,\n" +
+                        "\twb_process_pay.wb_process_pay_com_status,\n" +
+                        "\twb_process_pay.wb_process_pay_OP,\n" +
+                        "\twb_process_pay.wb_process_pay_proc_id,\n" +
+                        "\twb_process_pay.wb_process_pay_complete_process_get,\n" +
+                        "\twb_process_pay.wb_process_pay_con_id,\n" +
+                        "\twb_process_pay.wb_process_pay_id\n" +
+                        "FROM\n" +
+                        "wb_process_pay\n" +
+                        "INNER JOIN receipt ON wb_process_pay.wb_process_pay_receipt_no = receipt.receipt_print_no\n" +
+                        "WHERE\n" +
+                        "receipt.idReceipt = '" + text + "'");
+
+                while (selected.next()) {
+                    double wb_process_pay_lya_bal = selected.getDouble("wb_process_pay_LYA_bal");
+                    double wb_process_pay_lma_bal = selected.getDouble("wb_process_pay_LMA_bal");
+                    double wb_process_pay_tma_bal = selected.getDouble("wb_process_pay_TMA_bal");
+                    double wb_process_pay_vat = selected.getDouble("wb_process_pay_VAT");
+                    double wb_process_pay_nbt = selected.getDouble("wb_process_pay_NBT");
+                    double wb_process_pay_stamp = selected.getDouble("wb_process_pay_STAMP");
+                    int wb_process_pay_com_status = selected.getInt("wb_process_pay_com_status");
+                    double wb_process_pay_op = selected.getDouble("wb_process_pay_OP");
+                    int wb_process_pay_proc_id = selected.getInt("wb_process_pay_proc_id");
+                    int wb_process_pay_complete_process_get = selected.getInt("wb_process_pay_complete_process_get");
+                    int wb_process_pay_con_id = selected.getInt("wb_process_pay_con_id");
+                    int wb_process_pay_id = selected.getInt("wb_process_pay_id");
+
+
+                    conn.DB.setData("UPDATE `wb_process_tbl` \n" +
+                            "SET `wb_process_tbl_LYA_bal` = '" + wb_process_pay_lya_bal + "',\n" +
+                            "`wb_process_tbl_LMA_bal` = '" + wb_process_pay_lma_bal + "',\n" +
+                            "`wb_process_tbl_TMA_bal` = '" + wb_process_pay_tma_bal + "',\n" +
+                            "`wb_process_tbl_VAT` = `wb_process_tbl_VAT` + '" + wb_process_pay_vat + "',\n" +
+                            "`wb_process_tbl_NBT` = `wb_process_tbl_NBT` + '" + wb_process_pay_nbt + "',\n" +
+                            "`wb_process_tbl_STAMP` = `wb_process_tbl_STAMP` + '" + wb_process_pay_stamp + "',\n" +
+                            "`wb_process_tbl_com_status` = '" + wb_process_pay_com_status + "' \n" +
+                            "WHERE\n" +
+                            "\t`wb_process_tbl_id` = '" + wb_process_pay_proc_id + "'");
+
+
+                    conn.DB.setData("UPDATE `wb_opay` \n" +
+                            "SET `wb_opay_amount` = '" + wb_process_pay_op + "' \n" +
+                            "WHERE\n" +
+                            "\t( `wb_opay_con_id` = '" + wb_process_pay_con_id + "' ) ");
+
+
+                    conn.DB.setData("UPDATE `wb_process_pay` \n" +
+                            "SET `wb_process_pay_complete_process_get` = '1' \n" +
+                            "WHERE\n" +
+                            "\t( `wb_process_pay_id` = '" + wb_process_pay_id + "' ) ");
+                }
+
+                conn.DB.setData("UPDATE `wb_t_paid` SET `wb_t_complete_status`='1' WHERE `wb_t_receipt_id`='" + text + "'");
+                conn.DB.setData("UPDATE `wb_t_payment` SET `wb_t_pay_complete_or_not`='1' WHERE `wb_t_receipt_id_payment`='" + text + "'");
+                conn.DB.setData("UPDATE `account_ps_three` SET `report_status`='1'  WHERE `report_ricipt_id` = '" + text + "'");
+                conn.DB.setData("UPDATE `receipt` SET `receipt_status`='1' WHERE `idReceipt`='" + text + "'");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+            }
+        }
+
+        // update data
+
+
     }
 
 
@@ -777,12 +893,15 @@ public class BarcodePay implements Initializable {
 
 
     public void shopRent(String text) {
-        if (radio_print.isSelected()) {
-            modle.GetInstans.getBillComplete().loadShopRentBill(text, true);
-        } else {
-            modle.GetInstans.getBillComplete().loadShopRentBill(text, false);
-        }
-        completeShopRent(text);
+
+        modle.GetInstans.getBillComplete().shopRentBillPrintAndComplete(text, true);
+
+//        if (radio_print.isSelected()) {
+//            modle.GetInstans.getBillComplete().loadShopRentBill(text, true);
+//        } else {
+//            modle.GetInstans.getBillComplete().loadShopRentBill(text, false);
+//        }
+        //       completeShopRent(text);
     }
 
 
@@ -1025,6 +1144,8 @@ public class BarcodePay implements Initializable {
     }
 
     public void assessmentTaxBil(String text) {
+
+        String systemDateStringByQuary = GetInstans.getQuater().getSystemDateStringByQuary();
         try {
 
             String query = "SELECT\n" +
@@ -1040,7 +1161,9 @@ public class BarcodePay implements Initializable {
                     "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
                     "WHERE\n" +
                     "receipt.idReceipt = '" + text + "' AND\n" +
-                    "receipt.Application_Catagory_idApplication_Catagory = 2";
+                    "receipt.Application_Catagory_idApplication_Catagory = 2 AND\n" +
+                    "receipt.receipt_day = '" + systemDateStringByQuary + "'\n";
+
             ResultSet data = DB.getData(query);
             if (data.last()) {
                 int receipt_status = data.getInt("receipt_status");
@@ -1064,6 +1187,8 @@ public class BarcodePay implements Initializable {
                 } else {
 
                 }
+            } else {
+                modle.Allert.notificationWorning("Please Create New Barcode", "Expired Barcode");
             }
 
         } catch (Exception e) {

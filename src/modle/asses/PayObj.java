@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import conn.DB;
 import controller.assess.DayendController;
+import controller.payment.UpdateStatus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -97,6 +98,9 @@ public class PayObj {
     double Q4a;
 
     Double creditBalance;
+
+
+    double fromly = 0;
 
     @SuppressWarnings("deprecation")
     public void cal(int idAssess, controller.assess.PayViewController pvc) {
@@ -225,6 +229,14 @@ public class PayObj {
                             if (assQstart.getAssQstartQuaterNumber() == 1) {
 //                            Q1a = assQstart.getAssQstartLqcArreas();
 //                            Q1w = assQstart.getAssQstartLqcWarrant();
+
+                                if (assQstart.getProcessUpdateArrears() != null) {
+                                    fromly = modle.Round.round(assQstart.getProcessUpdateArrears());
+                                    pvc.balance.setText(modle.Round.roundToString(fromly));
+                                } else {
+                                    fromly = 0;
+                                    pvc.balance.setText("");
+                                }
                             }
                             if (assQstart.getAssQstartQuaterNumber() == 2) {
                                 Q1a = modle.Round.round(assQstart.getAssQstartLqcArreas()); // NEW ROUND
@@ -301,10 +313,10 @@ public class PayObj {
                         if (payhistry != null) {
 
 
-                            Q1paidDis = modle.Round.round( payhistry.getAssPayHistryDrq1());
-                            Q2paidDis = modle.Round.round( payhistry.getAssPayHistryDrq2());
-                            Q3paidDis = modle.Round.round( payhistry.getAssPayHistryDrq3());
-                            Q4paidDis = modle.Round.round( payhistry.getAssPayHistryDrq4());
+                            Q1paidDis = modle.Round.round(payhistry.getAssPayHistryDrq1());
+                            Q2paidDis = modle.Round.round(payhistry.getAssPayHistryDrq2());
+                            Q3paidDis = modle.Round.round(payhistry.getAssPayHistryDrq3());
+                            Q4paidDis = modle.Round.round(payhistry.getAssPayHistryDrq4());
 
                             Q1Status = payhistry.getAssPayHistryQ1status();
                             Q2Status = payhistry.getAssPayHistryQ2status();
@@ -353,8 +365,10 @@ public class PayObj {
 
                         if (lastQstartlist.size() > 0) {
                             AssQstart lastQstart = lastQstartlist.get(0);
-                            lyArrears = modle.Round.round( lastQstart.getAssQstartLycArreas());
-                            lyWarrant = modle.Round.round( lastQstart.getAssQstartLycWarrant());
+                            lyArrears = modle.Round.round(lastQstart.getAssQstartLycArreas());
+                            lyWarrant = modle.Round.round(lastQstart.getAssQstartLycWarrant());
+
+
                         }
 
                         pvc.txt_lyArrears.setText(modle.Maths.rondAnd2String(lyArrears));
@@ -363,12 +377,12 @@ public class PayObj {
                         pvc.txt_tyArrears.setText(modle.Maths.rondAnd2String(TYA));
                         pvc.txt_tyWarrant.setText(modle.Maths.rondAnd2String(TYW));
 
-                        totalAW =  TYA + TYW + lyArrears + lyWarrant;
+                        totalAW = TYA + TYW + lyArrears + lyWarrant;
                         totalAW = modle.Maths.round2(totalAW);
 
                         pvc.txt_Total.setText(modle.Maths.rondAnd2String(totalAW));
                         //=======================================
-                        ful = modle.Round.round( allocation * yearRate / 100); // ROUND
+                        ful = modle.Round.round(allocation * yearRate / 100); // ROUND
                         yd = ful * 10 / 100;
                         yd = modle.Maths.round2(yd);
                         yarpay = ful - yd;
@@ -470,6 +484,12 @@ public class PayObj {
         pvc.col_value.setCellValueFactory(new PropertyValueFactory<>("values"));
 
         clearPay();
+
+        if (fromly > 0) {
+            oal.add(new TablePay("From Last Year Balance", modle.Maths.round2(fromly), 0.0, fromly));
+            payValue += fromly;
+        }
+
 
         pay = payValue;
 
@@ -759,9 +779,9 @@ public class PayObj {
         double q4 = Double.parseDouble(pvc.q4_val.getText());
 
 
-        BigDecimal rawValue = new BigDecimal(totalAW + q1 + q2 + q3 + q4 + creditBalance);
+        BigDecimal rawValue = new BigDecimal(totalAW + q1 + q2 + q3 + q4 + creditBalance - fromly);
         BigDecimal value = rawValue.setScale(0, RoundingMode.UP);
-        pvc.q4_tot.setText(value.toString()+".00");
+        pvc.q4_tot.setText(value.toString() + ".00");
 
     }
 
@@ -1474,7 +1494,7 @@ public class PayObj {
         lyaPay = modle.Round.round(lyaPay);
         lywPay = modle.Round.round(lywPay);
 
-        double payTot = lywPay + lyaPay + Q1wp + Q2wp + Q3wp + Q4wp + Q1ap + Q2ap + Q3ap + Q4ap + Q1pay + Q2pay + Q3pay + Q4pay;
+        double payTot = lywPay + lyaPay + Q1wp + Q2wp + Q3wp + Q4wp + Q1ap + Q2ap + Q3ap + Q4ap + Q1pay + Q2pay + Q3pay + Q4pay - fromly;
 
         payTot = modle.Maths.round2(payTot);
         System.out.println("======  over  =======" + balance);
@@ -1529,7 +1549,9 @@ public class PayObj {
                 assPayment.setAssPaymentFullTotal(payTot);// calculate this and replace
                 assPayment.setAssPaymentIdUser(modle.StaticViews.getLogUser().getIdUser());
                 assPayment.setOfficeIdOffice(modle.StaticViews.getLogUser().getOfficeIdOffice());
+
                 assPayment.setAssPaymentGotoDebit(balance);// Think This And Fill
+
                 assPayment.setAssPaymentStatus(0);
 
 
@@ -1554,10 +1576,15 @@ public class PayObj {
                     }
                 }
 
+                if (fromly > 0) {
+                    assPayment.setCdBalance(modle.Round.round(-1 * fromly));
+                } else {
+                    assPayment.setCdBalance(creditpaid);
+                }
 
                 assPayment.setAssBank(b_no);
                 assPayment.setAssCheckNo(chno);
-                assPayment.setCdBalance(creditpaid);
+
 
                 Serializable payy = session.save(assPayment);
                 AssPayment load = (AssPayment) session.load(AssPayment.class, payy);
@@ -1620,7 +1647,7 @@ public class PayObj {
                     pato = true;
                 }
 
-                if(!pato){
+                if (!pato) {
                     AssPayto payto = new AssPayto();
                     payto.setAssPayment(assPayment);
                     payto.setAssPaytoQno(0);
@@ -1632,8 +1659,6 @@ public class PayObj {
                     payto.setAssPaytoStatus(0);
                     session.save(payto);
                 }
-
-
 
 
                 System.out.println(payy.toString());
@@ -1667,14 +1692,22 @@ public class PayObj {
                 System.out.println(assessbilltype);
 
 
-
                 pvc.check.setSelected(false);
                 pvc.cash.setSelected(false);
-                if(assessbilltype.equals("no")){
+                if (assessbilltype.equals("no")) {
                     new DayendController().reprintAssessBill(rno);
-                }else{
+                } else {
                     viewId();
                 }
+
+                if (ca > 0) {
+                    UpdateStatus.updateRecipt(rno + "", 1, 0, 1, ca); // update Recipt Status
+                }
+                if (ch > 0) {
+                    UpdateStatus.updateRecipt(rno + "", 2, 0, 1, ch); // update Recipt Status
+                }
+
+
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1714,7 +1747,7 @@ public class PayObj {
             modle.GetInstans.getPrintBarcode().print(BarcodeStatic.customerName, BarcodeStatic.idRecipt + "", modle.Round.roundToString(BarcodeStatic.reTotal), BarcodeStatic.subject);
             BarcodeStatic.customerName = null;
             BarcodeStatic.subject = null;
-            BarcodeStatic.idRecipt = 0+"";
+            BarcodeStatic.idRecipt = 0 + "";
             BarcodeStatic.reTotal = 0;
 
         } else {
@@ -1722,7 +1755,7 @@ public class PayObj {
 //            modle.GetInstans.getPrintBarcode().print(BarcodeStatic.customerName, BarcodeStatic.idRecipt + "", modle.Round.roundToString(BarcodeStatic.reTotal), BarcodeStatic.subject);
             BarcodeStatic.customerName = null;
             BarcodeStatic.subject = null;
-            BarcodeStatic.idRecipt = 0+"";
+            BarcodeStatic.idRecipt = 0 + "";
             BarcodeStatic.reTotal = 0;
 
         }
@@ -1749,6 +1782,10 @@ public class PayObj {
     }
 
     public String genarateRisitNoByOfficeAndOder(int officeid, int idRecipt) {
+
+        int currentYear = GetInstans.getQuater().getCurrentYear();
+
+
         String no = "";
         try {
             ResultSet data = DB.getData("SELECT\n" +
@@ -1762,24 +1799,27 @@ public class PayObj {
                     "aha.idAHA,\n" +
                     "aha.bankinfo_id\n" +
                     "FROM\n" +
-                    "\t`AHA`\n" +
+                    "\t`aha`\n" +
                     "WHERE\n" +
                     "aha.aha_status = 1\n" +
                     "AND aha.appcat_id = 2\n" +
                     "AND aha.office_id = '" + officeid + "'");
 
             int bankinfo_id = 0;
+
             if (data2.last()) {
                 bankinfo_id = data2.getInt("bankinfo_id");
             }
 
-            int xx = 0;
+            int xx = 1;
             ResultSet data1 = DB.getData("SELECT\n" +
-                    "MAX(receipt.oder)\n" +
-                    "FROM `receipt`\n" +
+                    "Max(receipt.oder)\n" +
+                    "FROM\n" +
+                    "receipt\n" +
                     "WHERE\n" +
                     "receipt.Application_Catagory_idApplication_Catagory = 2 AND\n" +
-                    "receipt.office_idOffice = " + officeid);
+                    "receipt.office_idOffice = " + officeid + " AND\n" +
+                    "EXTRACT(YEAR FROM receipt.receipt_day)= " + currentYear);
 
             if (data1.last()) {
                 xx = data1.getInt("MAX(receipt.oder)");
@@ -1791,7 +1831,8 @@ public class PayObj {
                 no += receipt_code;
             }
 
-            no += "" + xx;
+
+            no += currentYear + "/ " + xx;
             conn.DB.setData("UPDATE `receipt`\n" +
                     "SET \n" +
                     " `receipt_print_no` = '" + no + "', \n" +

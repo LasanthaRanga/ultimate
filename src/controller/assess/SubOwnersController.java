@@ -104,7 +104,17 @@ public class SubOwnersController implements Initializable {
         }
         if (so == null) {
             if (txt_owner.getText().length() > 2 && txt_owner_sinhala.getText().length()>2) {
-                AssSubowner subowner = new AssSubowner(assessment, txt_owner.getText(), txt_nic.getText(), status, title, txt_owner_sinhala.getText());
+
+                AssSubowner subowner = new AssSubowner(assessment,
+                        txt_owner.getText(),
+                        txt_nic.getText(),
+                        status,
+                        title,
+                        txt_owner_sinhala.getText());
+
+
+
+
                 boolean saveSubOwner = subOwnerModle.saveSubOwner(subowner);
                 if (saveSubOwner) {
                     modle.Allert.notificationGood("Saved", txt_owner.getText());

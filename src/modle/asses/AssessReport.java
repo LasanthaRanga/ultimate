@@ -10,6 +10,7 @@ import conn.DB;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
 import modle.KeyVal;
+import modle.StaticViews;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.fill.JRVerticalFiller.*;
@@ -81,6 +82,7 @@ public class AssessReport {
         String year = "";
         String des = "";
         String day = "";
+        String sub = "";
         try {
             ResultSet data = DB.getData("SELECT\n" +
                     "kform_data.idkfom,\n" +
@@ -90,6 +92,10 @@ public class AssessReport {
                     "kform_data.valueTemil\n" +
                     "FROM\n" +
                     "kform_data\n");
+            ResultSet data1 = DB.getData("SELECT office.office_name FROM  `user` INNER JOIN office ON office.idOffice = `user`.office_idOffice WHERE `user`.idUser = " + StaticViews.getLogUser().getIdUser());
+            if (data1.last()) {
+                sub = data1.getString("office_name");
+            }
 
             while (data.next()) {
                 String key = data.getString("key");
@@ -113,7 +119,7 @@ public class AssessReport {
                 if (key.equals("arriars_day")) {
                     des = data.getString("valueSinhala");
                     day = data.getString("valueEnglish");
-                   // act_tamil = data.getString("valueTemil");
+                    // act_tamil = data.getString("valueTemil");
                 }
 
             }
@@ -138,6 +144,7 @@ public class AssessReport {
             param.put("assList", list);
             param.put("des", des);
             param.put("day", day);
+            param.put("sub", sub);
 
 
             JasperPrint jp = JasperFillManager.fillReport(jr, param, getConnection());
@@ -260,7 +267,7 @@ public class AssessReport {
     }
 
 
-    public void getReciptView(String id, double tyw, double tya, boolean print) {//two
+    public void getReciptView(String id, double tyw, double tya, boolean print, String subs) {//two
         try {
             String path = "C:\\Ultimate\\Report\\assessment/mbil.jrxml";// IN SYSTEM
             //  String path="C:\\Users\\Ranga\\JaspersoftWorkspace\\MyReports\\Assessment\\assbill.jrxml" ;
@@ -272,6 +279,7 @@ public class AssessReport {
             param.put("pid", id);
             param.put("tyw", tyw);
             param.put("tya", tya);
+            param.put("subs", subs);
             JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
 
 
@@ -358,8 +366,8 @@ public class AssessReport {
                     "ass_payment.cd_balance,\n" +
                     "street.street_name,\n" +
                     "ward.ward_name,\n" +
-                    "ass_payment.ass_Payment_goto_debit\n" +
-                    "FROM\n" +
+                    "ass_payment.ass_Payment_goto_debit, receipt.receipt_total" +
+                    " FROM\n" +
                     "receipt\n" +
                     "INNER JOIN ass_payment ON ass_payment.Receipt_idReceipt = receipt.idReceipt\n" +
                     "INNER JOIN assessment ON ass_payment.Assessment_idAssessment = assessment.idAssessment\n" +
@@ -408,7 +416,7 @@ public class AssessReport {
                 day = data.getString("receipt_day");
                 asno = data.getString("ward_name") + " | " + data.getString("street_name") + " | " + data.getString("assessment_no");
                 cus_name = data.getString("cus_name");
-                fullpay = data.getDouble("ass_Payment_fullTotal");
+                fullpay = data.getDouble("receipt.receipt_total");
                 cd = data.getDouble("cd_balance");
                 overnext = data.getDouble("ass_Payment_goto_debit");
                 warant += data.getDouble("ass_Payment_LY_Warrant");
@@ -445,7 +453,7 @@ public class AssessReport {
                 System.out.println(warant);
 
 
-                fullpay += cd + overnext;
+                // fullpay += cd + overnext;
 
             }
 
@@ -453,6 +461,7 @@ public class AssessReport {
             String path = "C:\\Ultimate\\Report\\assessment\\longbil.jrxml";// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, Integer>();
+
             param.put("pid", pid + "");
             param.put("ricitno", ricitno);
             param.put("day", day);
@@ -462,11 +471,22 @@ public class AssessReport {
             param.put("warant", modle.Round.roundToString(warant));
             param.put("qptot", modle.Round.roundToString(qptot));
             param.put("qptot", modle.Round.roundToString(qptot));
-            param.put("cd", modle.Round.roundToString(cd));
+
+            if (cd < 0) {
+                param.put("cd", modle.Round.roundToString(0));
+            } else {
+                param.put("cd", modle.Round.roundToString(cd));
+            }
+
+
             param.put("overnext", modle.Round.roundToString(overnext + overquater));
+
             param.put("fullpay", modle.Round.roundToString(fullpay));
+
             param.put("des", des);
+
             param.put("discount", modle.Round.roundToString(discount));
+
             param.put("chequeno", chequeno);
 
 
