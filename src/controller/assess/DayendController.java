@@ -32,6 +32,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import modle.AmountToWord.Convert;
 import modle.KeyVal;
 import modle.asses.DayEndProcess;
 import modle.asses.Quater;
@@ -776,7 +777,7 @@ public class DayendController implements Initializable {
 
         String quary1 = "SELECT\n" +
                 "receipt.idReceipt,\n" +
-                "receipt.Application_Catagory_idApplication_Catagory\n" +
+                "receipt.Application_Catagory_idApplication_Catagory, receipt.receipt_total\n" +
                 "FROM\n" +
                 "receipt where idReceipt =" + idRecipt;
 
@@ -784,6 +785,7 @@ public class DayendController implements Initializable {
         try {
             ResultSet data = DB.getData(quary1);
             if (data.last()) {
+                String s = Convert.convertToWord(data.getDouble("receipt_total"));
                 int apc = data.getInt("Application_Catagory_idApplication_Catagory");
                 if (apc == 2) {
                     String quary = "SELECT\n" +
@@ -812,7 +814,6 @@ public class DayendController implements Initializable {
                         }
 
 
-
                         String idass_payment = d.getString("idass_Payment");
                         ResultSet d2 = DB.getData("SELECT * FROM\n" +
                                 "ass_payment\n" +
@@ -831,13 +832,13 @@ public class DayendController implements Initializable {
 
                         String assessbilltype = KeyVal.getVal("assessbilltype");
                         if (assessbilltype.equals("short")) {
-                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, false,subowners);
+                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, false, subowners, s);
                         } else if (assessbilltype.equals("long")) {
-                            modle.GetInstans.getAssessReport().longBill(idass_payment, false);
+                            modle.GetInstans.getAssessReport().longBill(idass_payment, false, subowners, s);
                         } else if (assessbilltype.equals("plane")) {
-                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, false); //Plane
+                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, false, subowners, s); //Plane
                         } else {
-                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, false); //Report
+                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, false, subowners, s); //Report
                         }
                     }
 
@@ -925,7 +926,7 @@ public class DayendController implements Initializable {
 
         String quary1 = "SELECT\n" +
                 "receipt.idReceipt,\n" +
-                "receipt.Application_Catagory_idApplication_Catagory\n" +
+                "receipt.Application_Catagory_idApplication_Catagory, receipt.receipt_total \n" +
                 "FROM\n" +
                 "receipt where idReceipt =" + idRecipt;
 
@@ -933,6 +934,12 @@ public class DayendController implements Initializable {
         try {
             ResultSet data = DB.getData(quary1);
             if (data.last()) {
+
+
+                String s = Convert.convertToWord(data.getDouble("receipt_total"));
+                System.out.println(s);
+
+
                 int apc = data.getInt("Application_Catagory_idApplication_Catagory");
                 if (apc == 2) {
                     String quary = "SELECT\n" +
@@ -978,13 +985,13 @@ public class DayendController implements Initializable {
 
                         String assessbilltype = KeyVal.getVal("assessbilltype");
                         if (assessbilltype.equals("short")) {
-                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print, subowners);
+                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print, subowners, s);
                         } else if (assessbilltype.equals("long")) {
-                            modle.GetInstans.getAssessReport().longBill(idass_payment, print);
+                            modle.GetInstans.getAssessReport().longBill(idass_payment, print, subowners, s);
                         } else if (assessbilltype.equals("plane")) {
-                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, print); //Plane
+                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, print, subowners, s); //Plane
                         } else {
-                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, print); //Report
+                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, print, subowners, s); //Report
                         }
                     }
 

@@ -170,6 +170,14 @@ public class Mixincome implements Initializable {
     @FXML
     private JFXComboBox<String> com_bank;
 
+    @FXML
+    private JFXTextField txt_ref;
+
+    @FXML
+    private JFXButton btn_search;
+
+    @FXML
+    private JFXButton btn_clear;
 
     public static boolean hasCustomer = false;
     public static int idcustomer = 0;
@@ -206,6 +214,38 @@ public class Mixincome implements Initializable {
         col_tot.setCellValueFactory(new PropertyValueFactory<>("fulltot"));
         btn_pay.setDisable(true);
         modle.StaticViews.getMc().changeTitle("Mix Income");
+
+        StaticBadu.setMixincome(this);
+    }
+
+    public static Search.Cross cross = null;
+
+    public void loadCrossData(Search.Cross cross) {
+        this.cross = cross;
+        txt_ref.setText(cross.ref);
+        int cusID = cross.getCusID();
+        getCustomerById(cusID);
+        btn_clear.setDisable(false);
+    }
+
+
+    @FXML
+    void clearVoucher(ActionEvent event) {
+        clearVoucher();
+    }
+
+
+    public void clearVoucher() {
+        txt_ref.setText(null);
+        txt_name.setText(null);
+        txt_adl1.setText(null);
+        txt_adl2.setText(null);
+        txt_adl3.setText(null);
+        txt_mobile.setText(null);
+        idcustomer = 0;
+        hasCustomer = false;
+        btn_clear.setDisable(true);
+        this.cross = null;
     }
 
     @FXML
@@ -560,6 +600,11 @@ public class Mixincome implements Initializable {
                     mixincome.setMixincomeStatus(0);
                     mixincome.setMixincomePaytype(paytype);
 
+                    if (cross != null) {
+                        mixincome.setCrosRef(cross.getRef());
+                    }
+
+
                     String format = new SimpleDateFormat("yyyy-MM-dd").format(GetInstans.getQuater().getSystemDate());
 
                     Serializable save = session.save(mixincome);
@@ -711,6 +756,8 @@ public class Mixincome implements Initializable {
                             "LIMIT 1");
 
 
+
+
                     if (data.next()) {
                         riciptid = data.getInt("idReceipt");
                     }
@@ -776,7 +823,7 @@ public class Mixincome implements Initializable {
 
 
                 clearall();
-
+                clearVoucher();
             } catch (Exception e) {
 
                 e.printStackTrace();
@@ -893,6 +940,53 @@ public class Mixincome implements Initializable {
             idselected = tbl_mix.getSelectionModel().getSelectedItem().getId();
         }
     }
+
+    public void getCustomerById(int id) {
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "customer.idCustomer,\n" +
+                    "customer.cus_name,\n" +
+                    "customer.cus_person_title,\n" +
+                    "customer.cus_nic,\n" +
+                    "customer.cus_mobile,\n" +
+                    "customer.cus_tel,\n" +
+                    "customer.cus_address_l1,\n" +
+                    "customer.cus_address_l2,\n" +
+                    "customer.cus_address_l3,\n" +
+                    "customer.cus_sity,\n" +
+                    "customer.cus_status,\n" +
+                    "customer.cus_syn,\n" +
+                    "customer.cus_reg_date,\n" +
+                    "customer.cus_update_date,\n" +
+                    "customer.cus_name_sinhala,\n" +
+                    "customer.cus_address_l1_sinhala,\n" +
+                    "customer.cus_address_l2_sinhala,\n" +
+                    "customer.cus_address_l3_sinhala\n" +
+                    "FROM\n" +
+                    "customer\n" +
+                    "WHERE\n" +
+                    "customer.idCustomer = " + id);
+            if (data.last()) {
+                idcustomer = data.getInt("idcustomer");
+                String cus_name = data.getString("cus_name");
+                String cus_mobile = data.getString("cus_mobile");
+                String cus_address_l1 = data.getString("cus_address_l1");
+                String cus_address_l2 = data.getString("cus_address_l2");
+                String cus_address_l3 = data.getString("cus_address_l3");
+                txt_name.setText(cus_name);
+                txt_adl1.setText(cus_address_l1);
+                txt_adl2.setText(cus_address_l2);
+                txt_adl3.setText(cus_address_l3);
+                txt_mobile.setText(cus_mobile);
+                hasCustomer = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+
+    }
+
 
     public void getCustomerData() {
         try {
@@ -1063,6 +1157,17 @@ public class Mixincome implements Initializable {
 
     int paytype = 0;
 
+
+    @FXML
+    void noCashRadio(ActionEvent event) {
+        radioOnAction(event);
+        txt_ref.setDisable(false);
+        btn_search.setDisable(false);
+
+
+    }
+
+
     @FXML
     void radioOnAction(ActionEvent event) {
 
@@ -1084,6 +1189,8 @@ public class Mixincome implements Initializable {
             txt_chequeNo.setDisable(true);
             com_bank.setDisable(true);
             dp_chque.setDisable(true);
+            txt_ref.setDisable(true);
+            btn_search.setDisable(true);
 
         } else if (radio_cheque.isSelected()) {
             btn_pay.setDisable(true);
@@ -1093,6 +1200,8 @@ public class Mixincome implements Initializable {
             txt_chequeNo.setDisable(false);
             com_bank.setDisable(false);
             dp_chque.setDisable(false);
+            txt_ref.setDisable(true);
+            btn_search.setDisable(true);
 
         } else {
             btn_pay.setDisable(true);
@@ -1172,6 +1281,30 @@ public class Mixincome implements Initializable {
 
         public double getFulltot() {
             return fulltot;
+        }
+    }
+
+
+    @FXML
+    void clickOnSearch(ActionEvent event) {
+        System.out.println("click on  search");
+
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/view/mix/Search.fxml"));
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.getIcons().add(new Image("/grafics/info.png"));
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            //   Logger.getLogger(AssessmangController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

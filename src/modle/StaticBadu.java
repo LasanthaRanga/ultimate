@@ -2,9 +2,12 @@ package modle;
 
 import controller.assess.AppLaters;
 import controller.assess.Applications;
+import controller.mix.Mixincome;
+import controller.mix.Search;
 import javafx.collections.ObservableList;
 import modle.asses.HolderAssess;
 import modle.asses.SearchHolder;
+import net.sf.jasperreports.web.servlets.Controller;
 
 import java.util.Date;
 
@@ -15,7 +18,24 @@ public class StaticBadu {
     private static int appcatid;
     private static int appid;
     private static SearchHolder sh;
+    private static Search.Cross cross;
+    private static Mixincome mixincome;
 
+    public static void setMixincome(Mixincome mixincome) {
+        StaticBadu.mixincome = mixincome;
+    }
+
+    public static Mixincome getMixincome() {
+        return mixincome;
+    }
+
+    public static void setCross(Search.Cross cross) {
+        StaticBadu.cross = cross;
+    }
+
+    public static Search.Cross getCross() {
+        return cross;
+    }
 
     private static ObservableList<HolderAssess> selectedList;
 

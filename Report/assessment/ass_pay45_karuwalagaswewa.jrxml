@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2019-12-05T17:17:37 -->
+<!-- 2020-02-27T11:57:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ass_pay45" pageWidth="691" pageHeight="367" columnWidth="619" leftMargin="36" rightMargin="36" topMargin="0" bottomMargin="0" uuid="8c1402c1-b980-4fa2-b5dd-5435501eecd6">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Ultimate2.xml"/>
@@ -13,57 +13,55 @@
 	<parameter name="tyw" class="java.lang.Double">
 		<defaultValueExpression><![CDATA[$P{tyw}]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ward" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{ward}]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT
-	ass_payment.cd_balance,
-	ass_payment.idass_Payment,
-	ass_payment.ass_Payment_Q_Number,
-	ass_payment.ass_Payment_ThisYear,
-	ass_payment.ass_Payment_date,
-	ass_payment.ass_Payment_LY_Arrears,
-	ass_payment.ass_Payment_LY_Warrant,
-	ass_payment.ass_Payment_fullTotal,
-	ass_payment.ass_Payment_idUser,
-	ass_payment.Assessment_idAssessment,
-	ass_payment.Receipt_idReceipt,
-	ass_payment.ass_nature_idass_nature,
-	ass_payment.ass_allocation_idass_allocation,
-	ass_payment.ass_Payment_goto_debit,
-	ass_payment.ass_Payment_Status,
-	ass_payment.ass_cash,
-	ass_payment.ass_check,
-	ass_payment.ass_check_no,
-	ass_payment.ass_bank,
-	assessment.assessment_no,
-	customer.cus_name,
-	ward.ward_name,
-	street.street_name,
-	receipt.idReceipt,
-	receipt.receipt_print_no,
-	ass_nature.ass_nature_name,
-	ass_allocation.ass_allocation,
-	ass_payto.idass_payto,
-	receipt.office_idOffice,
-	office.office_name
+ass_payment.cd_balance,
+ass_payment.idass_Payment,
+ass_payment.ass_Payment_Q_Number,
+ass_payment.ass_Payment_ThisYear,
+ass_payment.ass_Payment_date,
+ass_payment.ass_Payment_LY_Arrears,
+ass_payment.ass_Payment_LY_Warrant,
+ass_payment.ass_Payment_fullTotal,
+ass_payment.ass_Payment_idUser,
+ass_payment.Assessment_idAssessment,
+ass_payment.Receipt_idReceipt,
+ass_payment.ass_nature_idass_nature,
+ass_payment.ass_allocation_idass_allocation,
+ass_payment.ass_Payment_goto_debit,
+ass_payment.ass_Payment_Status,
+ass_payment.ass_cash,
+ass_payment.ass_check,
+ass_payment.ass_check_no,
+ass_payment.ass_bank,
+assessment.assessment_no,
+customer.cus_name,
+ward.ward_name,
+street.street_name,
+receipt.idReceipt,
+receipt.receipt_print_no,
+ass_nature.ass_nature_name,
+ass_allocation.ass_allocation,
+ass_payto.idass_payto,
+`user`.user_full_name
 FROM
-	ass_payment
+ass_payment
 LEFT JOIN assessment ON ass_payment.Assessment_idAssessment = assessment.idAssessment
 LEFT JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer
 LEFT JOIN ward ON assessment.Ward_idWard = ward.idWard
-LEFT JOIN street ON street.Ward_idWard = ward.idWard
-AND assessment.Street_idStreet = street.idStreet
+LEFT JOIN street ON street.Ward_idWard = ward.idWard AND assessment.Street_idStreet = street.idStreet
 LEFT JOIN receipt ON ass_payment.Receipt_idReceipt = receipt.idReceipt
-LEFT JOIN ass_nature ON ass_payment.ass_nature_idass_nature = ass_nature.idass_nature
-AND assessment.ass_nature_idass_nature = ass_nature.idass_nature
-LEFT JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment
-AND ass_payment.ass_allocation_idass_allocation = ass_allocation.idass_allocation
+LEFT JOIN ass_nature ON ass_payment.ass_nature_idass_nature = ass_nature.idass_nature AND assessment.ass_nature_idass_nature = ass_nature.idass_nature
+LEFT JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment AND ass_payment.ass_allocation_idass_allocation = ass_allocation.idass_allocation
 LEFT JOIN ass_payto ON ass_payto.ass_Payment_idass_Payment = ass_payment.idass_Payment
-INNER JOIN office ON office.idOffice = receipt.office_idOffice
+LEFT JOIN `user` ON receipt.receipt_user_id = `user`.idUser
 WHERE
-	ass_allocation.ass_allocation_status = 1
-AND ass_payment.idass_Payment =  $P{pid} 
+ass_payment.idass_Payment =  $P{pid} 
 GROUP BY
-	ass_payment.idass_Payment]]>
+ass_payment.idass_Payment]]>
 	</queryString>
 	<field name="cd_balance" class="java.lang.Double"/>
 	<field name="idass_Payment" class="java.lang.Integer"/>
@@ -93,8 +91,7 @@ GROUP BY
 	<field name="ass_nature_name" class="java.lang.String"/>
 	<field name="ass_allocation" class="java.lang.Double"/>
 	<field name="idass_payto" class="java.lang.Integer"/>
-	<field name="office_idOffice" class="java.lang.Integer"/>
-	<field name="office_name" class="java.lang.String"/>
+	<field name="user_full_name" class="java.lang.String"/>
 	<variable name="assessment" class="java.lang.String">
 		<variableExpression><![CDATA[$F{ward_name} +"  "+ $F{street_name}+"  "+$F{assessment_no}]]></variableExpression>
 		<initialValueExpression><![CDATA[$F{ward_name} +"  "+ $F{street_name}+"  "+$F{assessment_no}]]></initialValueExpression>
@@ -139,7 +136,7 @@ GROUP BY
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="366" splitType="Stretch">
+		<band height="367" splitType="Stretch">
 			<image>
 				<reportElement x="-36" y="0" width="691" height="366" uuid="043f4f81-11bb-4c5e-a432-d2bdd3c811c1"/>
 				<imageExpression><![CDATA["C:/Ultimate/Report/images/waribil_karuwalagaswewa.png"]]></imageExpression>
@@ -273,7 +270,7 @@ GROUP BY
 				<textFieldExpression><![CDATA[$V{fullTotal}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="308" width="160" height="20" uuid="d3209ae3-a301-475f-b565-a08d0f7ff643">
+				<reportElement x="105" y="308" width="95" height="20" uuid="d3209ae3-a301-475f-b565-a08d0f7ff643">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
@@ -305,6 +302,18 @@ GROUP BY
 					<font size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="350" width="450" height="13" uuid="90da4394-36c2-456f-bf2c-243e2e284ac0"/>
+				<textFieldExpression><![CDATA[$F{user_full_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="350" width="54" height="13" uuid="8ad8c219-63f7-402a-ae59-0351356631e8"/>
+				<text><![CDATA[Created By: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="200" y="308" width="315" height="42" uuid="f53ea2a5-00c2-4e0b-b004-afea776cc86c"/>
+				<textFieldExpression><![CDATA[$P{ward}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

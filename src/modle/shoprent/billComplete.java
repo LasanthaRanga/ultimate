@@ -174,12 +174,21 @@ public class billComplete {
 
             while (data.next()) {
                 int tl_pay_detail_tbl_id = data.getInt("tl_pay_detail_tbl_id");
+
                 conn.DB.setData("UPDATE ` tl_cross_tbl_details` \n" +
                         "SET `tl_paid_status` = '1',\n" +
                         "`tl_date` = '' \n" +
                         "WHERE\n" +
                         "\t`tl_pay_details_id` = '" + tl_pay_detail_tbl_id + "'");
+
             }
+
+
+
+
+
+
+
 
 
         } catch (Exception e) {

@@ -46,8 +46,13 @@ Contributor(s):
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 
 
-    <property name="hibernate.connection.url">jdbc:mysql://MPS_03:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.password">root</property>
+    <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.8.210:3306/ultimate2?zeroDateTimeBehavior=convertToNull</property>-->
+    <!--<property name="hibernate.connection.password">Pan@#321#</property>-->
+
+
+    <property name="hibernate.connection.url">jdbc:mysql://124.43.11.162:3307/wennappuwaps?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.password">3ta@kela#una@</property>
+
 
 
     <!--<property name="hibernate.connection.url">jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=no&amp;amp;autoReconnect=true</property>-->

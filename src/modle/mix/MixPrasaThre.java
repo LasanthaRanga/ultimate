@@ -33,7 +33,12 @@ public class MixPrasaThre {
                     "\tmixincome.idMixincome,\n" +
                     "\tmixincome.mixincome_userid,\n" +
                     "\treceipt.cheack,\n" +
-                    "\treceipt.cesh, receipt_total\n" +
+                    "\treceipt.cesh, " +
+                    "receipt_total ,\n" +
+                    "mixincome.cros_ref,\n" +
+                    "mixincome.others,\n" +
+                    "mixincome.mixincome_paytype,\n" +
+                    "mixincome.customer_idCustomer\n" +
                     "FROM\n" +
                     "\treceipt\n" +
                     "INNER JOIN mixincome ON mixincome.idMixincome = receipt.recept_applicationId\n" +
@@ -46,6 +51,11 @@ public class MixPrasaThre {
             int mixincome_userid = 0;
             double receipt_total = 0;
 
+            int payType = 0;
+            String cros_ref = "";
+
+            int cusid = 0;
+
             double cheack = 0;
             double cesh = 0;
             if (data1.last()) {
@@ -55,9 +65,10 @@ public class MixPrasaThre {
 
                 cheack = data1.getDouble("cheack");
                 cesh = data1.getDouble("cesh");
-                 receipt_total = data1.getDouble("receipt_total");
-
-
+                receipt_total = data1.getDouble("receipt_total");
+                payType = data1.getInt("mixincome_paytype");
+                cros_ref = data1.getString("cros_ref");
+                cusid = data1.getInt("customer_idCustomer");
             }
 
             String quary = "SELECT\n" +
@@ -95,20 +106,40 @@ public class MixPrasaThre {
                 double md_amount = data.getDouble("md_amount");
                 int idVote = data.getInt("account_receipt_title_idAccount_receipt_title");
                 bankinfo_idBank = data.getInt("bankinfo_idBank");
+
                 if (md_amount > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat);
+                    if (payType == 3) {
+                        insertToCross(cros_ref, md_amount, idVote, date, cusid, idRecipt);
+                    } else {
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat);
+                    }
                 }
+
                 double vat = data.getDouble("md_vat");
                 if (vat > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat);
+                    if (payType == 3) {
+                        insertToCross(cros_ref, vat, VATID, date, cusid, idRecipt);
+                    } else {
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat);
+                    }
                 }
+
                 double nbt = data.getDouble("md_nbt");
                 if (nbt > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat);
+                    if (payType == 3) {
+                        insertToCross(cros_ref, nbt, NBTID, date, cusid, idRecipt);
+                    } else {
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat);
+                    }
                 }
+
                 double stamp = data.getDouble("md_stamp");
                 if (stamp > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat);
+                    if (payType == 3) {
+                        insertToCross(cros_ref, stamp, STAMPID, date, cusid, idRecipt);
+                    } else {
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat);
+                    }
                 }
             }
 
@@ -140,4 +171,18 @@ public class MixPrasaThre {
         }
 
     }
+
+
+    public void insertToCross(String ref, double ex_amount, int vote, String date, int cusid, int reciptid) {
+        try {
+            conn.DB.setData("INSERT INTO `ex_cross` (  `ex_refno`, `ex_amount`, `ex_cross_vote_id`, `ex_income_or_expence`, `ex_active_status`,  `date`, `cus_id`, `voucher_id`, `recipt_id`, `is_cross` )\n" +
+                    "VALUES\n" +
+                    "\t( '" + ref + "', " + ex_amount + ", " + vote + ", 1, 1,  '" + date + "'," + cusid + ", 0, " + reciptid + ", 0 )");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        }
+    }
+
+
 }

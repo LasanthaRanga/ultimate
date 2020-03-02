@@ -12,19 +12,30 @@ public class DB {
 
     static Connection c = null;
 
-    //    // Online Testing
+
+    // Local
+    public static final String DBPATH = "jdbc:mysql://PUJ_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
+    public static final String USER = "root";
+    public static final String PASS = "root";
+
+
+//    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3307/wennappuwaps?zeroDateTimeBehavior=convertToNull";
+//    public static final String USER = "root";
+//    public static final String PASS = "3ta@kela#una@";
+
+    //    // Pannala Online
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3306/pannala?zeroDateTimeBehavior=convertToNull";
 //    public static final String USER = "root";
 //    public static final String PASS = "3ta@kela#una@";
 
 
-  // MCK ONLINE
-    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
-    public static final String USER = "root";
-    public static final String PASS = "@Mck_#321";
+    // Ambalangoda Online
+//    public static final String DBPATH = "jdbc:mysql://124.43.8.155:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
+//    public static final String USER = "root";
+//    public static final String PASS = "Amb@#321#";
 
 
-    //    // Digital Ocean
+//    // Digital Ocean
 //    public static final String DBPATH = "jdbc:mysql://157.245.152.224:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
 //    public static final String USER = "root";
 //    public static final String PASS = "Cat2020@mysql";

@@ -207,7 +207,7 @@ public class AssessReport {
         }
     }
 
-    public void getReciptPrintEdited1(String id, double tyw, double tya, boolean print) {//one
+    public void getReciptPrintEdited1(String id, double tyw, double tya, boolean print,String subs, String word) {//one
         try {
 
             String path = "C:\\Ultimate\\Report\\assessment/mbilEdited.jrxml";// IN SYSTEM
@@ -216,6 +216,8 @@ public class AssessReport {
             param.put("pid", id);
             param.put("tyw", tyw);
             param.put("tya", tya);
+            param.put("subs", subs);
+            param.put("ward", word);
             JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
             if (print) {
                 JasperPrintManager.printReport(jp, false);
@@ -236,7 +238,7 @@ public class AssessReport {
     }
 
 
-    public void getReciptPrintPlane(String id, double tyw, double tya, boolean print) {//one
+    public void getReciptPrintPlane(String id, double tyw, double tya, boolean print,String subs, String word) {//one
         try {
 
             String ass_bill_path = KeyVal.getVal("ass_bill_path");
@@ -247,6 +249,9 @@ public class AssessReport {
             param.put("pid", id);
             param.put("tyw", tyw);
             param.put("tya", tya);
+            param.put("subs", subs);
+            param.put("ward", word);
+
             JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
             if (print) {
                 JasperPrintManager.printReport(jp, false);
@@ -267,7 +272,7 @@ public class AssessReport {
     }
 
 
-    public void getReciptView(String id, double tyw, double tya, boolean print, String subs) {//two
+    public void getReciptView(String id, double tyw, double tya, boolean print, String subs, String word) {//two
         try {
             String path = "C:\\Ultimate\\Report\\assessment/mbil.jrxml";// IN SYSTEM
             //  String path="C:\\Users\\Ranga\\JaspersoftWorkspace\\MyReports\\Assessment\\assbill.jrxml" ;
@@ -280,6 +285,7 @@ public class AssessReport {
             param.put("tyw", tyw);
             param.put("tya", tya);
             param.put("subs", subs);
+            param.put("ward", word);
             JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
 
 
@@ -345,7 +351,7 @@ public class AssessReport {
         }
     }
 
-    public void longBill(String pid, boolean print) {
+    public void longBill(String pid, boolean print,String subs, String word) {
 
         System.out.println(pid);
 
@@ -471,6 +477,8 @@ public class AssessReport {
             param.put("warant", modle.Round.roundToString(warant));
             param.put("qptot", modle.Round.roundToString(qptot));
             param.put("qptot", modle.Round.roundToString(qptot));
+            param.put("subs", subs);
+            param.put("ward", word);
 
             if (cd < 0) {
                 param.put("cd", modle.Round.roundToString(0));

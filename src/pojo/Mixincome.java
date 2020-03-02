@@ -20,12 +20,14 @@ public class Mixincome  implements java.io.Serializable {
      private Integer customerIdCustomer;
      private Integer mixincomeUserid;
      private Integer mixincomePaytype;
+     private String crosRef;
+     private String others;
      private Set<Mixdata> mixdatas = new HashSet<Mixdata>(0);
 
     public Mixincome() {
     }
 
-    public Mixincome(Date mixincomeDate, Double mixincomeFulltotal, Integer mixincomeStatus, Integer mixincomeYear, Integer customerIdCustomer, Integer mixincomeUserid, Integer mixincomePaytype, Set<Mixdata> mixdatas) {
+    public Mixincome(Date mixincomeDate, Double mixincomeFulltotal, Integer mixincomeStatus, Integer mixincomeYear, Integer customerIdCustomer, Integer mixincomeUserid, Integer mixincomePaytype, String crosRef, String others, Set<Mixdata> mixdatas) {
        this.mixincomeDate = mixincomeDate;
        this.mixincomeFulltotal = mixincomeFulltotal;
        this.mixincomeStatus = mixincomeStatus;
@@ -33,7 +35,10 @@ public class Mixincome  implements java.io.Serializable {
        this.customerIdCustomer = customerIdCustomer;
        this.mixincomeUserid = mixincomeUserid;
        this.mixincomePaytype = mixincomePaytype;
+       this.crosRef = crosRef;
+       this.others = others;
        this.mixdatas = mixdatas;
+
     }
    
     public Integer getIdMixincome() {
@@ -92,10 +97,16 @@ public class Mixincome  implements java.io.Serializable {
     public void setMixincomePaytype(Integer mixincomePaytype) {
         this.mixincomePaytype = mixincomePaytype;
     }
+
+    public void setCrosRef(String crosRef){this.crosRef = crosRef;}
+    public String getCrosRef() {return this.crosRef;}
+
+    public void setOthers(String others){this.others = others;}
+    public String getOthers() {return this.others;}
+
     public Set<Mixdata> getMixdatas() {
         return this.mixdatas;
     }
-    
     public void setMixdatas(Set<Mixdata> mixdatas) {
         this.mixdatas = mixdatas;
     }

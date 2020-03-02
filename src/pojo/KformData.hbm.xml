@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Dec 1, 2019 6:32:31 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Dec 31, 2019 11:13:29 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="pojo.KformData" table="kform_data" catalog="polpithigamaps" optimistic-lock="version">
+    <class name="pojo.KformData" table="kform_data" catalog="narammalaps" optimistic-lock="version">
         <id name="idkfom" type="java.lang.Integer">
             <column name="idkfom" />
             <generator class="identity" />
