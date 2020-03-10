@@ -126,7 +126,7 @@ public class ForgotPass implements Initializable {
 
     @FXML
     void userKeyReleased(KeyEvent event) {
-        if(event.getCode()==KeyCode.ENTER){
+        if (event.getCode() == KeyCode.ENTER) {
             getDataByUname(txt_user.getText());
         }
 
@@ -290,7 +290,7 @@ public class ForgotPass implements Initializable {
                 try {
                     int i = DB.setData("UPDATE `user`\n" +
                             "SET \n" +
-                            " `user_password` = 'admin2012' \n" +
+                            " `user_password` = '" + text + "' \n" +
                             "WHERE\n" +
                             "\t(`idUser` = '" + userid + "')");
 
@@ -304,16 +304,16 @@ public class ForgotPass implements Initializable {
                 }
 
             } else {
-                modle.Allert.notificationWorning("passwords don't match", "");
+                modle.Allert.notificationWorning(" don't match", "");
             }
-        }else {
+        } else {
             modle.Allert.notificationInfo("too short", "length must be more then 4");
         }
 
 
     }
 
-    public void clearaAll(){
+    public void clearaAll() {
         txt_question.setText(null);
         txt_answer.setText(null);
         pword2.setText(null);

@@ -153,7 +153,7 @@ public class billComplete {
 
     }
 
-    public void shopRentBillPrintAndComplete(String idRecipt, boolean print) {
+    public void tradeLicensBill(String idRecipt, boolean print) {
 
         try {
             ResultSet data = DB.getData("SELECT\n" +
@@ -180,6 +180,14 @@ public class billComplete {
                         "`tl_date` = '' \n" +
                         "WHERE\n" +
                         "\t`tl_pay_details_id` = '" + tl_pay_detail_tbl_id + "'");
+
+
+
+
+
+
+
+
 
             }
 

@@ -1,9 +1,10 @@
 <component name="libraryTable">
   <library name="report-font">
     <CLASSES>
-      <root url="jar://$USER_HOME$/OneDrive/Desktop/FONTS/report-font.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/report-font.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/../Final CAT/LIB/report-font.jar!/" recursive="false" />
   </library>
 </component>

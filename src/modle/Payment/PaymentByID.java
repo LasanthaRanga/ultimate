@@ -251,13 +251,7 @@ public class PaymentByID {
                 receipt_account_id = acc.getInt("receipt_account_id");
             }
 
-// Without Account
-//            ResultSet data = DB.getData("SELECT\n" +
-//                    "MAX(receipt.oder)\n" +
-//                    "FROM `receipt`\n" +
-//                    "WHERE\n" +
-//                    "receipt.Application_Catagory_idApplication_Catagory = '" + applicationcat + "' AND\n" +
-//                    "receipt.office_idOffice = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
+
 
             int currentYear = GetInstans.getQuater().getCurrentYear();
 
@@ -273,12 +267,6 @@ public class PaymentByID {
                     " EXTRACT(YEAR FROM receipt.receipt_day)= " + currentYear);
 
 
-//            ResultSet data3 = DB.getData("SELECT\n" +
-//                    "receipt_code_create.receipt_code\n" +
-//                    "FROM `receipt_code_create`\n" +
-//                    "WHERE\n" +
-//                    "receipt_code_create.application_id = '" + applicationcat + "' AND\n" +
-//                    "receipt_code_create.receipt_code_office_id = " + modle.StaticViews.getLogUser().getOfficeIdOffice());
 
             ResultSet data3 = DB.getData("SELECT\n" +
                     "\treceipt_code_create.receipt_code \n" +

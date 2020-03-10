@@ -14,10 +14,28 @@ public class DB {
 
 
     // Local
-    public static final String DBPATH = "jdbc:mysql://PUJ_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
+    public static final String DBPATH = "jdbc:mysql://localhost:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
     public static final String USER = "root";
     public static final String PASS = "root";
 
+//    Kuliuc
+//    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3307/ibbagamuwaps?zeroDateTimeBehavior=convertToNull";
+//    public static final String USER = "root";
+//    public static final String PASS = "3ta@kela#una@";
+
+
+
+//    Kuliuc
+//    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3307/chilaw?zeroDateTimeBehavior=convertToNull";
+//    public static final String USER = "root";
+//    public static final String PASS = "3ta@kela#una@";
+
+
+
+//    MCK
+//    public static final String DBPATH = "jdbc:mysql://MCK_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
+//    public static final String USER = "root";
+//    public static final String PASS = "@Mck_#321";
 
 //    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3307/wennappuwaps?zeroDateTimeBehavior=convertToNull";
 //    public static final String USER = "root";
@@ -52,9 +70,9 @@ public class DB {
 //    public static final String PASS = "a1c9pzfjz3tye8t1";
 
 
-//    public static final String DBPATH = "jdbc:mysql://124.43.11.162:3307/panduwasnuwaraps?zeroDateTimeBe havior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
+//    public static final String DBPATH = "jdbc:mysql://KULIPS_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull";
 //    public static final String USER = "root";
-//    public static final String PASS = "3ta@kela#una@";
+//    public static final String PASS = "Kulips@#321#";
 
 
     //    // POLPITHIGAMA PS
@@ -156,11 +174,6 @@ public class DB {
 //    public static final String USER = "root";
 //    public static final String PASS = "3ta@kela#una@";
 
-
-//    MCK
-//    public static final String DBPATH = "jdbc:mysql://MCK_SERVER:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
-//    public static final String USER = "root";
-//    public static final String PASS = "@Mck_#321";
 
 ////    MCK Online
 //    public static final String DBPATH = "jdbc:mysql://124.43.9.57:3306/ultimate2?zeroDateTimeBehavior=convertToNull&useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=no&amp;autoReconnect=true";
