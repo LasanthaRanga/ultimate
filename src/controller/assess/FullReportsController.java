@@ -25,10 +25,8 @@ import view.buttons.BTN;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -837,6 +835,41 @@ public class FullReportsController implements Initializable {
 
 
         return ripHolder;
+
+    }
+
+    @FXML
+    void getWarrantLatter(MouseEvent event) {
+        System.out.println(" Warrant Latter ");
+
+        Date systemDate = GetInstans.getQuater().getSystemDate();
+
+        System.out.println(systemDate);
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(systemDate);
+
+        c.add(Calendar.DATE, 20);
+
+        Date currentDatePlusOne = c.getTime();
+
+        System.out.println(currentDatePlusOne);
+
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(currentDatePlusOne);
+
+        System.out.println(format);
+
+
+        String ss = "";
+        for (HolderAssess holderAssess : List) {
+            ss += ",";
+            ss += holderAssess.getIdAssess();
+        }
+        ss = ss.substring(1);
+
+        System.out.println(ss);
+        modle.GetInstans.getAssessReport().getWarrantLatter(ss, format, GetInstans.getQuater().getCurrentYear(), GetInstans.getQuater().getCurrentQuater());
+
 
     }
 

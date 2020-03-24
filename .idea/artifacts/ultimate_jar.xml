@@ -62,6 +62,8 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jfoenix.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jfreechart-1.0.19.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jpa.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jsch-0.1.42.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jsch-0.1.54.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jxl-2.6.10.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/log4j-1.2.15.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/lucene-analyzers-common-4.5.1.jar" path-in-jar="/" />
@@ -69,11 +71,11 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/lucene-queryparser-4.5.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mchange-commons-java-0.2.3.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mondrian-3.1.1.12687.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.23-bin.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.46.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-8.0.18.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/slf4j-api-1.6.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/slf4j-simple-1.6.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/jsch-0.1.54.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$USER_HOME$/OneDrive/Desktop/FONTS/report-font.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-8.0.18.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

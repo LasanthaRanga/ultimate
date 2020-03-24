@@ -72,6 +72,35 @@ public class AssessReport {
     }
 
 
+    public void getWarrantLatter(String list, String date, int year, int quater) {
+        try {
+
+            String path = "C:\\Ultimate\\Report\\assessment\\warant_latter_chilaw.jrxml";// IN SYSTEM
+
+
+            System.out.println(path);
+
+
+            JasperReport jr = JasperCompileManager.compileReport(path);
+            HashMap param = new HashMap<String, Integer>();
+            param.put("list", list);
+            param.put("year", year);
+            param.put("day", date);
+            param.put("quater", quater);
+            JasperPrint jp = JasperFillManager.fillReport(jr, param, this.getConnection());
+            JasperViewer.viewReport(jp, false);
+
+
+        } catch (Exception jRException) {
+            jRException.printStackTrace();
+            Notifications.create()
+                    .title("Warning")
+                    .text("Can not generate report. Something went wrong.\n(" + jRException.getMessage() + ")")
+                    .hideAfter(Duration.seconds(3))
+                    .position(Pos.BOTTOM_RIGHT).showWarning();
+        }
+    }
+
     public void kformType2(String list) {
         String institute_sinhala = "";
         String institute_english = "";
@@ -207,7 +236,7 @@ public class AssessReport {
         }
     }
 
-    public void getReciptPrintEdited1(String id, double tyw, double tya, boolean print,String subs, String word) {//one
+    public void getReciptPrintEdited1(String id, double tyw, double tya, boolean print, String subs, String word) {//one
         try {
 
             String path = "C:\\Ultimate\\Report\\assessment/mbilEdited.jrxml";// IN SYSTEM
@@ -238,7 +267,7 @@ public class AssessReport {
     }
 
 
-    public void getReciptPrintPlane(String id, double tyw, double tya, boolean print,String subs, String word) {//one
+    public void getReciptPrintPlane(String id, double tyw, double tya, boolean print, String subs, String word) {//one
         try {
 
             String ass_bill_path = KeyVal.getVal("ass_bill_path");
@@ -351,7 +380,7 @@ public class AssessReport {
         }
     }
 
-    public void longBill(String pid, boolean print,String subs, String word) {
+    public void longBill(String pid, boolean print, String subs, String word) {
 
         System.out.println(pid);
 

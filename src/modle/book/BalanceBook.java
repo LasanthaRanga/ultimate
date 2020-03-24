@@ -78,33 +78,33 @@ public class BalanceBook {
                 int idUser = data.getInt("book.book_idUser");
                 int vote = data.getInt("book_reson_idVote");
                 double book_amount = data.getDouble("book_amount");
-                modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), vote, book_reson_idAccount, book_amount, idUser, idbook, 10);
+                modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), vote, book_reson_idAccount, book_amount, idUser, idbook, 10,1);
 
                 int dipvote = data.getInt("book_reson_diposit_vote");
                 if (dipvote > 0) {
                     double book_diposit = data.getDouble("book_diposit");
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), dipvote, book_reson_idAccount, book_diposit, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), dipvote, book_reson_idAccount, book_diposit, idUser, idbook, 10,1);
                 }
 
                 double book_vat = data.getDouble("book_vat");
                 if (book_vat > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), VATID, book_reson_idAccount, book_vat, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), VATID, book_reson_idAccount, book_vat, idUser, idbook, 10,1);
                 }
 
                 double book_nbt = data.getDouble("book_nbt");
                 if (book_nbt > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), NBTID, book_reson_idAccount, book_nbt, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), NBTID, book_reson_idAccount, book_nbt, idUser, idbook, 10,1);
                 }
                 double book_stamp = data.getDouble("book_stamp");
                 if (book_stamp > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), STAMPID, book_reson_idAccount, book_stamp, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), STAMPID, book_reson_idAccount, book_stamp, idUser, idbook, 10,1);
                 }
 
                 if (cesh > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), CASH, book_reson_idAccount, cesh, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), CASH, book_reson_idAccount, cesh, idUser, idbook, 10,1);
                 }
                 if (cheack > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), CHEQUE, book_reson_idAccount, cheack, idUser, idbook, 10);
+                    modle.Payment.CompleteAcc.insertToAccount(book_date, receipt_print_no, Integer.parseInt(idRecipt), CHEQUE, book_reson_idAccount, cheack, idUser, idbook, 10,1);
                 }
 
 

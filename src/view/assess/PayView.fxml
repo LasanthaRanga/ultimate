@@ -191,7 +191,7 @@
             </HBox>
          </children>
       </VBox>
-      <VBox layoutX="65.0" layoutY="328.0" prefHeight="303.0" prefWidth="371.0">
+      <VBox layoutX="65.0" layoutY="312.0" prefHeight="303.0" prefWidth="371.0">
          <children>
             <HBox prefHeight="29.0" prefWidth="388.0">
                <children>
@@ -288,7 +288,7 @@
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin></Text>
-                  <Text fx:id="txt_Total" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT" wrappingWidth="150.0">
+                  <Text fx:id="txt_Total" fill="#bc0000" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT" wrappingWidth="150.0">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -335,6 +335,23 @@
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
+            </HBox>
+            <HBox prefHeight="24.0" prefWidth="398.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Next Year Over Payment :" textAlignment="RIGHT" wrappingWidth="178.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Text>
+                  <Text fx:id="txt_over" fill="#148600" strokeType="OUTSIDE" strokeWidth="0.0" text="00" textAlignment="RIGHT" wrappingWidth="153.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+               </children>
             </HBox>
          </children>
       </VBox>

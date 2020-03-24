@@ -10,11 +10,10 @@ import modle.GetInstans;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import pojo.AssAllocation;
-import pojo.AssCreditdebit;
-import pojo.AssUpdateHistry;
-import pojo.Assessment;
+import pojo.*;
 
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -231,6 +230,53 @@ public class ChangeAllocation {
                             assAllocation.setAssAllocation(newAllocation);
                             session.save(assAllocation);
                             session.save(auh);
+
+                            //change have to pay
+                            AssNature assNature = ass.getAssNature();
+                            double qvalue = assNature.getAssNatureYearRate() * newAllocation /400;
+
+                            int x = (Integer) session.createCriteria(AssPayhistry.class).setProjection(Projections.max("idassPayHistry")).add(Restrictions.eq("assessment", ass)).uniqueResult();
+                            System.out.println(x);
+                            AssPayhistry ph = (AssPayhistry) session.load(pojo.AssPayhistry.class, x);
+
+                            Set<AssQstart> assQstarts = ass.getAssQstarts();
+                            for (AssQstart qs : assQstarts) {
+                                if (qs.getAssQstartStatus() == 1) {
+                                    Integer qn = qs.getAssQstartQuaterNumber();
+
+                                    if (qn == 1) {
+                                        if (ph.getAssPayHistryQ1status() == 0) {
+                                            double v = qvalue - ph.getAssPayHistryQ1();
+                                            qs.setAssQstartHaveToQpay(v);
+                                        }
+                                    }
+
+                                    if (qn == 2) {
+                                        if (ph.getAssPayHistryQ2status() == 0) {
+                                            double v = qvalue - ph.getAssPayHistryQ2();
+                                            qs.setAssQstartHaveToQpay(v);
+                                        }
+                                    }
+
+                                    if (qn == 3) {
+                                        if (ph.getAssPayHistryQ3status() == 0) {
+                                            double v = qvalue - ph.getAssPayHistryQ3();
+                                            qs.setAssQstartHaveToQpay(v);
+                                        }
+                                    }
+
+                                    if (qn == 4) {
+                                        if (ph.getAssPayHistryQ4status() == 0) {
+                                            double v = qvalue - ph.getAssPayHistryQ4();
+                                            qs.setAssQstartHaveToQpay(v);
+                                        }
+                                    }
+
+                                    session.update(qs);
+                                }
+                            }
+
+
                             //Credit Debit
 
                             double lastBal = Double.parseDouble(acc.txt_creditDebit.getText());
@@ -264,11 +310,12 @@ public class ChangeAllocation {
                             acc.txt_creditDebit.setText(modle.Round.roundToString(lastBal + cd));
 
                             transaction.commit();
-                            conn.DB.setData("UPDATE `ass_creditdebit` SET `user_id` = '"+modle.StaticViews.getLogUser().getIdUser()+"' WHERE `idAss_CreditDebit` ="+i);
+                            conn.DB.setData("UPDATE `ass_creditdebit` SET `user_id` = '" + modle.StaticViews.getLogUser().getIdUser() + "' WHERE `idAss_CreditDebit` =" + i);
 
                             modle.Allert.notificationGood("Success", "New Balance" + (lastBal + cd));
                             acc.btn_Save.setDisable(true);
                         } catch (Exception e) {
+                            e.printStackTrace();
                             transaction.rollback();
                             modle.Allert.notificationError("Error", e.getMessage());
                         } finally {
@@ -276,6 +323,7 @@ public class ChangeAllocation {
                         }
 
                     } catch (Exception e) {
+                        e.printStackTrace();
                         //New Allocation
                     }
                 } else {

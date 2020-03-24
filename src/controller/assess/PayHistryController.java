@@ -12,9 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import modle.asses.HolderAssess;
 import modle.asses.StaticBadu;
-import org.codehaus.groovy.runtime.powerassert.SourceText;
 
 import java.net.URL;
 import java.sql.ResultSet;
@@ -29,10 +27,10 @@ public class PayHistryController implements Initializable {
     private TableView<Histry> tbl_oldbill;
 
     @FXML
-    private TableColumn<Histry, String> col_date;
+    private TableColumn<Object, Object> col_date;
 
     @FXML
-    private TableColumn<Histry, String> col_risitno;
+    private TableColumn<Object, Object> col_risitno;
 
     @FXML
     private TableColumn<Histry, Double> col_total;

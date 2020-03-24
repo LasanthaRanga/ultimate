@@ -304,32 +304,32 @@ public class Recipt {
 
                 double book_amount = data.getDouble("book_amount");
                 int book_reson_idVote = data.getInt("book_reson_idVote");
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_idVote, receipt_account_id, book_amount, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_idVote, receipt_account_id, book_amount, receipt_user_id, recept_applicationId, 10,1);
 
 
                 double book_diposit = data.getDouble("book_diposit");
                 int book_reson_diposit_vote = data.getInt("book_reson_diposit_vote");
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_diposit_vote, receipt_account_id, book_diposit, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, book_reson_diposit_vote, receipt_account_id, book_diposit, receipt_user_id, recept_applicationId, 10,1);
 
                 double book_vat = data.getDouble("book_vat");
                 int vatid = 33;
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, vatid, receipt_account_id, book_vat, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, vatid, receipt_account_id, book_vat, receipt_user_id, recept_applicationId, 10,1);
 
                 double book_nbt = data.getDouble("book_nbt");
                 int nbt = 34;
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, nbt, receipt_account_id, book_nbt, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, nbt, receipt_account_id, book_nbt, receipt_user_id, recept_applicationId, 10,1);
 
                 double book_stamp = data.getDouble("book_stamp");
                 int stamp = 35;
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, stamp, receipt_account_id, book_stamp, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, stamp, receipt_account_id, book_stamp, receipt_user_id, recept_applicationId, 10,1);
 
                 double book_cash = data.getDouble("book_cash");
                 int cash = 65;
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, cash, receipt_account_id, book_cash, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, cash, receipt_account_id, book_cash, receipt_user_id, recept_applicationId, 10,1);
 
                 double book_chque = data.getDouble("book_chque");
                 int check = 66;
-                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, check, receipt_account_id, book_chque, receipt_user_id, recept_applicationId, 10);
+                modle.Payment.CompleteAcc.insertToAccount(receipt_day, receipt_print_no, idReceipt, check, receipt_account_id, book_chque, receipt_user_id, recept_applicationId, 10,1);
 
             }
         } catch (Exception e) {

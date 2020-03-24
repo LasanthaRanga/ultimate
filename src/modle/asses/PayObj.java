@@ -276,14 +276,18 @@ public class PayObj {
                         Q3paid = 0;
                         Q4paid = 0;
 
+                        double overpay = 0;
+
                         for (pojo.AssPayhistry object : list1) {
                             payhistry = object;
                             Q1paid += modle.Round.round(payhistry.getAssPayHistryQ1());
                             Q2paid += modle.Round.round(payhistry.getAssPayHistryQ2());
                             Q3paid += modle.Round.round(payhistry.getAssPayHistryQ3());
                             Q4paid += modle.Round.round(payhistry.getAssPayHistryQ4());
+                            overpay += modle.Round.round(payhistry.getAssPayHistryOver());
                         }
 
+                        pvc.txt_over.setText(modle.Maths.rondAnd2String(overpay));
 
                         Q1paidDis = 0;
                         Q2paidDis = 0;

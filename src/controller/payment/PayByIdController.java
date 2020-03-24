@@ -1266,28 +1266,28 @@ public class PayByIdController implements Initializable {
                 int idVote = data.getInt("account_receipt_title_idAccount_receipt_title");
                 bankinfo_idBank = data.getInt("bankinfo_idBank");
                 if (md_amount > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat);
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat,1);
                 }
                 double vat = data.getDouble("md_vat");
                 if (vat > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat);
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat,1);
                 }
                 double nbt = data.getDouble("md_nbt");
                 if (nbt > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat);
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat,1);
                 }
                 double stamp = data.getDouble("md_stamp");
                 if (stamp > 0) {
-                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat);
+                    modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat,1);
                 }
             }
 
             if (cesh > 0) {
-                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat);
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat,1);
             }
 
             if (cheack > 0) {
-                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat);
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat,1);
             }
 
             conn.DB.setData("UPDATE \n" +

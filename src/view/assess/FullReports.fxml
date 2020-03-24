@@ -104,5 +104,6 @@
             </TableView>
          </children>
       </AnchorPane>
+      <JFXButton layoutX="639.0" layoutY="382.0" onMouseClicked="#getWarrantLatter" prefHeight="25.0" prefWidth="275.0" style="-fx-background-color: #4CAF50;" text="Warrant Latter" />
     </children>
 </AnchorPane>

@@ -122,6 +122,7 @@ public class FullDayEnd implements Initializable {
             public void run() {
                 runDayEnd();
             }
+
         }).start();
     }
 
@@ -202,26 +203,42 @@ public class FullDayEnd implements Initializable {
                     Date parse = new SimpleDateFormat("yyyy-MM-dd").parse(receipt_day);
 
                     if (new modle.asses.DayEndProcess().dayEndProcessForOne(fde.getId(), parse)) {
+
                         conn.DB.setData("UPDATE `de`\n"
                                 + "SET \n"
                                 + " `staus` = '1' \n"
                                 + "WHERE\n"
                                 + "\t(`idde` = '" + idde + "')");
                     } else {
-                        conn.DB.setData("DELETE from de WHERE idde = " + idde);
+                        //  conn.DB.setData("DELETE from de WHERE idde = " + idde);
+                        modle.Allert.notificationWorning("Day End Not Completed", "Please Recheck  -  " + idde);
+                        break;
                     }
+
                     x++;
                     i = x / size;
                     dend_progras.setProgress(i);
                     pro_to.setProgress(i);
+
+
                 }
             }
 
+            int i1 = DB.setData("DELETE from de WHERE staus = 0");
+
+            if (i1 > 0) {
+                modle.Allert.notificationWorning("Day End Not Completed", "Please Recheck");
+            } else {
+                modle.Allert.notificationGood("Day End Completed", "Thank You");
+            }
+
             if (dp.getValue() != null) {
+
                 Date selectDate = Date.from(dp.getValue().atStartOfDay().atZone(ZoneId.of("Asia/Colombo")).toInstant());
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String day = simpleDateFormat.format(selectDate);
                 loadAllRecipt(day);
+
             } else {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String day = simpleDateFormat.format(new Date());

@@ -14,13 +14,13 @@
          <children>
             <JFXProgressBar fx:id="progras" layoutX="26.0" layoutY="19.0" prefHeight="28.0" prefWidth="926.0" progress="0.0" />
             <Text fx:id="txt_qStart" layoutX="26.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="926.0000184178352" />
-            <JFXButton fx:id="btn_process" disable="true" layoutX="380.0" layoutY="82.0" onAction="#qstartAction" prefHeight="39.0" prefWidth="218.0" style="-fx-background-color: #673AB7;" text="Quater Start Process" textFill="WHITE">
+            <JFXButton fx:id="btn_process" disable="true" layoutX="380.0" layoutY="82.0" onAction="#qstartAction" prefHeight="39.0" prefWidth="218.0" style="-fx-background-color: #673AB7;" text="Quater Start Process" textFill="WHITE" visible="false">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
          </children>
       </AnchorPane>
-      <JFXButton disable="true" layoutX="1084.0" layoutY="546.0" onAction="#clickOn10" style="-fx-background-color: #673AB7;" text="10 discount process button" textFill="WHITE" />
+      <JFXButton disable="true" layoutX="1084.0" layoutY="546.0" onAction="#clickOn10" style="-fx-background-color: #673AB7;" text="10 discount process button" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>

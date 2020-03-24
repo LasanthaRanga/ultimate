@@ -60,6 +60,8 @@
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jfoenix.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jfreechart-1.0.19.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jpa.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jsch-0.1.42.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jsch-0.1.54.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/jxl-2.6.10.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/log4j-1.2.15.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/lucene-analyzers-common-4.5.1.jar!/" />
@@ -67,6 +69,9 @@
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/lucene-queryparser-4.5.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mchange-commons-java-0.2.3.4.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mondrian-3.1.1.12687.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.23-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-5.1.46.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/mysql-connector-java-8.0.18.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/slf4j-api-1.6.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/../Final CAT/LIB/slf4j-simple-1.6.1.jar!/" />
     </CLASSES>

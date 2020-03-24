@@ -118,7 +118,7 @@ public class Search implements Initializable {
                         "ex_cross\n" +
                         "INNER JOIN customer ON customer.idCustomer = ex_cross.cus_id\n" +
                         "WHERE\n" +
-                        "ex_cross.is_cross = 1";
+                        "ex_cross.is_cross = 1 AND ex_active_status = 2";
             } else {
                 query = "SELECT\n" +
                         "ex_cross.ex_croess_detail_id,\n" +
@@ -140,7 +140,7 @@ public class Search implements Initializable {
                         "ex_cross\n" +
                         "INNER JOIN customer ON customer.idCustomer = ex_cross.cus_id\n" +
                         "WHERE\n" +
-                        "ex_cross.is_cross = 1 AND\n" +
+                        "ex_cross.is_cross = 1 AND ex_active_status = 2 AND\n" +
                         "ex_cross.ex_refno LIKE '%" + ref + "%'\n";
             }
 

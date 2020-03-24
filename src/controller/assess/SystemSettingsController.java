@@ -119,15 +119,21 @@ public class SystemSettingsController implements Initializable {
         Transaction transaction = session.beginTransaction();
         try {
             Systemdate systemDate = (Systemdate) session.createCriteria(Systemdate.class).add(Restrictions.eq("systemDateStatus", 1)).uniqueResult();
+
             if (systemDate != null) {
+
                 Date systemDate1 = systemDate.getSystemDate();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String dbDate = format.format(systemDate1);
                 String input = format.format(day);
+
                 if (dbDate.equals(input)) {
+
                     modle.Allert.notificationInfo("System is date already set", dbDate);
                     System.out.println("Samanai");
+
                 } else {
+
                     systemDate.setSystemDateStatus(0);
                     session.update(systemDate);
                     Systemdate sd = new Systemdate();
@@ -137,7 +143,9 @@ public class SystemSettingsController implements Initializable {
                     sd.setChangeUserId(uid);
                     session.save(sd);
                     System.out.println("UPDate Una");
+
                 }
+
             } else {
                 //
                 Systemdate sd = new Systemdate();
@@ -147,7 +155,11 @@ public class SystemSettingsController implements Initializable {
                 sd.setChangeUserId(uid);
                 session.save(sd);
                 System.out.println("EMptye Update");
+
             }
+
+
+
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

@@ -110,8 +110,9 @@ public class MixPrasaThre {
                 if (md_amount > 0) {
                     if (payType == 3) {
                         insertToCross(cros_ref, md_amount, idVote, date, cusid, idRecipt);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat,3);
                     } else {
-                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, idVote, bankinfo_idBank, md_amount, mixincome_userid, appid, appcat,1);
                     }
                 }
 
@@ -119,8 +120,9 @@ public class MixPrasaThre {
                 if (vat > 0) {
                     if (payType == 3) {
                         insertToCross(cros_ref, vat, VATID, date, cusid, idRecipt);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat,3);
                     } else {
-                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, VATID, bankinfo_idBank, vat, mixincome_userid, appid, appcat,1);
                     }
                 }
 
@@ -128,8 +130,9 @@ public class MixPrasaThre {
                 if (nbt > 0) {
                     if (payType == 3) {
                         insertToCross(cros_ref, nbt, NBTID, date, cusid, idRecipt);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat,3);
                     } else {
-                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NBTID, bankinfo_idBank, nbt, mixincome_userid, appid, appcat,1);
                     }
                 }
 
@@ -137,26 +140,31 @@ public class MixPrasaThre {
                 if (stamp > 0) {
                     if (payType == 3) {
                         insertToCross(cros_ref, stamp, STAMPID, date, cusid, idRecipt);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat,3);
                     } else {
-                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat);
+                        modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, STAMPID, bankinfo_idBank, stamp, mixincome_userid, appid, appcat,1);
                     }
                 }
             }
 
+
             if (cesh > 0) {
-                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat);
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CASH, bankinfo_idBank, cesh, mixincome_userid, appid, appcat,1);
                 UpdateStatus.updateRecipt(idRecipt + "", 1, 0, 1, cesh); // update Recipt Status
             }
 
+
             if (cheack > 0) {
-                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat);
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, CHQUE, bankinfo_idBank, cheack, mixincome_userid, appid, appcat,1);
                 UpdateStatus.updateRecipt(idRecipt + "", 2, 0, 1, cheack); // update Recipt Status
             }
 
+
             if (cheack == 0 && cesh == 0) {
-                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NOCASH, bankinfo_idBank, receipt_total, mixincome_userid, appid, appcat);
+                modle.Payment.CompleteAcc.insertToAccount(date, reciptNo, idRecipt, NOCASH, bankinfo_idBank, receipt_total, mixincome_userid, appid, appcat,3);
                 UpdateStatus.updateRecipt(idRecipt + "", 3, 0, 1, receipt_total); // update Recipt Status
             }
+
 
             conn.DB.setData("UPDATE \n" +
                     "`receipt`\n" +

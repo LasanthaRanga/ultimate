@@ -69,7 +69,7 @@ public class YQendProcess {
 
     public static void yearEndProcess(JFXProgressBar progras) {
         try {
-            ResultSet allAssess = DB.getData("SELECT assessment.idAssessment FROM assessment WHERE assessment_syn = 0");
+            ResultSet allAssess = DB.getData("SELECT assessment.idAssessment, assessment.isWarrant FROM assessment WHERE assessment_syn = 0");
             while ((allAssess.next())) {// Get All Activ Assessment
 
                 x = x + 1;
@@ -77,6 +77,9 @@ public class YQendProcess {
                 progras.setProgress(pro);
 
                 int idAssessment = allAssess.getInt("idAssessment");
+                int isWarrant = allAssess.getInt("isWarrant");
+
+
                 ResultSet overs = DB.getData("SELECT\n" +
                         "sum(ass_payhistry.ass_PayHistry_Over) as over\n" +
                         "FROM\n" +
@@ -264,6 +267,10 @@ public class YQendProcess {
 
                     if (q4status == 0 && havetopay > 10) {
                         q4warrant = modle.Maths.round2(quater * warrantrate / 100);
+                    }
+
+                    if (isWarrant == 0) {
+                        q4warrant = 0;
                     }
 
                     arriars += havetopay;

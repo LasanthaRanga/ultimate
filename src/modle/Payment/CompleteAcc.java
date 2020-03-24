@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class CompleteAcc {
 
-    public static boolean insertToAccount(String date, String recipt_no, int recipt_id, int vort_id, int acoount_id, double amount, int user_id, int app_id, int appcatid) {
+    public static boolean insertToAccount(String date, String recipt_no, int recipt_id, int vort_id, int acoount_id, double amount, int user_id, int app_id, int appcatid, int incom) {
 
         String quary = "INSERT INTO `account_ps_three` (\n" +
                 "\t`report_date`,\n" +
@@ -32,7 +32,7 @@ public class CompleteAcc {
                 "\t\t'" + user_id + "',\n" +
                 "\t\t'" + app_id + "',\n" +
                 "\t\t'" + appcatid + "',\n" +
-                "\t\t'1','" + StaticViews.getLogUser().getOfficeIdOffice() + "', '1' \n" +
+                "\t\t'1','" + StaticViews.getLogUser().getOfficeIdOffice() + "', '" + incom + "' \n" +
                 "\t);";
         try {
             conn.DB.setData(quary);

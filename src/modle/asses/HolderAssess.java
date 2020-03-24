@@ -116,4 +116,15 @@ public class HolderAssess {
     public JFXCheckBox getCh() {
         return ch;
     }
+
+
+    public void setSelected(boolean b) {
+        this.ch.setSelected(b);
+    }
+
+    public boolean isSelected() {
+        return this.ch.isSelected();
+    }
+
+
 }

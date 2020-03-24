@@ -608,6 +608,7 @@ public class Mixincome implements Initializable {
                     String format = new SimpleDateFormat("yyyy-MM-dd").format(GetInstans.getQuater().getSystemDate());
 
                     Serializable save = session.save(mixincome);
+
                     int mixindi = Integer.parseInt(save.toString());
 
 
@@ -1291,9 +1292,13 @@ public class Mixincome implements Initializable {
 
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/mix/Search.fxml"));
+
+            root = FXMLLoader.load(getClass().getResource("/view/mix/search.fxml"));
+
             Stage stage = new Stage();
+
             stage.initStyle(StageStyle.TRANSPARENT);
+
 
             stage.getIcons().add(new Image("/grafics/info.png"));
             Scene scene = new Scene(root);

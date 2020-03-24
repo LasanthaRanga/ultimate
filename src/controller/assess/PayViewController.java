@@ -85,6 +85,8 @@ public class PayViewController implements Initializable {
     @FXML
     public Text txt_cd;
     @FXML
+    public Text txt_over;
+    @FXML
     public Text q1_val;
     @FXML
     public Text q2_val;
@@ -338,7 +340,7 @@ public class PayViewController implements Initializable {
             txt_nature.setText("");
             txt_Pay.setText("");
 
-            txt_cd.setText("");
+            txt_cd.setText("00");
             q1_val.setText("00");
             q2_val.setText("00");
             q3_val.setText("00");
@@ -349,6 +351,8 @@ public class PayViewController implements Initializable {
             q2pidv.setText("00");
             q3pidv.setText("00");
             q4pidv.setText("00");
+            txt_over.setText("00");
+
 
             txt_chq_no.setText("");
             txt_cash.setText("");
