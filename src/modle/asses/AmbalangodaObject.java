@@ -1674,7 +1674,7 @@ public class AmbalangodaObject {
 
                 StaticBadu.setPayid("ID : " + rno);
                 StaticBadu.setPayTot("Total Rs : " + fulpay + "/=");
-                StaticBadu.setCusid(assessment.getCustomer().getIdCustomer());
+                StaticBadu.setCusid( AssCustomer.getFirstCustomerID(assessment.getIdAssessment()));
 
 
                 transaction.commit();

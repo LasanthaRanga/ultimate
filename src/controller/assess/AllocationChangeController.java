@@ -55,8 +55,6 @@ public class AllocationChangeController implements Initializable {
     @FXML
     public Text txt_warrant;
 
-    @FXML
-    public Text txt_overPay;
 
     @FXML
     public Text txt_creditDebit;
@@ -113,7 +111,14 @@ public class AllocationChangeController implements Initializable {
     public TableColumn<changeHistry, String> col_change;
 
     @FXML
-    private JFXCheckBox check_new;
+    public JFXCheckBox check_new;
+
+
+    @FXML
+    public Text txt_overpay;
+
+    @FXML
+    public JFXTextField txt_balance;
 
     @FXML
     void checkNewOnAction(ActionEvent event) {
@@ -135,22 +140,66 @@ public class AllocationChangeController implements Initializable {
     }
 
 
+    double overpayment = 0.0;
+
     @FXML
     void onKeyReleasedAssessmentID(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             clearAll();
             changeAllocation.getAllocation();
+            String overPay = changeAllocation.getOverPay();
+            txt_overpay.setText(overPay);
+            overpayment = Double.parseDouble(overPay);
         }
         if (txt_idAssess.getText().length() <= 0) {
+            clearAll();
             changeAllocation.getAllocation();
+
         }
     }
+
+
+    @FXML
+    void keyUpDebit(KeyEvent event) {
+        try {
+            double deb = 0.0;
+            if (txt_newCredit.getText().length() > 0) {
+                deb = Double.parseDouble(txt_newCredit.getText());
+            } else {
+                deb = 0.0;
+            }
+
+            double ove = overpayment;
+
+            double bal = 0;
+            double over = 0;
+
+            if (deb >= ove) {
+                bal = deb - ove;
+                over = 0;
+
+            } else {
+                over = ove - deb;
+                bal = 0;
+            }
+
+            txt_balance.setText(modle.Round.roundFormat(bal));
+            txt_overpay.setText(modle.Round.roundFormat(over));
+
+
+        } catch (Exception e) {
+
+        }
+
+
+    }
+
 
     @FXML
     void onMouseClickedSaveButton(MouseEvent event) {
         double cd = 0;
 
-        String text = txt_newCredit.getText();
+        String text = txt_balance.getText();
         try {
             cd = Double.parseDouble(text);
 
@@ -159,21 +208,22 @@ public class AllocationChangeController implements Initializable {
                 cd = cd * -1;
                 if (cd <= 0) {
                     changeAllocation.saveAllocationChangeHistory(cd);
-                  //  btn_Save.setDisable(true);
+                    //  btn_Save.setDisable(true);
                 } else {
                     modle.Allert.notificationInfo("Credit Value Must Be - ", "Please Check It");
                 }
             } else if (radio_Debit.isSelected()) {
                 if (cd >= 0) {
                     changeAllocation.saveAllocationChangeHistory(cd);
-                  //  btn_Save.setDisable(true);
+                    //  btn_Save.setDisable(true);
+                    changeAllocation.updateOverPay(txt_overpay.getText());
                 } else {
                     modle.Allert.notificationInfo("Debit Value Must Be + ", "Please Check It");
                 }
             } else {
                 if (cd == 0) {
                     changeAllocation.saveAllocationChangeHistory(cd);
-                 //   btn_Save.setDisable(true);
+                    //   btn_Save.setDisable(true);
                 } else {
                     modle.Allert.notificationInfo("Credit Debit Value Must Be 00 ", "Please Check It");
                 }
@@ -210,6 +260,7 @@ public class AllocationChangeController implements Initializable {
         radio_Credit.setSelected(false);
         txt_newCredit.setText("");
         txt_description.setText("");
+        txt_overpay.setText("");
     }
 
 

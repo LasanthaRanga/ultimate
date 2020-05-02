@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -30,21 +30,30 @@ public class SrShopProc  implements java.io.Serializable {
      private Double srShopNbt;
      private Double srShopStamp;
      private Double srShopSc1;
+     private Double srShopSc1Balance;
      private Double srShopSc2;
-     private Double srShopSc3;
+     private Double srShopSc2Balance;
+     private double srShopSc3;
+     private Double srShopSc3Balance;
      private Double srShopRent;
      private String srShopProcComplete;
      private Date srShopDate;
      private Date srShopTime;
      private Integer srShopUserIdProc;
      private Integer srShopFineProcessDoOrNot;
+     private Double srShopLastYearFine;
+     private Double srShopLastYearFineBal;
      private Set<SrShopPayment> srShopPayments = new HashSet<SrShopPayment>(0);
      private Set<SrShopFinePrcDetail> srShopFinePrcDetails = new HashSet<SrShopFinePrcDetail>(0);
 
     public SrShopProc() {
     }
 
-    public SrShopProc(SrShop srShop, Integer srShopProcYear, Integer srShopProcMonth, Double srShopLastYearArrears, Double srShopLastYearArrearsBal, Double srShopArrears, Double srShopArrearsBal, Double srShopFine, Double srShopFineBal, Double srShopRentalTot, Double srShopRentalTotBal, Double srShopOverPay, Double srShopOverPayBal, Double srShopVat, Double srShopNbt, Double srShopStamp, Double srShopSc1, Double srShopSc2, Double srShopSc3, Double srShopRent, String srShopProcComplete, Date srShopDate, Date srShopTime, Integer srShopUserIdProc, Integer srShopFineProcessDoOrNot, Set<SrShopPayment> srShopPayments, Set<SrShopFinePrcDetail> srShopFinePrcDetails) {
+	
+    public SrShopProc(double srShopSc3) {
+        this.srShopSc3 = srShopSc3;
+    }
+    public SrShopProc(SrShop srShop, Integer srShopProcYear, Integer srShopProcMonth, Double srShopLastYearArrears, Double srShopLastYearArrearsBal, Double srShopArrears, Double srShopArrearsBal, Double srShopFine, Double srShopFineBal, Double srShopRentalTot, Double srShopRentalTotBal, Double srShopOverPay, Double srShopOverPayBal, Double srShopVat, Double srShopNbt, Double srShopStamp, Double srShopSc1, Double srShopSc1Balance, Double srShopSc2, Double srShopSc2Balance, double srShopSc3, Double srShopSc3Balance, Double srShopRent, String srShopProcComplete, Date srShopDate, Date srShopTime, Integer srShopUserIdProc, Integer srShopFineProcessDoOrNot, Double srShopLastYearFine, Double srShopLastYearFineBal, Set<SrShopPayment> srShopPayments, Set<SrShopFinePrcDetail> srShopFinePrcDetails) {
        this.srShop = srShop;
        this.srShopProcYear = srShopProcYear;
        this.srShopProcMonth = srShopProcMonth;
@@ -62,14 +71,19 @@ public class SrShopProc  implements java.io.Serializable {
        this.srShopNbt = srShopNbt;
        this.srShopStamp = srShopStamp;
        this.srShopSc1 = srShopSc1;
+       this.srShopSc1Balance = srShopSc1Balance;
        this.srShopSc2 = srShopSc2;
+       this.srShopSc2Balance = srShopSc2Balance;
        this.srShopSc3 = srShopSc3;
+       this.srShopSc3Balance = srShopSc3Balance;
        this.srShopRent = srShopRent;
        this.srShopProcComplete = srShopProcComplete;
        this.srShopDate = srShopDate;
        this.srShopTime = srShopTime;
        this.srShopUserIdProc = srShopUserIdProc;
        this.srShopFineProcessDoOrNot = srShopFineProcessDoOrNot;
+       this.srShopLastYearFine = srShopLastYearFine;
+       this.srShopLastYearFineBal = srShopLastYearFineBal;
        this.srShopPayments = srShopPayments;
        this.srShopFinePrcDetails = srShopFinePrcDetails;
     }
@@ -200,6 +214,13 @@ public class SrShopProc  implements java.io.Serializable {
     public void setSrShopSc1(Double srShopSc1) {
         this.srShopSc1 = srShopSc1;
     }
+    public Double getSrShopSc1Balance() {
+        return this.srShopSc1Balance;
+    }
+    
+    public void setSrShopSc1Balance(Double srShopSc1Balance) {
+        this.srShopSc1Balance = srShopSc1Balance;
+    }
     public Double getSrShopSc2() {
         return this.srShopSc2;
     }
@@ -207,12 +228,26 @@ public class SrShopProc  implements java.io.Serializable {
     public void setSrShopSc2(Double srShopSc2) {
         this.srShopSc2 = srShopSc2;
     }
-    public Double getSrShopSc3() {
+    public Double getSrShopSc2Balance() {
+        return this.srShopSc2Balance;
+    }
+    
+    public void setSrShopSc2Balance(Double srShopSc2Balance) {
+        this.srShopSc2Balance = srShopSc2Balance;
+    }
+    public double getSrShopSc3() {
         return this.srShopSc3;
     }
     
-    public void setSrShopSc3(Double srShopSc3) {
+    public void setSrShopSc3(double srShopSc3) {
         this.srShopSc3 = srShopSc3;
+    }
+    public Double getSrShopSc3Balance() {
+        return this.srShopSc3Balance;
+    }
+    
+    public void setSrShopSc3Balance(Double srShopSc3Balance) {
+        this.srShopSc3Balance = srShopSc3Balance;
     }
     public Double getSrShopRent() {
         return this.srShopRent;
@@ -255,6 +290,20 @@ public class SrShopProc  implements java.io.Serializable {
     
     public void setSrShopFineProcessDoOrNot(Integer srShopFineProcessDoOrNot) {
         this.srShopFineProcessDoOrNot = srShopFineProcessDoOrNot;
+    }
+    public Double getSrShopLastYearFine() {
+        return this.srShopLastYearFine;
+    }
+    
+    public void setSrShopLastYearFine(Double srShopLastYearFine) {
+        this.srShopLastYearFine = srShopLastYearFine;
+    }
+    public Double getSrShopLastYearFineBal() {
+        return this.srShopLastYearFineBal;
+    }
+    
+    public void setSrShopLastYearFineBal(Double srShopLastYearFineBal) {
+        this.srShopLastYearFineBal = srShopLastYearFineBal;
     }
     public Set<SrShopPayment> getSrShopPayments() {
         return this.srShopPayments;

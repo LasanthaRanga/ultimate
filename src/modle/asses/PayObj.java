@@ -180,7 +180,7 @@ public class PayObj {
                         pvc.txt_street.setText(assessment.getStreet().getStreetName());
                         pvc.txt_assessmant.setText(assessment.getAssessmentNo());
                         pvc.txt_Obsaloot.setText(assessment.getAssessmentObsolete());
-                        pvc.txt_customer.setText(assessment.getCustomer().getCusName());
+                        pvc.txt_customer.setText(AssCustomer.getFirstCustomerName(assessment.getIdAssessment()));
 
                         yearRate = modle.Round.round(assessment.getAssNature().getAssNatureYearRate()); // NEW ROUND
                         warrantRate = modle.Round.round(assessment.getAssNature().getAssNatureWarrantRate()); // NEW ROUND
@@ -1670,10 +1670,10 @@ public class PayObj {
 
                 modle.asses.StaticBadu.setPayid("ID : " + rno);
                 modle.asses.StaticBadu.setPayTot("Total Rs : " + fulpay + "/=");
-                modle.asses.StaticBadu.setCusid(assessment.getCustomer().getIdCustomer());
+                modle.asses.StaticBadu.setCusid(AssCustomer.getFirstCustomerID(assessment.getIdAssessment()));
 
                 BarcodeStatic.subject = "Assessment";
-                BarcodeStatic.customerName = assessment.getCustomer().getCusName();
+                BarcodeStatic.customerName = AssCustomer.getFirstCustomerName(assessment.getIdAssessment());
                 BarcodeStatic.reTotal = fulpay;
                 BarcodeStatic.idRecipt = rno;
 

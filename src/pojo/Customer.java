@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -34,14 +34,16 @@ public class Customer  implements java.io.Serializable {
      private Set<CustomerHasCusCat> customerHasCusCats = new HashSet<CustomerHasCusCat>(0);
      private Set<Applications> applicationses = new HashSet<Applications>(0);
      private Set<SlDetails> slDetailses = new HashSet<SlDetails>(0);
-     private Set<Bop> bops = new HashSet<Bop>(0);
      private Set<Streetline> streetlines = new HashSet<Streetline>(0);
      private Set<Application> applications = new HashSet<Application>(0);
      private Set<Environment> environments = new HashSet<Environment>(0);
+     private Set<SwimApp> swimApps = new HashSet<SwimApp>(0);
+     private Set<SwimCorchRegistration> swimCorchRegistrations = new HashSet<SwimCorchRegistration>(0);
      private Set<CustomerHasTradeLicense> customerHasTradeLicenses = new HashSet<CustomerHasTradeLicense>(0);
      private Set<Uploads> uploadses = new HashSet<Uploads>(0);
+     private Set<TlApp> tlApps = new HashSet<TlApp>(0);
      private Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories = new HashSet<CustomerHasApplicationCatagory>(0);
-     private Set<Assessment> assessments = new HashSet<Assessment>(0);
+     private Set<Cushasassess> cushasassesses = new HashSet<Cushasassess>(0);
      private Set<Building> buildings = new HashSet<Building>(0);
      private Set<SrShopHasCustomer> srShopHasCustomers = new HashSet<SrShopHasCustomer>(0);
      private Set<CustomerHasSrShop> customerHasSrShops = new HashSet<CustomerHasSrShop>(0);
@@ -51,7 +53,7 @@ public class Customer  implements java.io.Serializable {
     public Customer() {
     }
 
-    public Customer(String cusName, String cusPersonTitle, String cusNic, String cusMobile, String cusTel, String cusAddressL1, String cusAddressL2, String cusAddressL3, String cusSity, Integer cusStatus, Integer cusSyn, Date cusRegDate, Date cusUpdateDate, String cusNameSinhala, String cusAddressL1Sinhala, String cusAddressL2Sinhala, String cusAddressL3Sinhala, Set<Contact> contacts, Set<CustomerHasCusCat> customerHasCusCats, Set<Applications> applicationses, Set<SlDetails> slDetailses, Set<Bop> bops, Set<Streetline> streetlines, Set<Application> applications, Set<Environment> environments, Set<CustomerHasTradeLicense> customerHasTradeLicenses, Set<Uploads> uploadses, Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories, Set<Assessment> assessments, Set<Building> buildings, Set<SrShopHasCustomer> srShopHasCustomers, Set<CustomerHasSrShop> customerHasSrShops, Set<Gali> galis, Set<Referenceno> referencenos) {
+    public Customer(String cusName, String cusPersonTitle, String cusNic, String cusMobile, String cusTel, String cusAddressL1, String cusAddressL2, String cusAddressL3, String cusSity, Integer cusStatus, Integer cusSyn, Date cusRegDate, Date cusUpdateDate, String cusNameSinhala, String cusAddressL1Sinhala, String cusAddressL2Sinhala, String cusAddressL3Sinhala, Set<Contact> contacts, Set<CustomerHasCusCat> customerHasCusCats, Set<Applications> applicationses, Set<SlDetails> slDetailses, Set<Streetline> streetlines, Set<Application> applications, Set<Environment> environments, Set<SwimApp> swimApps, Set<SwimCorchRegistration> swimCorchRegistrations, Set<CustomerHasTradeLicense> customerHasTradeLicenses, Set<Uploads> uploadses, Set<TlApp> tlApps, Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories, Set<Cushasassess> cushasassesses, Set<Building> buildings, Set<SrShopHasCustomer> srShopHasCustomers, Set<CustomerHasSrShop> customerHasSrShops, Set<Gali> galis, Set<Referenceno> referencenos) {
        this.cusName = cusName;
        this.cusPersonTitle = cusPersonTitle;
        this.cusNic = cusNic;
@@ -73,14 +75,16 @@ public class Customer  implements java.io.Serializable {
        this.customerHasCusCats = customerHasCusCats;
        this.applicationses = applicationses;
        this.slDetailses = slDetailses;
-       this.bops = bops;
        this.streetlines = streetlines;
        this.applications = applications;
        this.environments = environments;
+       this.swimApps = swimApps;
+       this.swimCorchRegistrations = swimCorchRegistrations;
        this.customerHasTradeLicenses = customerHasTradeLicenses;
        this.uploadses = uploadses;
+       this.tlApps = tlApps;
        this.customerHasApplicationCatagories = customerHasApplicationCatagories;
-       this.assessments = assessments;
+       this.cushasassesses = cushasassesses;
        this.buildings = buildings;
        this.srShopHasCustomers = srShopHasCustomers;
        this.customerHasSrShops = customerHasSrShops;
@@ -242,13 +246,6 @@ public class Customer  implements java.io.Serializable {
     public void setSlDetailses(Set<SlDetails> slDetailses) {
         this.slDetailses = slDetailses;
     }
-    public Set<Bop> getBops() {
-        return this.bops;
-    }
-    
-    public void setBops(Set<Bop> bops) {
-        this.bops = bops;
-    }
     public Set<Streetline> getStreetlines() {
         return this.streetlines;
     }
@@ -270,6 +267,20 @@ public class Customer  implements java.io.Serializable {
     public void setEnvironments(Set<Environment> environments) {
         this.environments = environments;
     }
+    public Set<SwimApp> getSwimApps() {
+        return this.swimApps;
+    }
+    
+    public void setSwimApps(Set<SwimApp> swimApps) {
+        this.swimApps = swimApps;
+    }
+    public Set<SwimCorchRegistration> getSwimCorchRegistrations() {
+        return this.swimCorchRegistrations;
+    }
+    
+    public void setSwimCorchRegistrations(Set<SwimCorchRegistration> swimCorchRegistrations) {
+        this.swimCorchRegistrations = swimCorchRegistrations;
+    }
     public Set<CustomerHasTradeLicense> getCustomerHasTradeLicenses() {
         return this.customerHasTradeLicenses;
     }
@@ -284,6 +295,13 @@ public class Customer  implements java.io.Serializable {
     public void setUploadses(Set<Uploads> uploadses) {
         this.uploadses = uploadses;
     }
+    public Set<TlApp> getTlApps() {
+        return this.tlApps;
+    }
+    
+    public void setTlApps(Set<TlApp> tlApps) {
+        this.tlApps = tlApps;
+    }
     public Set<CustomerHasApplicationCatagory> getCustomerHasApplicationCatagories() {
         return this.customerHasApplicationCatagories;
     }
@@ -291,12 +309,12 @@ public class Customer  implements java.io.Serializable {
     public void setCustomerHasApplicationCatagories(Set<CustomerHasApplicationCatagory> customerHasApplicationCatagories) {
         this.customerHasApplicationCatagories = customerHasApplicationCatagories;
     }
-    public Set<Assessment> getAssessments() {
-        return this.assessments;
+    public Set<Cushasassess> getCushasassesses() {
+        return this.cushasassesses;
     }
     
-    public void setAssessments(Set<Assessment> assessments) {
-        this.assessments = assessments;
+    public void setCushasassesses(Set<Cushasassess> cushasassesses) {
+        this.cushasassesses = cushasassesses;
     }
     public Set<Building> getBuildings() {
         return this.buildings;

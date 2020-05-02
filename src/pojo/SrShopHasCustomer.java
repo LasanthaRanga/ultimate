@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -17,17 +17,21 @@ public class SrShopHasCustomer  implements java.io.Serializable {
      private Date srShopHasCustomerStartDate;
      private Date srShopHasCustomerEndDate;
      private Double srShopHasCustomerTenderAmount;
+     private String srShopHasCustomerDescription;
+     private String srShopHasAgreementNo;
 
     public SrShopHasCustomer() {
     }
 
-    public SrShopHasCustomer(Customer customer, SrShop srShop, Integer srShopHasCustomerStatusActive, Date srShopHasCustomerStartDate, Date srShopHasCustomerEndDate, Double srShopHasCustomerTenderAmount) {
+    public SrShopHasCustomer(Customer customer, SrShop srShop, Integer srShopHasCustomerStatusActive, Date srShopHasCustomerStartDate, Date srShopHasCustomerEndDate, Double srShopHasCustomerTenderAmount, String srShopHasCustomerDescription, String srShopHasAgreementNo) {
        this.customer = customer;
        this.srShop = srShop;
        this.srShopHasCustomerStatusActive = srShopHasCustomerStatusActive;
        this.srShopHasCustomerStartDate = srShopHasCustomerStartDate;
        this.srShopHasCustomerEndDate = srShopHasCustomerEndDate;
        this.srShopHasCustomerTenderAmount = srShopHasCustomerTenderAmount;
+       this.srShopHasCustomerDescription = srShopHasCustomerDescription;
+       this.srShopHasAgreementNo = srShopHasAgreementNo;
     }
    
     public Integer getSrShopHasCustomerId() {
@@ -78,6 +82,20 @@ public class SrShopHasCustomer  implements java.io.Serializable {
     
     public void setSrShopHasCustomerTenderAmount(Double srShopHasCustomerTenderAmount) {
         this.srShopHasCustomerTenderAmount = srShopHasCustomerTenderAmount;
+    }
+    public String getSrShopHasCustomerDescription() {
+        return this.srShopHasCustomerDescription;
+    }
+    
+    public void setSrShopHasCustomerDescription(String srShopHasCustomerDescription) {
+        this.srShopHasCustomerDescription = srShopHasCustomerDescription;
+    }
+    public String getSrShopHasAgreementNo() {
+        return this.srShopHasAgreementNo;
+    }
+    
+    public void setSrShopHasAgreementNo(String srShopHasAgreementNo) {
+        this.srShopHasAgreementNo = srShopHasAgreementNo;
     }
 
 

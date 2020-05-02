@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -54,6 +54,7 @@ public class SlDetails  implements java.io.Serializable {
      private String slLandSize;
      private String slvillageName;
      private String engineerApprove;
+     private String paymentBtnStatus;
      private Set<SlDistance> slDistances = new HashSet<SlDistance>(0);
 
     public SlDetails() {
@@ -65,7 +66,7 @@ public class SlDetails  implements java.io.Serializable {
         this.customer = customer;
         this.office = office;
     }
-    public SlDetails(int idStreetLine, Customer customer, Office office, Integer applicationCateg, String assId, Date slDate, String sllotNo, String slPlanNo, String slDescription, Double slDeposit, Double slAmount, Double slVat, Double slNbt, Double slStamp, Double slOther1, Double slOther2, Integer slApproveToPay, String slServayOfficer, Date slServayDate, Integer slPersonTitle, Integer slYesNoId, Integer slYesNoId2, Integer slYesNoId3, Integer slYesNoId4, Integer slYesNoId5, Integer slYesNoId6, Integer slStatus, String slReferenceNo, String slApproveDescription, String slLandName, String slNotatyOfficer, Date slNotaryDate, String slDeedNo, String slApplicantName, Integer slGnId, String slPurpose, String slBnkorPlce, String slPlceAddress, String slloanAmnt, String slLandSize, String slvillageName, String engineerApprove, Set<SlDistance> slDistances) {
+    public SlDetails(int idStreetLine, Customer customer, Office office, Integer applicationCateg, String assId, Date slDate, String sllotNo, String slPlanNo, String slDescription, Double slDeposit, Double slAmount, Double slVat, Double slNbt, Double slStamp, Double slOther1, Double slOther2, Integer slApproveToPay, String slServayOfficer, Date slServayDate, Integer slPersonTitle, Integer slYesNoId, Integer slYesNoId2, Integer slYesNoId3, Integer slYesNoId4, Integer slYesNoId5, Integer slYesNoId6, Integer slStatus, String slReferenceNo, String slApproveDescription, String slLandName, String slNotatyOfficer, Date slNotaryDate, String slDeedNo, String slApplicantName, Integer slGnId, String slPurpose, String slBnkorPlce, String slPlceAddress, String slloanAmnt, String slLandSize, String slvillageName, String engineerApprove, String paymentBtnStatus, Set<SlDistance> slDistances) {
        this.idStreetLine = idStreetLine;
        this.customer = customer;
        this.office = office;
@@ -108,6 +109,7 @@ public class SlDetails  implements java.io.Serializable {
        this.slLandSize = slLandSize;
        this.slvillageName = slvillageName;
        this.engineerApprove = engineerApprove;
+       this.paymentBtnStatus = paymentBtnStatus;
        this.slDistances = slDistances;
     }
    
@@ -404,6 +406,13 @@ public class SlDetails  implements java.io.Serializable {
     
     public void setEngineerApprove(String engineerApprove) {
         this.engineerApprove = engineerApprove;
+    }
+    public String getPaymentBtnStatus() {
+        return this.paymentBtnStatus;
+    }
+    
+    public void setPaymentBtnStatus(String paymentBtnStatus) {
+        this.paymentBtnStatus = paymentBtnStatus;
     }
     public Set<SlDistance> getSlDistances() {
         return this.slDistances;

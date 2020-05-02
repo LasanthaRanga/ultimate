@@ -374,45 +374,38 @@ public class Search_assessController implements Initializable {
             sh.setCustomer(null);
         }
 
-        String qq = "SELECT\n"
-                + "	assessment.idAssessment,\n"
-                + "	assessment.Customer_idCustomer,\n"
-                + "	assessment.Ward_idWard,\n"
-                + "	assessment.Street_idStreet,\n"
-                + "	assessment.ass_nature_idass_nature,\n"
-                + "	assessment.ass_discription_idass_discription,\n"
-                + "	assessment.User_idUser,\n"
-                + "	assessment.assessment_oder,\n"
-                + "	assessment.assessment_no,\n"
-                + "	assessment.assessment_status,\n"
-                + "	assessment.assessment_syn,\n"
-                + "	assessment.assessment_comment,\n"
-                + "	assessment.assessment_obsolete,\n"
-                + "	customer.cus_name,\n"
-                + "	customer.cus_nic,\n"
-                + "	customer.cus_mobile,\n"
-                + "	customer.cus_address_l1,\n"
-                + "	customer.cus_tel,\n"
-                + "	customer.cus_address_l2,\n"
-                + "	customer.cus_address_l3,\n"
-                + "	customer.cus_sity,\n"
-                + "	customer.cus_status,\n"
-                + "	customer.idCustomer,\n"
-                + "	ward.ward_name,\n"
-                + "	ward.idWard,\n"
-                + "	street.idStreet,\n"
-                + "	street.street_name,\n"
-                + "	ass_nature.idass_nature,\n "
-                + "     ass_allocation.ass_allocation, \n"
-                + "	ass_nature.ass_nature_name \n"
-                + "FROM\n"
-                + "	assessment\n"
-                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
-                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
-                + "	AND assessment.Street_idStreet = street.idStreet\n"
-                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
-                + " INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1";
+        String qq = "SELECT\n" +
+                "assessment.idAssessment,\n" +
+                "assessment.Ward_idWard,\n" +
+                "assessment.Street_idStreet,\n" +
+                "assessment.ass_nature_idass_nature,\n" +
+                "assessment.ass_discription_idass_discription,\n" +
+                "assessment.User_idUser,\n" +
+                "assessment.assessment_oder,\n" +
+                "assessment.assessment_no,\n" +
+                "assessment.assessment_status,\n" +
+                "assessment.assessment_syn,\n" +
+                "assessment.assessment_comment,\n" +
+                "assessment.assessment_obsolete,\n" +
+                "ward.ward_name,\n" +
+                "ward.idWard,\n" +
+                "street.idStreet,\n" +
+                "street.street_name,\n" +
+                "ass_nature.idass_nature,\n" +
+                "ass_allocation.ass_allocation,\n" +
+                "ass_nature.ass_nature_name,\n" +
+                "GROUP_CONCAT( customer.cus_name SEPARATOR ' , ') AS cus_name,\n" +
+                "GROUP_CONCAT( customer.cus_nic SEPARATOR ' , ') AS cus_nic\n" +
+                "FROM\n" +
+                "assessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                "WHERE\n" +
+                "ass_allocation.ass_allocation_status = 1";
 
         if (where) {
             if (w) {
@@ -435,7 +428,7 @@ public class Search_assessController implements Initializable {
             }
         }
 
-        qq += " ORDER BY assessment.assessment_oder ASC ";
+        qq += " GROUP BY assessment.idAssessment ORDER BY assessment.assessment_oder ASC ";
         executeQuary(qq);
         StaticBadu.setSH(sh);
     }

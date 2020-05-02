@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Apr 18, 2020 9:36:55 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.SrShopHasCustomer" table="sr_shop_has_customer" catalog="ultimate2" optimistic-lock="version">
         <id name="srShopHasCustomerId" type="java.lang.Integer">
@@ -25,6 +25,12 @@
         </property>
         <property name="srShopHasCustomerTenderAmount" type="java.lang.Double">
             <column name="sr_shop_has_customer_tender_amount" precision="22" scale="0" />
+        </property>
+        <property name="srShopHasCustomerDescription" type="string">
+            <column name="sr_shop_has_customer_description" />
+        </property>
+        <property name="srShopHasAgreementNo" type="string">
+            <column name="sr_shop_has_agreement_no" length="50" />
         </property>
     </class>
 </hibernate-mapping>

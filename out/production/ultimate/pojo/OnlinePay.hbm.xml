@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 18, 2020 9:36:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojo.OnlinePay" table="online_pay" catalog="ultimate2" optimistic-lock="version">
+        <id name="idOnPaid" type="java.lang.Integer">
+            <column name="idOnPaid" />
+            <generator class="identity" />
+        </id>
+        <property name="oncusId" type="java.lang.Integer">
+            <column name="oncus_id" />
+        </property>
+        <property name="appcatId" type="java.lang.Integer">
+            <column name="appcat_id" />
+        </property>
+        <property name="appId" type="java.lang.Integer">
+            <column name="app_id" />
+        </property>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" />
+        </property>
+        <property name="amount" type="java.lang.Double">
+            <column name="amount" precision="22" scale="0" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="other" type="string">
+            <column name="other" />
+        </property>
+        <property name="other2" type="string">
+            <column name="other2" />
+        </property>
+        <property name="oder" type="java.lang.Integer">
+            <column name="oder" />
+        </property>
+    </class>
+</hibernate-mapping>

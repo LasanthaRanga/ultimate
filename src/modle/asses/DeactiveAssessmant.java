@@ -30,7 +30,7 @@ public class DeactiveAssessmant {
             dac.txt_ward.setText(ass.getWard().getWardName());
             dac.txt_street.setText(ass.getStreet().getStreetName());
             dac.txt_assessmant.setText(ass.getAssessmentNo());
-            dac.txt_customer.setText(ass.getCustomer().getCusName());
+            dac.txt_customer.setText(AssCustomer.getFirstCustomerName(ass.getIdAssessment()));
             dac.txt_oder.setText(ass.getAssessmentOder() + "");
             double allocation = 0;
             Set<AssAllocation> assAllocations = ass.getAssAllocations();

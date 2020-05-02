@@ -1558,7 +1558,7 @@ public class OnlineAssessPayProcess {
                 conn.DB.setData("UPDATE `receipt` \n" +
                         "SET \n" +
                         "`income_expense` = 1,\n" +
-                        "`cus_id` = " + assessment.getCustomer().getIdCustomer() + " ,\n" +
+                        "`cus_id` = " + AssCustomer.getFirstCustomerID(assessment.getIdAssessment()) + " ,\n" +
                         "`cross_recipt_or_voucher` = 1 ,\n" +
                         "`pay_type` = 4 ,\n" +
                         "`amount` = " + fulpay + " \n" +

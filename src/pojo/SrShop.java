@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -26,6 +26,7 @@ public class SrShop  implements java.io.Serializable {
      private Integer srShopFineProcCategoryId;
      private Set<SrShopFinePrcDetail> srShopFinePrcDetails = new HashSet<SrShopFinePrcDetail>(0);
      private Set<SrShopPayment> srShopPayments = new HashSet<SrShopPayment>(0);
+     private Set<SrProcMonthly> srProcMonthlies = new HashSet<SrProcMonthly>(0);
      private Set<CustomerHasSrShop> customerHasSrShops = new HashSet<CustomerHasSrShop>(0);
      private Set<SrShopHasCustomer> srShopHasCustomers = new HashSet<SrShopHasCustomer>(0);
      private Set<SrShopHasValue> srShopHasValues = new HashSet<SrShopHasValue>(0);
@@ -42,7 +43,7 @@ public class SrShop  implements java.io.Serializable {
         this.srBuilding = srBuilding;
         this.srFlow = srFlow;
     }
-    public SrShop(Office office, SrBuilding srBuilding, SrFlow srFlow, SrShopType srShopType, String srShopNo, Integer srShopNumber, Integer srShopStatus, String srShopDis, String cusname, String address, Integer customerIdCustomer, Integer srShopFineProcCategoryId, Set<SrShopFinePrcDetail> srShopFinePrcDetails, Set<SrShopPayment> srShopPayments, Set<CustomerHasSrShop> customerHasSrShops, Set<SrShopHasCustomer> srShopHasCustomers, Set<SrShopHasValue> srShopHasValues, Set<SrShopHasVote> srShopHasVotes, Set<SrShopPaymentCrossTbl> srShopPaymentCrossTbls, Set<SrShopProc> srShopProcs, Set<SrShopCashflow> srShopCashflows) {
+    public SrShop(Office office, SrBuilding srBuilding, SrFlow srFlow, SrShopType srShopType, String srShopNo, Integer srShopNumber, Integer srShopStatus, String srShopDis, String cusname, String address, Integer customerIdCustomer, Integer srShopFineProcCategoryId, Set<SrShopFinePrcDetail> srShopFinePrcDetails, Set<SrShopPayment> srShopPayments, Set<SrProcMonthly> srProcMonthlies, Set<CustomerHasSrShop> customerHasSrShops, Set<SrShopHasCustomer> srShopHasCustomers, Set<SrShopHasValue> srShopHasValues, Set<SrShopHasVote> srShopHasVotes, Set<SrShopPaymentCrossTbl> srShopPaymentCrossTbls, Set<SrShopProc> srShopProcs, Set<SrShopCashflow> srShopCashflows) {
        this.office = office;
        this.srBuilding = srBuilding;
        this.srFlow = srFlow;
@@ -57,6 +58,7 @@ public class SrShop  implements java.io.Serializable {
        this.srShopFineProcCategoryId = srShopFineProcCategoryId;
        this.srShopFinePrcDetails = srShopFinePrcDetails;
        this.srShopPayments = srShopPayments;
+       this.srProcMonthlies = srProcMonthlies;
        this.customerHasSrShops = customerHasSrShops;
        this.srShopHasCustomers = srShopHasCustomers;
        this.srShopHasValues = srShopHasValues;
@@ -170,6 +172,13 @@ public class SrShop  implements java.io.Serializable {
     
     public void setSrShopPayments(Set<SrShopPayment> srShopPayments) {
         this.srShopPayments = srShopPayments;
+    }
+    public Set<SrProcMonthly> getSrProcMonthlies() {
+        return this.srProcMonthlies;
+    }
+    
+    public void setSrProcMonthlies(Set<SrProcMonthly> srProcMonthlies) {
+        this.srProcMonthlies = srProcMonthlies;
     }
     public Set<CustomerHasSrShop> getCustomerHasSrShops() {
         return this.customerHasSrShops;

@@ -1,5 +1,5 @@
 package pojo;
-// Generated Oct 3, 2019 9:56:57 AM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -29,20 +29,23 @@ public class WbMConnection  implements java.io.Serializable {
      private Integer wbMAssignDivisionOrNot;
      private Integer wbMOfficeId;
      private Set<WbMDataClearTbl> wbMDataClearTbls = new HashSet<WbMDataClearTbl>(0);
-     private Set<WbTCusMeterRead> wbTCusMeterReads = new HashSet<WbTCusMeterRead>(0);
-     private Set<WbTPayment> wbTPayments = new HashSet<WbTPayment>(0);
+     private Set<WbOpay> wbOpays = new HashSet<WbOpay>(0);
      private Set<WbTPaid> wbTPaids = new HashSet<WbTPaid>(0);
-     private Set<WbTBillProcess> wbTBillProcesses = new HashSet<WbTBillProcess>(0);
      private Set<WbTConnectionHasVote> wbTConnectionHasVotes = new HashSet<WbTConnectionHasVote>(0);
      private Set<WbMMainOwner> wbMMainOwners = new HashSet<WbMMainOwner>(0);
+     private Set<WbMOverpay> wbMOverpays = new HashSet<WbMOverpay>(0);
      private Set<WbMReadingProb> wbMReadingProbs = new HashSet<WbMReadingProb>(0);
-     private Set<WbMSubOwner> wbMSubOwners = new HashSet<WbMSubOwner>(0);
      private Set<WbTMeterResetDetails> wbTMeterResetDetailses = new HashSet<WbTMeterResetDetails>(0);
+     private Set<WbTCusMeterRead> wbTCusMeterReads = new HashSet<WbTCusMeterRead>(0);
+     private Set<WbTPayment> wbTPayments = new HashSet<WbTPayment>(0);
+     private Set<WbTBillProcess> wbTBillProcesses = new HashSet<WbTBillProcess>(0);
+     private Set<WbProcessTbl> wbProcessTbls = new HashSet<WbProcessTbl>(0);
+     private Set<WbMSubOwner> wbMSubOwners = new HashSet<WbMSubOwner>(0);
 
     public WbMConnection() {
     }
 
-    public WbMConnection(ApplicationCatagory applicationCatagory, Assessment assessment, WbMConnectionTypeDetail wbMConnectionTypeDetail, WbMDevision wbMDevision, WbMNature wbMNature, WbMReadingProblems wbMReadingProblems, String wbMCustomerId, String wbMAddress, Date wbMFirstConnectionDate, Integer wbMStreet, String wbMMeterNo, Integer wbMOrderId, Integer wbMAssignCustomerOrNot, Integer wbMAssignDivisionOrNot, Integer wbMOfficeId, Set<WbMDataClearTbl> wbMDataClearTbls, Set<WbTCusMeterRead> wbTCusMeterReads, Set<WbTPayment> wbTPayments, Set<WbTPaid> wbTPaids, Set<WbTBillProcess> wbTBillProcesses, Set<WbTConnectionHasVote> wbTConnectionHasVotes, Set<WbMMainOwner> wbMMainOwners, Set<WbMReadingProb> wbMReadingProbs, Set<WbMSubOwner> wbMSubOwners, Set<WbTMeterResetDetails> wbTMeterResetDetailses) {
+    public WbMConnection(ApplicationCatagory applicationCatagory, Assessment assessment, WbMConnectionTypeDetail wbMConnectionTypeDetail, WbMDevision wbMDevision, WbMNature wbMNature, WbMReadingProblems wbMReadingProblems, String wbMCustomerId, String wbMAddress, Date wbMFirstConnectionDate, Integer wbMStreet, String wbMMeterNo, Integer wbMOrderId, Integer wbMAssignCustomerOrNot, Integer wbMAssignDivisionOrNot, Integer wbMOfficeId, Set<WbMDataClearTbl> wbMDataClearTbls, Set<WbOpay> wbOpays, Set<WbTPaid> wbTPaids, Set<WbTConnectionHasVote> wbTConnectionHasVotes, Set<WbMMainOwner> wbMMainOwners, Set<WbMOverpay> wbMOverpays, Set<WbMReadingProb> wbMReadingProbs, Set<WbTMeterResetDetails> wbTMeterResetDetailses, Set<WbTCusMeterRead> wbTCusMeterReads, Set<WbTPayment> wbTPayments, Set<WbTBillProcess> wbTBillProcesses, Set<WbProcessTbl> wbProcessTbls, Set<WbMSubOwner> wbMSubOwners) {
        this.applicationCatagory = applicationCatagory;
        this.assessment = assessment;
        this.wbMConnectionTypeDetail = wbMConnectionTypeDetail;
@@ -59,15 +62,18 @@ public class WbMConnection  implements java.io.Serializable {
        this.wbMAssignDivisionOrNot = wbMAssignDivisionOrNot;
        this.wbMOfficeId = wbMOfficeId;
        this.wbMDataClearTbls = wbMDataClearTbls;
-       this.wbTCusMeterReads = wbTCusMeterReads;
-       this.wbTPayments = wbTPayments;
+       this.wbOpays = wbOpays;
        this.wbTPaids = wbTPaids;
-       this.wbTBillProcesses = wbTBillProcesses;
        this.wbTConnectionHasVotes = wbTConnectionHasVotes;
        this.wbMMainOwners = wbMMainOwners;
+       this.wbMOverpays = wbMOverpays;
        this.wbMReadingProbs = wbMReadingProbs;
-       this.wbMSubOwners = wbMSubOwners;
        this.wbTMeterResetDetailses = wbTMeterResetDetailses;
+       this.wbTCusMeterReads = wbTCusMeterReads;
+       this.wbTPayments = wbTPayments;
+       this.wbTBillProcesses = wbTBillProcesses;
+       this.wbProcessTbls = wbProcessTbls;
+       this.wbMSubOwners = wbMSubOwners;
     }
    
     public Integer getWbMConnectionId() {
@@ -189,19 +195,12 @@ public class WbMConnection  implements java.io.Serializable {
     public void setWbMDataClearTbls(Set<WbMDataClearTbl> wbMDataClearTbls) {
         this.wbMDataClearTbls = wbMDataClearTbls;
     }
-    public Set<WbTCusMeterRead> getWbTCusMeterReads() {
-        return this.wbTCusMeterReads;
+    public Set<WbOpay> getWbOpays() {
+        return this.wbOpays;
     }
     
-    public void setWbTCusMeterReads(Set<WbTCusMeterRead> wbTCusMeterReads) {
-        this.wbTCusMeterReads = wbTCusMeterReads;
-    }
-    public Set<WbTPayment> getWbTPayments() {
-        return this.wbTPayments;
-    }
-    
-    public void setWbTPayments(Set<WbTPayment> wbTPayments) {
-        this.wbTPayments = wbTPayments;
+    public void setWbOpays(Set<WbOpay> wbOpays) {
+        this.wbOpays = wbOpays;
     }
     public Set<WbTPaid> getWbTPaids() {
         return this.wbTPaids;
@@ -209,13 +208,6 @@ public class WbMConnection  implements java.io.Serializable {
     
     public void setWbTPaids(Set<WbTPaid> wbTPaids) {
         this.wbTPaids = wbTPaids;
-    }
-    public Set<WbTBillProcess> getWbTBillProcesses() {
-        return this.wbTBillProcesses;
-    }
-    
-    public void setWbTBillProcesses(Set<WbTBillProcess> wbTBillProcesses) {
-        this.wbTBillProcesses = wbTBillProcesses;
     }
     public Set<WbTConnectionHasVote> getWbTConnectionHasVotes() {
         return this.wbTConnectionHasVotes;
@@ -231,6 +223,13 @@ public class WbMConnection  implements java.io.Serializable {
     public void setWbMMainOwners(Set<WbMMainOwner> wbMMainOwners) {
         this.wbMMainOwners = wbMMainOwners;
     }
+    public Set<WbMOverpay> getWbMOverpays() {
+        return this.wbMOverpays;
+    }
+    
+    public void setWbMOverpays(Set<WbMOverpay> wbMOverpays) {
+        this.wbMOverpays = wbMOverpays;
+    }
     public Set<WbMReadingProb> getWbMReadingProbs() {
         return this.wbMReadingProbs;
     }
@@ -238,19 +237,47 @@ public class WbMConnection  implements java.io.Serializable {
     public void setWbMReadingProbs(Set<WbMReadingProb> wbMReadingProbs) {
         this.wbMReadingProbs = wbMReadingProbs;
     }
-    public Set<WbMSubOwner> getWbMSubOwners() {
-        return this.wbMSubOwners;
-    }
-    
-    public void setWbMSubOwners(Set<WbMSubOwner> wbMSubOwners) {
-        this.wbMSubOwners = wbMSubOwners;
-    }
     public Set<WbTMeterResetDetails> getWbTMeterResetDetailses() {
         return this.wbTMeterResetDetailses;
     }
     
     public void setWbTMeterResetDetailses(Set<WbTMeterResetDetails> wbTMeterResetDetailses) {
         this.wbTMeterResetDetailses = wbTMeterResetDetailses;
+    }
+    public Set<WbTCusMeterRead> getWbTCusMeterReads() {
+        return this.wbTCusMeterReads;
+    }
+    
+    public void setWbTCusMeterReads(Set<WbTCusMeterRead> wbTCusMeterReads) {
+        this.wbTCusMeterReads = wbTCusMeterReads;
+    }
+    public Set<WbTPayment> getWbTPayments() {
+        return this.wbTPayments;
+    }
+    
+    public void setWbTPayments(Set<WbTPayment> wbTPayments) {
+        this.wbTPayments = wbTPayments;
+    }
+    public Set<WbTBillProcess> getWbTBillProcesses() {
+        return this.wbTBillProcesses;
+    }
+    
+    public void setWbTBillProcesses(Set<WbTBillProcess> wbTBillProcesses) {
+        this.wbTBillProcesses = wbTBillProcesses;
+    }
+    public Set<WbProcessTbl> getWbProcessTbls() {
+        return this.wbProcessTbls;
+    }
+    
+    public void setWbProcessTbls(Set<WbProcessTbl> wbProcessTbls) {
+        this.wbProcessTbls = wbProcessTbls;
+    }
+    public Set<WbMSubOwner> getWbMSubOwners() {
+        return this.wbMSubOwners;
+    }
+    
+    public void setWbMSubOwners(Set<WbMSubOwner> wbMSubOwners) {
+        this.wbMSubOwners = wbMSubOwners;
     }
 
 

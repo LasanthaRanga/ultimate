@@ -49,6 +49,64 @@ public class ChangeAllocation {
 
     }
 
+    public String getOverPay() {
+        String id = acc.txt_idAssess.getText();
+        int currentYear = GetInstans.getQuater().getCurrentYear();
+        double ass_payHistry_over = 0.0;
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "\tass_payhistry.ass_PayHistry_Over,\n" +
+                    "\tass_payhistry.Assessment_idAssessment,\n" +
+                    "\tass_payhistry.idass_PayHistry\n" +
+                    "FROM\n" +
+                    "\tass_payhistry\n" +
+                    "WHERE\n" +
+                    "\tass_payhistry.Assessment_idAssessment = '" + id + "'\n" +
+                    "AND ass_payhistry.ass_PayHistry_year = '" + currentYear + "'\n");
+
+            while (data.next()) {
+                ass_payHistry_over += data.getDouble("ass_PayHistry_Over");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return modle.Round.roundToString(ass_payHistry_over);
+    }
+
+
+    public void updateOverPay(String over) {
+        String id = acc.txt_idAssess.getText();
+        int currentYear = GetInstans.getQuater().getCurrentYear();
+        try {
+            ResultSet data = DB.getData("SELECT\n" +
+                    "\tass_payhistry.ass_PayHistry_Over,\n" +
+                    "\tass_payhistry.Assessment_idAssessment,\n" +
+                    "\tass_payhistry.idass_PayHistry\n" +
+                    "FROM\n" +
+                    "\tass_payhistry\n" +
+                    "WHERE\n" +
+                    "\tass_payhistry.Assessment_idAssessment = '" + id + "'\n" +
+                    "AND ass_payhistry.ass_PayHistry_year = '" + currentYear + "'\n");
+            int fetchSize = data.getFetchSize();
+
+            System.out.println(fetchSize);
+            int lastId = 0;
+            while (data.next()) {
+                int idass_payHistry = data.getInt("idass_PayHistry");
+                lastId = idass_payHistry;
+                conn.DB.setData("UPDATE `ass_payhistry` SET `ass_PayHistry_Over` = '0' WHERE `idass_PayHistry` = " + idass_payHistry);
+            }
+            conn.DB.setData("UPDATE `ass_payhistry` SET `ass_PayHistry_Over` = '" + over + "' WHERE `idass_PayHistry` = " + lastId);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void getAllocation() {
         String id = acc.txt_idAssess.getText();
         try {
@@ -192,6 +250,7 @@ public class ChangeAllocation {
         int newNature = GetInstans.getNature().getNatureIdByQuary(acc.com_nature.getSelectionModel().getSelectedItem());
         String dis = acc.txt_description.getText();
 
+
         if (text.length() > 0) {
             if (dis.length() > 2) {
                 if (newNature > 0) {
@@ -233,7 +292,7 @@ public class ChangeAllocation {
 
                             //change have to pay
                             AssNature assNature = ass.getAssNature();
-                            double qvalue = assNature.getAssNatureYearRate() * newAllocation /400;
+                            double qvalue = assNature.getAssNatureYearRate() * newAllocation / 400;
 
                             int x = (Integer) session.createCriteria(AssPayhistry.class).setProjection(Projections.max("idassPayHistry")).add(Restrictions.eq("assessment", ass)).uniqueResult();
                             System.out.println(x);

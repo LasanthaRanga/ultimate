@@ -1168,20 +1168,41 @@ public class BarcodePay implements Initializable {
         try {
 
             String query = "SELECT\n" +
-                    "customer.cus_name,\n" +
+                    "receipt.idReceipt,\n" +
                     "receipt.cheack,\n" +
                     "receipt.cesh,\n" +
-                    "assessment.assessment_no,\n" +
-                    "receipt.idReceipt,\n" +
-                    "receipt.receipt_status\n" +
+                    "receipt.amount,\n" +
+                    "customer.cus_name,\n" +
+                    "receipt.receipt_day, " +
+                    "receipt.receipt_status \n" +
                     "FROM\n" +
                     "receipt\n" +
                     "INNER JOIN assessment ON assessment.idAssessment = receipt.recept_applicationId\n" +
-                    "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+                    "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                    "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
                     "WHERE\n" +
                     "receipt.idReceipt = '" + text + "' AND\n" +
                     "receipt.Application_Catagory_idApplication_Catagory = 2 AND\n" +
-                    "receipt.receipt_day = '" + systemDateStringByQuary + "'\n";
+                    "receipt.receipt_day = '" + systemDateStringByQuary + "' AND\n" +
+                    "cushasassess.`status` = 1\n" +
+                    "ORDER BY\n" +
+                    "cushasassess.idCusHasAssess ASC";
+
+//            String query = "SELECT\n" +
+//                    "customer.cus_name,\n" +
+//                    "receipt.cheack,\n" +
+//                    "receipt.cesh,\n" +
+//                    "assessment.assessment_no,\n" +
+//                    "receipt.idReceipt,\n" +
+//                    "receipt.receipt_status\n" +
+//                    "FROM\n" +
+//                    "receipt\n" +
+//                    "INNER JOIN assessment ON assessment.idAssessment = receipt.recept_applicationId\n" +
+//                    "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+//                    "WHERE\n" +
+//                    "receipt.idReceipt = '" + text + "' AND\n" +
+//                    "receipt.Application_Catagory_idApplication_Catagory = 2 AND\n" +
+//                    "receipt.receipt_day = '" + systemDateStringByQuary + "'\n";
 
             ResultSet data = DB.getData(query);
             if (data.last()) {

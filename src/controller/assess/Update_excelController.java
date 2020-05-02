@@ -10,11 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +37,8 @@ import modle.ComboItem;
 import modle.ComboLoad;
 import modle.GetInstans;
 import modle.StaticBadu;
+import modle.asses.AssCustomer;
+import modle.asses.CustomerObj;
 import modle.asses.OldDataSave;
 import modle.asses.TableAsses;
 import org.controlsfx.control.textfield.TextFields;
@@ -196,7 +194,7 @@ public class Update_excelController implements Initializable {
             street = com_street.getSelectionModel().getSelectedItem();
             nature = com_nature.getSelectionModel().getSelectedItem();
             if (com_title.getSelectionModel().getSelectedItem() != null) {
-                persanalTitle = com_title.getSelectionModel().getSelectedItem().getId()+"";
+                persanalTitle = com_title.getSelectionModel().getSelectedItem().getId() + "";
             }
 
             //===
@@ -333,7 +331,7 @@ public class Update_excelController implements Initializable {
                     Assessment asess = new Assessment();
                     asess.setAssDiscription(d);
                     asess.setAssNature(n);
-                    asess.setCustomer(cus);
+                    // asess.setCustomer(cus);
                     asess.setWard(w);
                     asess.setStreet(s);
                     asess.setUser(u);
@@ -344,6 +342,12 @@ public class Update_excelController implements Initializable {
                     asess.setAssessmentSyn(0);
                     asess.setAssessmentComment(others);
                     Serializable save = session.save(asess);
+
+                    Cushasassess cushasassess = new Cushasassess();
+                    cushasassess.setCustomer(cus);
+                    cushasassess.setAssessment(asess);
+                    cushasassess.setStatus(1);
+                    cushasassess.setDate(new Date());
 
                     //allocation
                     modle.asses.StaticBadu.setAssessment(asess);
@@ -409,9 +413,9 @@ public class Update_excelController implements Initializable {
 
             if (customer.length() > 1 && assessmant.length() > 0) {
 
-                Integer idCustomer = a.getCustomer().getIdCustomer();
+                Integer idCustomer = AssCustomer.getFirstCustomerID(a.getIdAssessment());
                 System.out.println(idCustomer);
-                pojo.Customer cus = (pojo.Customer) session.load(pojo.Customer.class, a.getCustomer().getIdCustomer());
+                pojo.Customer cus = (pojo.Customer) session.load(pojo.Customer.class,idCustomer);
                 System.out.println(cus);
                 cus.setCusName(customer);
                 cus.setCusNic(nic);
@@ -607,13 +611,14 @@ public class Update_excelController implements Initializable {
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
         try {
             a = (Assessment) session.load(Assessment.class, idAsses);
+            CustomerObj cus = AssCustomer.getFirstCustomerObject(a.getIdAssessment());
             btn_save.setText("Update");
             btn_subOwner.setDisable(false);
             modle.asses.StaticBadu.setAssessment(a);
             txt_book_no.setText(a.getAssessmentOder() + "");
             txt_assessment.setText(a.getAssessmentNo());
             txt_obserloot.setText(a.getAssessmentObsolete());
-            txt_customer.setText(a.getCustomer().getCusName());
+            txt_customer.setText(cus.getCus_name());
             com_nature.getSelectionModel().select(a.getAssNature().getAssNatureName());
             com_ward.getSelectionModel().select(a.getStreet().getWard().getWardName());
             com_street.getSelectionModel().select(a.getStreet().getStreetName());
@@ -627,11 +632,11 @@ public class Update_excelController implements Initializable {
             }
 
             txt_discription.setText(a.getAssDiscription().getAssDiscription());
-            txt_nic.setText(a.getCustomer().getCusNic());
-            txt_adl1.setText(a.getCustomer().getCusAddressL1());
-            txt_adl2.setText(a.getCustomer().getCusAddressL2());
-            txt_adl3.setText(a.getCustomer().getCusAddressL3());
-            txt_mobile.setText(a.getCustomer().getCusMobile());
+            txt_nic.setText(cus.getCus_nic());
+            txt_adl1.setText(cus.getCus_address_l1());
+            txt_adl2.setText(cus.getCus_address_l2());
+            txt_adl3.setText(cus.getCus_address_l3());
+            txt_mobile.setText(cus.getCus_mobile());
             txt_others.setText(a.getAssessmentComment());
 
             subowner.clear();

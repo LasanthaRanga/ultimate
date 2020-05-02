@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 18, 2020 9:36:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojo.ExCross" table="ex_cross" catalog="ultimate2" optimistic-lock="version">
+        <id name="exCroessDetailId" type="java.lang.Integer">
+            <column name="ex_croess_detail_id" />
+            <generator class="identity" />
+        </id>
+        <property name="exRefno" type="string">
+            <column name="ex_refno" />
+        </property>
+        <property name="exAmount" type="java.lang.Double">
+            <column name="ex_amount" precision="22" scale="0" />
+        </property>
+        <property name="exCrossVoteId" type="java.lang.Integer">
+            <column name="ex_cross_vote_id" />
+        </property>
+        <property name="exIncomeOrExpence" type="java.lang.Integer">
+            <column name="ex_income_or_expence" />
+        </property>
+        <property name="exActiveStatus" type="java.lang.Integer">
+            <column name="ex_active_status" />
+        </property>
+        <property name="exStatus" type="java.lang.Integer">
+            <column name="ex_status" />
+        </property>
+        <property name="date" type="date">
+            <column name="date" length="10" />
+        </property>
+        <property name="cusId" type="java.lang.Integer">
+            <column name="cus_id" />
+        </property>
+        <property name="voucherId" type="java.lang.Integer">
+            <column name="voucher_id" />
+        </property>
+        <property name="reciptId" type="java.lang.Integer">
+            <column name="recipt_id" />
+        </property>
+        <property name="isCross" type="java.lang.Integer">
+            <column name="is_cross" />
+        </property>
+    </class>
+</hibernate-mapping>

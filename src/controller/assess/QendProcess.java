@@ -375,86 +375,155 @@ public class QendProcess implements Initializable {
             where = true;
         }
 
+        String qq = "SELECT\n" +
+                "assessment.idAssessment,\n" +
+                "assessment.Ward_idWard,\n" +
+                "assessment.Street_idStreet,\n" +
+                "assessment.ass_nature_idass_nature,\n" +
+                "assessment.ass_discription_idass_discription,\n" +
+                "assessment.User_idUser,\n" +
+                "assessment.assessment_oder,\n" +
+                "assessment.assessment_no,\n" +
+                "assessment.assessment_status,\n" +
+                "assessment.assessment_syn,\n" +
+                "assessment.assessment_comment,\n" +
+                "assessment.assessment_obsolete,\n" +
+                "ward.ward_name,\n" +
+                "ward.idWard,\n" +
+                "street.idStreet,\n" +
+                "street.street_name,\n" +
+                "ass_nature.idass_nature,\n" +
+                "ass_allocation.ass_allocation,\n" +
+                "ass_nature.ass_nature_name,\n" +
+                "GROUP_CONCAT( customer.cus_name SEPARATOR ' , ') AS cus_name,\n" +
+                "GROUP_CONCAT( customer.cus_nic SEPARATOR ' , ') AS cus_nic\n" +
+                "FROM\n" +
+                "assessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                "WHERE\n" +
+                "ass_allocation.ass_allocation_status = 1 AND\n" +
+                "assessment.isWarrant = 1\n";
 
-        String qq = "SELECT\n"
-                + "	assessment.idAssessment,\n"
-                + "	assessment.Customer_idCustomer,\n"
-                + "	assessment.Ward_idWard,\n"
-                + "	assessment.Street_idStreet,\n"
-                + "	assessment.ass_nature_idass_nature,\n"
-                + "	assessment.ass_discription_idass_discription,\n"
-                + "	assessment.User_idUser,\n"
-                + "	assessment.assessment_oder,\n"
-                + "	assessment.assessment_no,\n"
-                + "	assessment.assessment_status,\n"
-                + "	assessment.assessment_syn,\n"
-                + "	assessment.assessment_comment,\n"
-                + "	assessment.assessment_obsolete,\n"
-                + "	customer.cus_name,\n"
-                + "	customer.cus_nic,\n"
-                + "	customer.cus_mobile,\n"
-                + "	customer.cus_address_l1,\n"
-                + "	customer.cus_tel,\n"
-                + "	customer.cus_address_l2,\n"
-                + "	customer.cus_address_l3,\n"
-                + "	customer.cus_sity,\n"
-                + "	customer.cus_status,\n"
-                + "	customer.idCustomer,\n"
-                + "	ward.ward_name,\n"
-                + "	ward.idWard,\n"
-                + "	street.idStreet,\n"
-                + "	street.street_name,\n"
-                + "	ass_nature.idass_nature,\n "
-                + "     ass_allocation.ass_allocation, \n"
-                + "	ass_nature.ass_nature_name \n"
-                + "FROM\n"
-                + "	assessment\n"
-                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
-                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
-                + "	AND assessment.Street_idStreet = street.idStreet\n"
-                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
-                + "     INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1 AND isWarrant = 1 ";
+//        String qq = "SELECT\n"
+//                + "	assessment.idAssessment,\n"
+//                + "	assessment.Customer_idCustomer,\n"
+//                + "	assessment.Ward_idWard,\n"
+//                + "	assessment.Street_idStreet,\n"
+//                + "	assessment.ass_nature_idass_nature,\n"
+//                + "	assessment.ass_discription_idass_discription,\n"
+//                + "	assessment.User_idUser,\n"
+//                + "	assessment.assessment_oder,\n"
+//                + "	assessment.assessment_no,\n"
+//                + "	assessment.assessment_status,\n"
+//                + "	assessment.assessment_syn,\n"
+//                + "	assessment.assessment_comment,\n"
+//                + "	assessment.assessment_obsolete,\n"
+//                + "	customer.cus_name,\n"
+//                + "	customer.cus_nic,\n"
+//                + "	customer.cus_mobile,\n"
+//                + "	customer.cus_address_l1,\n"
+//                + "	customer.cus_tel,\n"
+//                + "	customer.cus_address_l2,\n"
+//                + "	customer.cus_address_l3,\n"
+//                + "	customer.cus_sity,\n"
+//                + "	customer.cus_status,\n"
+//                + "	customer.idCustomer,\n"
+//                + "	ward.ward_name,\n"
+//                + "	ward.idWard,\n"
+//                + "	street.idStreet,\n"
+//                + "	street.street_name,\n"
+//                + "	ass_nature.idass_nature,\n "
+//                + "     ass_allocation.ass_allocation, \n"
+//                + "	ass_nature.ass_nature_name \n"
+//                + "FROM\n"
+//                + "	assessment\n"
+//                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
+//                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
+//                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
+//                + "	AND assessment.Street_idStreet = street.idStreet\n"
+//                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
+//                + "     INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1 AND isWarrant = 1 ";
 
-        String r_qq = "SELECT\n"
-                + "	assessment.idAssessment,\n"
-                + "	assessment.Customer_idCustomer,\n"
-                + "	assessment.Ward_idWard,\n"
-                + "	assessment.Street_idStreet,\n"
-                + "	assessment.ass_nature_idass_nature,\n"
-                + "	assessment.ass_discription_idass_discription,\n"
-                + "	assessment.User_idUser,\n"
-                + "	assessment.assessment_oder,\n"
-                + "	assessment.assessment_no,\n"
-                + "	assessment.assessment_status,\n"
-                + "	assessment.assessment_syn,\n"
-                + "	assessment.assessment_comment,\n"
-                + "	assessment.assessment_obsolete,\n"
-                + "	customer.cus_name,\n"
-                + "	customer.cus_nic,\n"
-                + "	customer.cus_mobile,\n"
-                + "	customer.cus_address_l1,\n"
-                + "	customer.cus_tel,\n"
-                + "	customer.cus_address_l2,\n"
-                + "	customer.cus_address_l3,\n"
-                + "	customer.cus_sity,\n"
-                + "	customer.cus_status,\n"
-                + "	customer.idCustomer,\n"
-                + "	ward.ward_name,\n"
-                + "	ward.idWard,\n"
-                + "	street.idStreet,\n"
-                + "	street.street_name,\n"
-                + "	ass_nature.idass_nature,\n "
-                + "     ass_allocation.ass_allocation, \n"
-                + "	ass_nature.ass_nature_name \n"
-                + "FROM\n"
-                + "	assessment\n"
-                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
-                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
-                + "	AND assessment.Street_idStreet = street.idStreet\n"
-                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
-                + "     INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1 AND isWarrant = 0 ";
+        String r_qq = "SELECT\n" +
+                "assessment.idAssessment,\n" +
+                "assessment.Ward_idWard,\n" +
+                "assessment.Street_idStreet,\n" +
+                "assessment.ass_nature_idass_nature,\n" +
+                "assessment.ass_discription_idass_discription,\n" +
+                "assessment.User_idUser,\n" +
+                "assessment.assessment_oder,\n" +
+                "assessment.assessment_no,\n" +
+                "assessment.assessment_status,\n" +
+                "assessment.assessment_syn,\n" +
+                "assessment.assessment_comment,\n" +
+                "assessment.assessment_obsolete,\n" +
+                "ward.ward_name,\n" +
+                "ward.idWard,\n" +
+                "street.idStreet,\n" +
+                "street.street_name,\n" +
+                "ass_nature.idass_nature,\n" +
+                "ass_allocation.ass_allocation,\n" +
+                "ass_nature.ass_nature_name,\n" +
+                "GROUP_CONCAT( customer.cus_name SEPARATOR ' , ') AS cus_name,\n" +
+                "GROUP_CONCAT( customer.cus_nic SEPARATOR ' , ') AS cus_nic\n" +
+                "FROM\n" +
+                "assessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                "WHERE\n" +
+                "ass_allocation.ass_allocation_status = 1 AND\n" +
+                "assessment.isWarrant = 0\n";
+
+
+
+//        String r_qq = "SELECT\n"
+//                + "	assessment.idAssessment,\n"
+//                + "	assessment.Customer_idCustomer,\n"
+//                + "	assessment.Ward_idWard,\n"
+//                + "	assessment.Street_idStreet,\n"
+//                + "	assessment.ass_nature_idass_nature,\n"
+//                + "	assessment.ass_discription_idass_discription,\n"
+//                + "	assessment.User_idUser,\n"
+//                + "	assessment.assessment_oder,\n"
+//                + "	assessment.assessment_no,\n"
+//                + "	assessment.assessment_status,\n"
+//                + "	assessment.assessment_syn,\n"
+//                + "	assessment.assessment_comment,\n"
+//                + "	assessment.assessment_obsolete,\n"
+//                + "	customer.cus_name,\n"
+//                + "	customer.cus_nic,\n"
+//                + "	customer.cus_mobile,\n"
+//                + "	customer.cus_address_l1,\n"
+//                + "	customer.cus_tel,\n"
+//                + "	customer.cus_address_l2,\n"
+//                + "	customer.cus_address_l3,\n"
+//                + "	customer.cus_sity,\n"
+//                + "	customer.cus_status,\n"
+//                + "	customer.idCustomer,\n"
+//                + "	ward.ward_name,\n"
+//                + "	ward.idWard,\n"
+//                + "	street.idStreet,\n"
+//                + "	street.street_name,\n"
+//                + "	ass_nature.idass_nature,\n "
+//                + "     ass_allocation.ass_allocation, \n"
+//                + "	ass_nature.ass_nature_name \n"
+//                + "FROM\n"
+//                + "	assessment\n"
+//                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
+//                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
+//                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
+//                + "	AND assessment.Street_idStreet = street.idStreet\n"
+//                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
+//                + "     INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1 AND isWarrant = 0 ";
 
         if (where) {
             if (w) {
@@ -484,8 +553,8 @@ public class QendProcess implements Initializable {
             }
         }
 
-        qq += " ORDER BY assessment.assessment_oder ASC ";
-        r_qq += " ORDER BY assessment.assessment_oder ASC ";
+        qq += "GROUP BY assessment.idAssessment ORDER BY assessment.assessment_oder ASC ";
+        r_qq += "GROUP BY assessment.idAssessment ORDER BY assessment.assessment_oder ASC ";
         executeQuary(qq);
         executeR_Quary(r_qq);
     }
@@ -500,6 +569,7 @@ public class QendProcess implements Initializable {
             List.clear();
             while (rs.next()) {
                 HolderAssess holderAssess = new HolderAssess(rs.getInt("idAssessment"), rs.getDouble("assessment_oder"), rs.getString("ass_nature.ass_nature_name"), rs.getString("ward_name"), rs.getString("street_name"), rs.getString("assessment_no"), rs.getString("assessment_obsolete"), rs.getDouble("ass_allocation.ass_allocation"), rs.getString("cus_name"), rs.getString("assessment_status"));
+                //           HolderAssess holderAssess = new HolderAssess(rs.getInt("idAssessment"), rs.getDouble("assessment_oder"), rs.getString("ass_nature.ass_nature_name"), rs.getString("ward_name"), rs.getString("street_name"), rs.getString("assessment_no"), rs.getString("assessment_obsolete"), rs.getDouble("ass_allocation.ass_allocation"), "", rs.getString("assessment_status"));
                 List.add(holderAssess);
             }
             tbl_assess.setItems(List);
@@ -516,6 +586,7 @@ public class QendProcess implements Initializable {
             R_List.clear();
             while (rs.next()) {
                 HolderAssess holderAssess = new HolderAssess(rs.getInt("idAssessment"), rs.getDouble("assessment_oder"), rs.getString("ass_nature.ass_nature_name"), rs.getString("ward_name"), rs.getString("street_name"), rs.getString("assessment_no"), rs.getString("assessment_obsolete"), rs.getDouble("ass_allocation.ass_allocation"), rs.getString("cus_name"), rs.getString("assessment_status"));
+                //            HolderAssess holderAssess = new HolderAssess(rs.getInt("idAssessment"), rs.getDouble("assessment_oder"), rs.getString("ass_nature.ass_nature_name"), rs.getString("ward_name"), rs.getString("street_name"), rs.getString("assessment_no"), rs.getString("assessment_obsolete"), rs.getDouble("ass_allocation.ass_allocation"), "", rs.getString("assessment_status"));
                 R_List.add(holderAssess);
             }
             tbl_assess1.setItems(R_List);
@@ -675,13 +746,12 @@ public class QendProcess implements Initializable {
 
         new Thread(() -> {
 
-           int currentQuater = GetInstans.getQuater().getCurrentQuater();
-            if(currentQuater==1){
+            int currentQuater = GetInstans.getQuater().getCurrentQuater();
+            if (currentQuater == 1) {
                 YQendProcess.collectMainData(progress);
-            }else{
+            } else {
                 QSProcess.startProcess(progress);
             }
-
 
 
         }).start();

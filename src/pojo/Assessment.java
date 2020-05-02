@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -14,10 +14,10 @@ public class Assessment  implements java.io.Serializable {
      private Integer idAssessment;
      private AssDiscription assDiscription;
      private AssNature assNature;
-     private Customer customer;
      private Street street;
      private User user;
      private Ward ward;
+     private Integer customer;
      private Double assessmentOder;
      private String assessmentNo;
      private Integer assessmentStatus;
@@ -25,6 +25,7 @@ public class Assessment  implements java.io.Serializable {
      private String assessmentComment;
      private String assessmentObsolete;
      private Integer officeIdOffice;
+     private Integer isWarrant;
      private Set<AssAllocation> assAllocations = new HashSet<AssAllocation>(0);
      private Set<BuildingHasAssessment> buildingHasAssessments = new HashSet<BuildingHasAssessment>(0);
      private Set<AssQstart> assQstarts = new HashSet<AssQstart>(0);
@@ -32,10 +33,12 @@ public class Assessment  implements java.io.Serializable {
      private Set<AssSubowner> assSubowners = new HashSet<AssSubowner>(0);
      private Set<AssPayhistry> assPayhistries = new HashSet<AssPayhistry>(0);
      private Set<AssPayment> assPayments = new HashSet<AssPayment>(0);
+     private Set<WbMConnection> wbMConnections = new HashSet<WbMConnection>(0);
      private Set<AssCreditdebit> assCreditdebits = new HashSet<AssCreditdebit>(0);
      private Set<Streetline> streetlines = new HashSet<Streetline>(0);
      private Set<Application> applications = new HashSet<Application>(0);
      private Set<AssessmentHasProcesstype> assessmentHasProcesstypes = new HashSet<AssessmentHasProcesstype>(0);
+     private Set<Cushasassess> cushasassesses = new HashSet<Cushasassess>(0);
      private Set<BopHasAssessment> bopHasAssessments = new HashSet<BopHasAssessment>(0);
      private Set<AssHistory> assHistories = new HashSet<AssHistory>(0);
 
@@ -43,21 +46,20 @@ public class Assessment  implements java.io.Serializable {
     }
 
 	
-    public Assessment(AssDiscription assDiscription, AssNature assNature, Customer customer, Street street, User user, Ward ward) {
+    public Assessment(AssDiscription assDiscription, AssNature assNature, Street street, User user, Ward ward) {
         this.assDiscription = assDiscription;
         this.assNature = assNature;
-        this.customer = customer;
         this.street = street;
         this.user = user;
         this.ward = ward;
     }
-    public Assessment(AssDiscription assDiscription, AssNature assNature, Customer customer, Street street, User user, Ward ward, Double assessmentOder, String assessmentNo, Integer assessmentStatus, Integer assessmentSyn, String assessmentComment, String assessmentObsolete, Integer officeIdOffice, Set<AssAllocation> assAllocations, Set<BuildingHasAssessment> buildingHasAssessments, Set<AssQstart> assQstarts, Set<Obsaloot> obsaloots, Set<AssSubowner> assSubowners, Set<AssPayhistry> assPayhistries, Set<AssPayment> assPayments, Set<AssCreditdebit> assCreditdebits, Set<Streetline> streetlines, Set<Application> applications, Set<AssessmentHasProcesstype> assessmentHasProcesstypes, Set<BopHasAssessment> bopHasAssessments, Set<AssHistory> assHistories) {
+    public Assessment(AssDiscription assDiscription, AssNature assNature, Street street, User user, Ward ward, Integer customer, Double assessmentOder, String assessmentNo, Integer assessmentStatus, Integer assessmentSyn, String assessmentComment, String assessmentObsolete, Integer officeIdOffice, Integer isWarrant, Set<AssAllocation> assAllocations, Set<BuildingHasAssessment> buildingHasAssessments, Set<AssQstart> assQstarts, Set<Obsaloot> obsaloots, Set<AssSubowner> assSubowners, Set<AssPayhistry> assPayhistries, Set<AssPayment> assPayments, Set<WbMConnection> wbMConnections, Set<AssCreditdebit> assCreditdebits, Set<Streetline> streetlines, Set<Application> applications, Set<AssessmentHasProcesstype> assessmentHasProcesstypes, Set<Cushasassess> cushasassesses, Set<BopHasAssessment> bopHasAssessments, Set<AssHistory> assHistories) {
        this.assDiscription = assDiscription;
        this.assNature = assNature;
-       this.customer = customer;
        this.street = street;
        this.user = user;
        this.ward = ward;
+       this.customer = customer;
        this.assessmentOder = assessmentOder;
        this.assessmentNo = assessmentNo;
        this.assessmentStatus = assessmentStatus;
@@ -65,6 +67,7 @@ public class Assessment  implements java.io.Serializable {
        this.assessmentComment = assessmentComment;
        this.assessmentObsolete = assessmentObsolete;
        this.officeIdOffice = officeIdOffice;
+       this.isWarrant = isWarrant;
        this.assAllocations = assAllocations;
        this.buildingHasAssessments = buildingHasAssessments;
        this.assQstarts = assQstarts;
@@ -72,10 +75,12 @@ public class Assessment  implements java.io.Serializable {
        this.assSubowners = assSubowners;
        this.assPayhistries = assPayhistries;
        this.assPayments = assPayments;
+       this.wbMConnections = wbMConnections;
        this.assCreditdebits = assCreditdebits;
        this.streetlines = streetlines;
        this.applications = applications;
        this.assessmentHasProcesstypes = assessmentHasProcesstypes;
+       this.cushasassesses = cushasassesses;
        this.bopHasAssessments = bopHasAssessments;
        this.assHistories = assHistories;
     }
@@ -101,13 +106,6 @@ public class Assessment  implements java.io.Serializable {
     public void setAssNature(AssNature assNature) {
         this.assNature = assNature;
     }
-    public Customer getCustomer() {
-        return this.customer;
-    }
-    
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
     public Street getStreet() {
         return this.street;
     }
@@ -128,6 +126,13 @@ public class Assessment  implements java.io.Serializable {
     
     public void setWard(Ward ward) {
         this.ward = ward;
+    }
+    public Integer getCustomer() {
+        return this.customer;
+    }
+    
+    public void setCustomer(Integer customer) {
+        this.customer = customer;
     }
     public Double getAssessmentOder() {
         return this.assessmentOder;
@@ -178,6 +183,13 @@ public class Assessment  implements java.io.Serializable {
     public void setOfficeIdOffice(Integer officeIdOffice) {
         this.officeIdOffice = officeIdOffice;
     }
+    public Integer getIsWarrant() {
+        return this.isWarrant;
+    }
+    
+    public void setIsWarrant(Integer isWarrant) {
+        this.isWarrant = isWarrant;
+    }
     public Set<AssAllocation> getAssAllocations() {
         return this.assAllocations;
     }
@@ -227,6 +239,13 @@ public class Assessment  implements java.io.Serializable {
     public void setAssPayments(Set<AssPayment> assPayments) {
         this.assPayments = assPayments;
     }
+    public Set<WbMConnection> getWbMConnections() {
+        return this.wbMConnections;
+    }
+    
+    public void setWbMConnections(Set<WbMConnection> wbMConnections) {
+        this.wbMConnections = wbMConnections;
+    }
     public Set<AssCreditdebit> getAssCreditdebits() {
         return this.assCreditdebits;
     }
@@ -254,6 +273,13 @@ public class Assessment  implements java.io.Serializable {
     
     public void setAssessmentHasProcesstypes(Set<AssessmentHasProcesstype> assessmentHasProcesstypes) {
         this.assessmentHasProcesstypes = assessmentHasProcesstypes;
+    }
+    public Set<Cushasassess> getCushasassesses() {
+        return this.cushasassesses;
+    }
+    
+    public void setCushasassesses(Set<Cushasassess> cushasassesses) {
+        this.cushasassesses = cushasassesses;
     }
     public Set<BopHasAssessment> getBopHasAssessments() {
         return this.bopHasAssessments;

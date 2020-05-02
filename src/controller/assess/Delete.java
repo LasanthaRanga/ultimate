@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import modle.StaticViews;
+import modle.asses.AssCustomer;
 import modle.asses.HolderAssess;
 import modle.popup.BarcodeStatic;
 import org.hibernate.Session;
@@ -252,7 +253,7 @@ public class Delete implements Initializable {
             int i = Integer.parseInt(idAssessment.getText());
             Assessment ass = (pojo.Assessment) session.load(pojo.Assessment.class, i);
             txt_ass.setText(ass.getWard().getWardName() + " - " + ass.getStreet().getStreetName() + " - " + ass.getAssessmentNo());
-            txt_customer.setText(ass.getCustomer().getCusName());
+            txt_customer.setText(AssCustomer.getFirstCustomerName(ass.getIdAssessment()));
             btn_delete.setDisable(false);
 
         } catch (Exception e) {

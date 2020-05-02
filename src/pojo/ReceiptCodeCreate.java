@@ -1,5 +1,5 @@
 package pojo;
-// Generated Sep 6, 2019 4:30:16 PM by Hibernate Tools 4.3.1
+// Generated Apr 18, 2020 9:36:49 PM by Hibernate Tools 4.3.1
 
 
 
@@ -14,15 +14,17 @@ public class ReceiptCodeCreate  implements java.io.Serializable {
      private Office office;
      private String receiptCode;
      private String chequeCode;
+     private Integer accountId;
 
     public ReceiptCodeCreate() {
     }
 
-    public ReceiptCodeCreate(ApplicationCatagory applicationCatagory, Office office, String receiptCode, String chequeCode) {
+    public ReceiptCodeCreate(ApplicationCatagory applicationCatagory, Office office, String receiptCode, String chequeCode, Integer accountId) {
        this.applicationCatagory = applicationCatagory;
        this.office = office;
        this.receiptCode = receiptCode;
        this.chequeCode = chequeCode;
+       this.accountId = accountId;
     }
    
     public Integer getReceiptCodeId() {
@@ -59,6 +61,13 @@ public class ReceiptCodeCreate  implements java.io.Serializable {
     
     public void setChequeCode(String chequeCode) {
         this.chequeCode = chequeCode;
+    }
+    public Integer getAccountId() {
+        return this.accountId;
+    }
+    
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 
 

@@ -227,9 +227,9 @@ public class FullDayEnd implements Initializable {
             int i1 = DB.setData("DELETE from de WHERE staus = 0");
 
             if (i1 > 0) {
-                modle.Allert.notificationWorning("Day End Not Completed", "Please Recheck");
+       //         modle.Allert.notificationWorning("Day End Not Completed", "Please Recheck");
             } else {
-                modle.Allert.notificationGood("Day End Completed", "Thank You");
+       //         modle.Allert.notificationGood("Day End Completed", "Thank You");
             }
 
             if (dp.getValue() != null) {

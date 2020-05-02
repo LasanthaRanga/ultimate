@@ -3,14 +3,12 @@ package controller.assess;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,20 +29,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import modle.asses.AssCustomer;
+import modle.asses.CustomerObj;
 import modle.asses.OldDataSave;
 import modle.asses.TableAsses;
 import org.controlsfx.control.textfield.TextFields;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import pojo.AssAllocation;
-import pojo.AssDiscription;
-import pojo.AssNature;
-import pojo.Assessment;
+import pojo.*;
 import pojo.Customer;
-import pojo.Street;
-import pojo.User;
-import pojo.Ward;
 
 public class NewController implements Initializable {
 
@@ -156,6 +150,7 @@ public class NewController implements Initializable {
         }
         com_ward.setItems(List);
     }
+
     ObservableList ola = FXCollections.observableArrayList();
 
     public void loadTabel() {
@@ -442,13 +437,16 @@ public class NewController implements Initializable {
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
         try {
             a = (Assessment) session.load(Assessment.class, idAsses);
+
+            CustomerObj cus = AssCustomer.getFirstCustomerObject(a.getIdAssessment());
+
             btn_save.setText("Update");
             btn_subOwner.setDisable(false);
             modle.asses.StaticBadu.setAssessment(a);
             txt_book_no.setText(a.getAssessmentOder() + "");
             txt_assessment.setText(a.getAssessmentNo());
             txt_obserloot.setText(a.getAssessmentObsolete());
-            txt_customer.setText(a.getCustomer().getCusName());
+            txt_customer.setText(cus.getCus_name());
             com_nature.getSelectionModel().select(a.getAssNature().getAssNatureName());
             com_ward.getSelectionModel().select(a.getStreet().getWard().getWardName());
             com_street.getSelectionModel().select(a.getStreet().getStreetName());
@@ -462,11 +460,11 @@ public class NewController implements Initializable {
             }
 
             txt_discription.setText(a.getAssDiscription().getAssDiscription());
-            txt_nic.setText(a.getCustomer().getCusNic());
-            txt_adl1.setText(a.getCustomer().getCusAddressL1());
-            txt_adl2.setText(a.getCustomer().getCusAddressL2());
-            txt_adl3.setText(a.getCustomer().getCusAddressL3());
-            txt_mobile.setText(a.getCustomer().getCusMobile());
+            txt_nic.setText(cus.getCus_nic());
+            txt_adl1.setText(cus.getCus_address_l1());
+            txt_adl2.setText(cus.getCus_address_l2());
+            txt_adl3.setText(cus.getCus_address_l3());
+            txt_mobile.setText(cus.getCus_mobile());
             txt_others.setText(a.getAssessmentComment());
             if (a.getAssessmentStatus() == 0) {
                 //  radio_no.setSelected(true);
@@ -745,7 +743,7 @@ public class NewController implements Initializable {
                 Assessment asess = new Assessment();
                 asess.setAssDiscription(d);
                 asess.setAssNature(n);
-                asess.setCustomer(cus);
+                //   asess.setCustomer(cus);
                 asess.setWard(w);
                 asess.setStreet(s);
                 asess.setUser(u);
@@ -756,6 +754,13 @@ public class NewController implements Initializable {
                 asess.setAssessmentSyn(0);
                 asess.setAssessmentComment(others);
                 session.save(asess);
+
+                Cushasassess cushasassess = new Cushasassess();
+                cushasassess.setAssessment(asess);
+                cushasassess.setCustomer(cus);
+                cushasassess.setStatus(1);
+                cushasassess.setDate(new Date());
+                session.save(cushasassess);
 
                 //allocation
                 modle.asses.StaticBadu.setAssessment(asess);
@@ -801,7 +806,7 @@ public class NewController implements Initializable {
                 session.save(d);
             }
 
-            Customer cus = (Customer) session.load(Customer.class, a.getCustomer().getIdCustomer());
+            Customer cus = (Customer) session.load(Customer.class, AssCustomer.getFirstCustomerID(a.getIdAssessment()));
             cus.setCusName(customer);
             cus.setCusNic(nic);
             cus.setCusAddressL1(adl1);

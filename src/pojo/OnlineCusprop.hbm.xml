@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 18, 2020 9:36:55 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojo.OnlineCusprop" table="online_cusprop" catalog="ultimate2" optimistic-lock="version">
+        <id name="idOnCusProp" type="java.lang.Integer">
+            <column name="idOnCusProp" />
+            <generator class="identity" />
+        </id>
+        <property name="idOnCus" type="java.lang.Integer">
+            <column name="idOnCus" />
+        </property>
+        <property name="appCat" type="java.lang.Integer">
+            <column name="appCat" />
+        </property>
+        <property name="aplayDate" type="timestamp">
+            <column name="aplayDate" length="19" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+        <property name="userid" type="java.lang.Integer">
+            <column name="userid" />
+        </property>
+        <property name="approvDate" type="timestamp">
+            <column name="approvDate" length="19" />
+        </property>
+        <property name="propid" type="string">
+            <column name="propid" />
+        </property>
+        <property name="recitid" type="string">
+            <column name="recitid" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="65535" />
+        </property>
+        <property name="ownerName" type="string">
+            <column name="owner_name" />
+        </property>
+        <property name="other1" type="string">
+            <column name="other1" />
+        </property>
+        <property name="other2" type="string">
+            <column name="other2" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 6, 2019 4:30:22 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Apr 18, 2020 9:36:55 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="pojo.SrShopProc" table="sr_shop_proc" catalog="ultimate2" optimistic-lock="version">
         <id name="srShopProcId" type="java.lang.Integer">
@@ -59,11 +59,20 @@
         <property name="srShopSc1" type="java.lang.Double">
             <column name="sr_shop_sc1" precision="22" scale="0" />
         </property>
+        <property name="srShopSc1Balance" type="java.lang.Double">
+            <column name="sr_shop_sc1_balance" precision="22" scale="0" />
+        </property>
         <property name="srShopSc2" type="java.lang.Double">
             <column name="sr_shop_sc2" precision="22" scale="0" />
         </property>
-        <property name="srShopSc3" type="java.lang.Double">
-            <column name="sr_shop_sc3" precision="22" scale="0" />
+        <property name="srShopSc2Balance" type="java.lang.Double">
+            <column name="sr_shop_sc2_balance" precision="22" scale="0" />
+        </property>
+        <property name="srShopSc3" type="double">
+            <column name="sr_shop_sc3" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="srShopSc3Balance" type="java.lang.Double">
+            <column name="sr_shop_sc3_balance" precision="22" scale="0" />
         </property>
         <property name="srShopRent" type="java.lang.Double">
             <column name="sr_shop_rent" precision="22" scale="0" />
@@ -82,6 +91,12 @@
         </property>
         <property name="srShopFineProcessDoOrNot" type="java.lang.Integer">
             <column name="sr_shop_fine_process_do_or_not" />
+        </property>
+        <property name="srShopLastYearFine" type="java.lang.Double">
+            <column name="sr_shop_last_year_fine" precision="22" scale="0" />
+        </property>
+        <property name="srShopLastYearFineBal" type="java.lang.Double">
+            <column name="sr_shop_last_year_fine_bal" precision="22" scale="0" />
         </property>
         <set name="srShopPayments" table="sr_shop_payment" inverse="true" lazy="true" fetch="select">
             <key>

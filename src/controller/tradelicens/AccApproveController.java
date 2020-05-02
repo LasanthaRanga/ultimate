@@ -182,7 +182,7 @@ public class AccApproveController implements Initializable {
                     txt_ward.setText(assessment.getWard().getWardName());
                     txt_street.setText(assessment.getStreet().getStreetName());
                     txt_assessment.setText(assessment.getAssessmentNo());
-                    txt_owner.setText(assessment.getCustomer().getCusName());
+                   // txt_owner.setText(assessment.getCustomer().getCusName());
                 }
 
 

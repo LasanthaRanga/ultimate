@@ -168,7 +168,7 @@ public class CreditObj {
                         pvc.txt_street.setText(assessment.getStreet().getStreetName());
                         pvc.txt_assessmant.setText(assessment.getAssessmentNo());
                         pvc.txt_Obsaloot.setText(assessment.getAssessmentObsolete());
-                        pvc.txt_customer.setText(assessment.getCustomer().getCusName());
+                        pvc.txt_customer.setText(AssCustomer.getFirstCustomerName(assessment.getIdAssessment()));
 
                         yearRate = modle.Round.round(assessment.getAssNature().getAssNatureYearRate()); // NEW ROUND
                         warrantRate = modle.Round.round(assessment.getAssNature().getAssNatureWarrantRate()); // NEW ROUND
@@ -1548,7 +1548,7 @@ public class CreditObj {
 
                 System.out.println(payy.toString());
 
-                conn.DB.setData("INSERT INTO `ass_creditdebit`( `Ass_CreditDebit_discription`, `Ass_CreditDebit_cd`, `Ass_CreditDebit_amount`, `Ass_balance`, `Ass_CreditDebit_date`, `Assessment_idAssessment`, `Ass_CreditDebit_status`,`user_id`) VALUES ( '" + pvc.txt_comment.getText() + "', -1, '" + (payTot +balance) + "', '0', '" + systemDatesString + "', '" + assessment.getIdAssessment() + "', 0,'"+modle.StaticViews.getLogUser().getIdUser()+"')");
+                conn.DB.setData("INSERT INTO `ass_creditdebit`( `Ass_CreditDebit_discription`, `Ass_CreditDebit_cd`, `Ass_CreditDebit_amount`, `Ass_balance`, `Ass_CreditDebit_date`, `Assessment_idAssessment`, `Ass_CreditDebit_status`,`user_id`) VALUES ( '" + pvc.txt_comment.getText() + "', -1, '" + (payTot + balance) + "', '0', '" + systemDatesString + "', '" + assessment.getIdAssessment() + "', 0,'" + modle.StaticViews.getLogUser().getIdUser() + "')");
 
                 transaction.commit();
                 modle.Allert.notificationGood("Credit Succsess", assessment.getAssessmentNo());
