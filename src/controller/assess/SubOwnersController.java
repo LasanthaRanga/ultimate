@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import conn.NewHibernateUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +28,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import modle.ComboItem;
 import modle.ComboLoad;
-import pojo.AssSubowner;
+import modle.GetInstans;
+import modle.adv.customer;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import pojo.*;
+import pojo.Customer;
 
 /**
  * FXML Controller class
@@ -103,34 +109,78 @@ public class SubOwnersController implements Initializable {
             status = 0;
         }
         if (so == null) {
-            if (txt_owner.getText().length() > 2 && txt_owner_sinhala.getText().length()>2) {
+            if (txt_owner.getText().length() > 2 && txt_owner_sinhala.getText().length() > 2) {
 
-                AssSubowner subowner = new AssSubowner(assessment,
-                        txt_owner.getText(),
-                        txt_nic.getText(),
-                        status,
-                        title,
-                        txt_owner_sinhala.getText());
+                Session session = NewHibernateUtil.getSessionFactory().openSession();
+                Transaction transaction = session.beginTransaction();
+                try {
 
 
+                    pojo.Customer customer = new Customer();
+                    customer.setCusName(txt_owner.getText());
+                    customer.setCusNameSinhala(txt_owner_sinhala.getText());
+                    customer.setCusNic(txt_nic.getText());
+                    customer.setCusPersonTitle(title);
+                    customer.setCusSyn(status);
+
+//                AssSubowner subowner = new AssSubowner(assessment,
+//                        txt_owner.getText(),
+//                        txt_nic.getText(),
+//                        status,
+//                        title,
+//                        txt_owner_sinhala.getText());
+
+                    Cushasassess cushasassess = new Cushasassess(assessment, customer, 1, GetInstans.getQuater().getSystemDate());
+                    session.save(customer);
+                    session.save(cushasassess);
+                    transaction.commit();
+
+                    //boolean saveSubOwner = subOwnerModle.saveSubOwner(subowner);
 
 
-                boolean saveSubOwner = subOwnerModle.saveSubOwner(subowner);
-                if (saveSubOwner) {
                     modle.Allert.notificationGood("Saved", txt_owner.getText());
                     cleare();
                     loadSubOwnerTable();
+
+                } catch (Exception e) {
+                    transaction.rollback();
+                    e.printStackTrace();
+                    modle.Allert.notificationWorning("Something Wrong", e.getMessage());
+                } finally {
+                    session.close();
                 }
             } else {
                 modle.Allert.notificationError("Error", "cheack sub owner name");
 
             }
         } else {
-            if (subOwnerModle.updateSubOwner(so.getId(), txt_owner.getText(), txt_nic.getText(), status)) {
+
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+
+            try {
+
+                pojo.Customer customer = (pojo.Customer) session.load(Customer.class, so.getId());
+                customer.setCusName(txt_owner.getText());
+                customer.setCusNameSinhala(txt_owner_sinhala.getText());
+                customer.setCusNic(txt_nic.getText());
+                customer.setCusPersonTitle(title);
+                customer.setCusSyn(status);
+                session.update(customer);
+                transaction.commit();
                 modle.Allert.notificationGood("Updated", txt_owner.getText());
                 cleare();
                 loadSubOwnerTable();
+
+            } catch (Exception e) {
+                transaction.rollback();
+                e.printStackTrace();
+                modle.Allert.notificationWorning("Something Wrong", e.getMessage());
+            } finally {
+                session.close();
             }
+
+
         }
 
     }
@@ -149,18 +199,25 @@ public class SubOwnersController implements Initializable {
     public void loadSubOwnerTable() {
         try {
             obal.clear();
-            ResultSet data = DB.getData("SELECT\n"
-                    + "ass_subowner.idass_subOwner,\n"
-                    + "ass_subowner.ass_subOwner_name,\n"
-                    + "ass_subowner.ass_subOwner_nic,\n"
-                    + "ass_subowner.ass_subOwner_status,\n"
-                    + "ass_subowner.Assessment_idAssessment, ass_subowner.ass_subOwner_namesinhala \n"
-                    + "FROM\n"
-                    + "ass_subowner\n"
-                    + "WHERE ass_subowner.Assessment_idAssessment = '" + modle.asses.StaticBadu.getAssessment().getIdAssessment() + "'");
+            ResultSet data = DB.getData("SELECT\n" +
+                    "assessment.idAssessment,\n" +
+                    "customer.idCustomer,\n" +
+                    "customer.cus_name,\n" +
+                    "customer.cus_person_title,\n" +
+                    "customer.cus_nic,\n" +
+                    "customer.cus_status,\n" +
+                    "customer.cus_syn,\n" +
+                    "customer.cus_reg_date,\n" +
+                    "customer.cus_name_sinhala\n" +
+                    "FROM\n" +
+                    "assessment\n" +
+                    "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                    "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                    "WHERE  cushasassess.`status` = 1 AND \n" +
+                    "assessment.idAssessment = " + modle.asses.StaticBadu.getAssessment().getIdAssessment());
 
             while (data.next()) {
-                obal.add(new Owner(data.getInt("idass_subOwner"), data.getString("ass_subOwner_name"), data.getString("ass_subOwner_nic"), data.getInt("ass_subOwner_status"),data.getString("ass_subOwner_namesinhala")));
+                obal.add(new Owner(data.getInt("idCustomer"), data.getString("cus_name"), data.getString("cus_nic"), data.getInt("cus_syn"), data.getString("cus_name_sinhala")));
             }
             col_sub.setCellValueFactory(new PropertyValueFactory<>("sname"));
             col_nic.setCellValueFactory(new PropertyValueFactory<>("snic"));
@@ -198,7 +255,9 @@ public class SubOwnersController implements Initializable {
     private void clickOnDelete(MouseEvent event) {
         Owner so = tbl_sub.getSelectionModel().getSelectedItem();
         if (so != null) {
-            boolean deleteSubOwner = subOwnerModle.deleteSubOwner(so.getId());
+
+
+            boolean deleteSubOwner = subOwnerModle.deleteSubOwner(so.getId(), assessment.getIdAssessment());
             if (deleteSubOwner) {
                 modle.Allert.notificationGood("deleted", so.getSname());
                 loadSubOwnerTable();
@@ -240,7 +299,7 @@ public class SubOwnersController implements Initializable {
             return snic.get();
         }
 
-        public Owner(int id, String sname, String snic, int status,String sinhala) {
+        public Owner(int id, String sname, String snic, int status, String sinhala) {
             this.id = id;
             this.sname = new SimpleStringProperty(sname);
             this.snic = new SimpleStringProperty(snic);

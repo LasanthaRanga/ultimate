@@ -305,45 +305,44 @@ public class FullReportsController implements Initializable {
             where = true;
         }
 
-        String qq = "SELECT\n"
-                + "	assessment.idAssessment,\n"
-                + "	assessment.Customer_idCustomer,\n"
-                + "	assessment.Ward_idWard,\n"
-                + "	assessment.Street_idStreet,\n"
-                + "	assessment.ass_nature_idass_nature,\n"
-                + "	assessment.ass_discription_idass_discription,\n"
-                + "	assessment.User_idUser,\n"
-                + "	assessment.assessment_oder,\n"
-                + "	assessment.assessment_no,\n"
-                + "	assessment.assessment_status,\n"
-                + "	assessment.assessment_syn,\n"
-                + "	assessment.assessment_comment,\n"
-                + "	assessment.assessment_obsolete,\n"
-                + "	customer.cus_name,\n"
-                + "	customer.cus_nic,\n"
-                + "	customer.cus_mobile,\n"
-                + "	customer.cus_address_l1,\n"
-                + "	customer.cus_tel,\n"
-                + "	customer.cus_address_l2,\n"
-                + "	customer.cus_address_l3,\n"
-                + "	customer.cus_sity,\n"
-                + "	customer.cus_status,\n"
-                + "	customer.idCustomer,\n"
-                + "	ward.ward_name,\n"
-                + "	ward.idWard,\n"
-                + "	street.idStreet,\n"
-                + "	street.street_name,\n"
-                + "	ass_nature.idass_nature,\n "
-                + "     ass_allocation.ass_allocation, \n"
-                + "	ass_nature.ass_nature_name \n"
-                + "FROM\n"
-                + "	assessment\n"
-                + "	INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "	INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n"
-                + "	INNER JOIN street ON street.Ward_idWard = ward.idWard \n"
-                + "	AND assessment.Street_idStreet = street.idStreet\n"
-                + "	INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature "
-                + "     INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment WHERE ass_allocation.ass_allocation_status = 1";
+        String qq = "SELECT\n" +
+                "\tassessment.idAssessment,\n" +
+                "\tassessment.Ward_idWard,\n" +
+                "\tassessment.Street_idStreet,\n" +
+                "\tassessment.ass_nature_idass_nature,\n" +
+                "\tassessment.ass_discription_idass_discription,\n" +
+                "\tassessment.User_idUser,\n" +
+                "\tassessment.assessment_oder,\n" +
+                "\tassessment.assessment_no,\n" +
+                "\tassessment.assessment_status,\n" +
+                "\tassessment.assessment_syn,\n" +
+                "\tassessment.assessment_comment,\n" +
+                "\tassessment.assessment_obsolete,\n" +
+                "\tward.ward_name,\n" +
+                "\tward.idWard,\n" +
+                "\tstreet.idStreet,\n" +
+                "\tstreet.street_name,\n" +
+                "\tass_nature.idass_nature,\n" +
+                "\tass_allocation.ass_allocation,\n" +
+                "\tass_nature.ass_nature_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_name SEPARATOR ' , '\n" +
+                "\t) AS cus_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_nic SEPARATOR ' , '\n" +
+                "\t) AS cus_nic\n" +
+                "FROM\n" +
+                "\tassessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
+                "AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                "WHERE\n" +
+                "\tass_allocation.ass_allocation_status = 1\n" +
+                "AND cushasassess.`status` = 1";
 
         if (where) {
             if (w) {
@@ -367,7 +366,7 @@ public class FullReportsController implements Initializable {
             }
         }
 
-        qq += " ORDER BY assessment.assessment_oder ASC ";
+        qq += " GROUP BY assessment.idAssessment  ORDER BY assessment.assessment_oder ASC ";
         executeQuary(qq);
     }
 
@@ -605,7 +604,8 @@ public class FullReportsController implements Initializable {
                 "INNER JOIN street ON assessment.Street_idStreet = street.idStreet\n" +
                 "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
                 "AND street.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+                " INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment \n" +
+                " INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer " +
                 "WHERE\n" +
                 "\tass_qstart.ass_Qstart_year = '" + currentYear + "'\n" +
                 "AND ass_qstart.Assessment_idAssessment = '" + assessID + "'\n" +
@@ -715,7 +715,8 @@ public class FullReportsController implements Initializable {
                 "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
                 "AND street.Ward_idWard = ward.idWard\n" +
                 "\n" +
-                "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
+                " INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                " INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer " +
                 "WHERE\n" +
                 "ass_qstart.ass_Qstart_year = '" + currentYear + "' AND\n" +
                 "(ass_qstart.ass_Qstart_LYC_Arreas > 0 OR\n" +

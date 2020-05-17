@@ -405,7 +405,8 @@ public class Search_assessController implements Initializable {
                 "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
                 "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
                 "WHERE\n" +
-                "ass_allocation.ass_allocation_status = 1";
+                "ass_allocation.ass_allocation_status = 1  AND\n" +
+                "cushasassess.`status` = 1 ";
 
         if (where) {
             if (w) {

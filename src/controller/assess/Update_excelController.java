@@ -415,7 +415,7 @@ public class Update_excelController implements Initializable {
 
                 Integer idCustomer = AssCustomer.getFirstCustomerID(a.getIdAssessment());
                 System.out.println(idCustomer);
-                pojo.Customer cus = (pojo.Customer) session.load(pojo.Customer.class,idCustomer);
+                pojo.Customer cus = (pojo.Customer) session.load(pojo.Customer.class, idCustomer);
                 System.out.println(cus);
                 cus.setCusName(customer);
                 cus.setCusNic(nic);
@@ -833,25 +833,44 @@ public class Update_excelController implements Initializable {
         col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         String qq = "SELECT\n" +
-                "ward.ward_name,\n" +
-                "street.street_name,\n" +
-                "assessment.assessment_oder,\n" +
-                "assessment.assessment_no,\n" +
-                "assessment.assessment_status,\n" +
-                "assessment.assessment_obsolete,\n" +
-                "customer.cus_name,\n" +
-                "assessment.idAssessment,\n" +
-                "ass_allocation.ass_allocation,\n" +
-                "assessment.assessment_syn\n" +
+                "\tassessment.idAssessment,\n" +
+                "\tassessment.Ward_idWard,\n" +
+                "\tassessment.Street_idStreet,\n" +
+                "\tassessment.ass_nature_idass_nature,\n" +
+                "\tassessment.ass_discription_idass_discription,\n" +
+                "\tassessment.User_idUser,\n" +
+                "\tassessment.assessment_oder,\n" +
+                "\tassessment.assessment_no,\n" +
+                "\tassessment.assessment_status,\n" +
+                "\tassessment.assessment_syn,\n" +
+                "\tassessment.assessment_comment,\n" +
+                "\tassessment.assessment_obsolete,\n" +
+                "\tward.ward_name,\n" +
+                "\tward.idWard,\n" +
+                "\tstreet.idStreet,\n" +
+                "\tstreet.street_name,\n" +
+                "\tass_nature.idass_nature,\n" +
+                "\tass_allocation.ass_allocation,\n" +
+                "\tass_nature.ass_nature_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_name SEPARATOR ' , '\n" +
+                "\t) AS cus_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_nic SEPARATOR ' , '\n" +
+                "\t) AS cus_nic\n" +
                 "FROM\n" +
-                "\tward\n" +
+                "\tassessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
                 "INNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN assessment ON assessment.Street_idStreet = street.idStreet\n" +
-                "AND assessment.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
-                "LEFT JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer \n" +
                 "WHERE\n" +
                 "\tass_allocation.ass_allocation_status = 1\n" +
+                "GROUP BY\n" +
+                "\tassessment.idAssessment\n" +
                 "ORDER BY\n" +
                 "\tassessment.idAssessment DESC";
 
@@ -878,29 +897,48 @@ public class Update_excelController implements Initializable {
 
     public void loadTabelByWardStreet() {
 
-        String qq = "SELECT\n"
-                + "ward.ward_name,\n"
-                + "street.street_name,\n"
-                + "assessment.assessment_oder,\n"
-                + "assessment.assessment_no,\n"
-                + "assessment.assessment_status,\n"
-                + "assessment.assessment_obsolete,\n"
-                + "customer.cus_name,\n"
-                + "assessment.idAssessment,\n"
-                + "ass_allocation.ass_allocation,\n"
-                + "assessment.assessment_syn \n"
-                + "FROM\n"
-                + "ward\n"
-                + "INNER JOIN street ON street.Ward_idWard = ward.idWard\n"
-                + "INNER JOIN assessment ON assessment.Street_idStreet = street.idStreet AND assessment.Ward_idWard = ward.idWard\n"
-                + "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "LEFT JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n"
-                + "WHERE\n"
-                + "ass_allocation.ass_allocation_status = 1 AND\n"
+        String qq = "SELECT\n" +
+                "\tassessment.idAssessment,\n" +
+                "\tassessment.Ward_idWard,\n" +
+                "\tassessment.Street_idStreet,\n" +
+                "\tassessment.ass_nature_idass_nature,\n" +
+                "\tassessment.ass_discription_idass_discription,\n" +
+                "\tassessment.User_idUser,\n" +
+                "\tassessment.assessment_oder,\n" +
+                "\tassessment.assessment_no,\n" +
+                "\tassessment.assessment_status,\n" +
+                "\tassessment.assessment_syn,\n" +
+                "\tassessment.assessment_comment,\n" +
+                "\tassessment.assessment_obsolete,\n" +
+                "\tward.ward_name,\n" +
+                "\tward.idWard,\n" +
+                "\tstreet.idStreet,\n" +
+                "\tstreet.street_name,\n" +
+                "\tass_nature.idass_nature,\n" +
+                "\tass_allocation.ass_allocation,\n" +
+                "\tass_nature.ass_nature_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_name SEPARATOR ' , '\n" +
+                "\t) AS cus_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_nic SEPARATOR ' , '\n" +
+                "\t) AS cus_nic\n" +
+                "FROM\n" +
+                "\tassessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
+                "AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer " +
+                " WHERE\n"
+                + "ass_allocation.ass_allocation_status = 1  AND\n" +
+                " cushasassess.`status` = 1 AND \n"
                 + "assessment.assessment_syn = 0 AND\n"
                 + "ward.ward_name = '" + com_ward.getSelectionModel().getSelectedItem() + "' AND\n"
                 + "street.street_name = '" + com_street.getSelectionModel().getSelectedItem() + "'\n"
-                + "ORDER BY\n"
+                + " GROUP BY assessment.idAssessment  ORDER BY\n"
                 + "assessment.idAssessment DESC";
 
         col_bookNo.setCellValueFactory(new PropertyValueFactory<>("bookNo"));
@@ -929,25 +967,44 @@ public class Update_excelController implements Initializable {
 
     public void loadTabelByWardStreetAsess(String assessno) {
 
-        String qq = "SELECT\n"
-                + "ward.ward_name,\n"
-                + "street.street_name,\n"
-                + "assessment.assessment_oder,\n"
-                + "assessment.assessment_no,\n"
-                + "assessment.assessment_status,\n"
-                + "assessment.assessment_obsolete,\n"
-                + "customer.cus_name,\n"
-                + "assessment.idAssessment,\n"
-                + "ass_allocation.ass_allocation, \n"
-                + "assessment.assessment_syn \n"
-                + "FROM\n"
-                + "ward\n"
-                + "INNER JOIN street ON street.Ward_idWard = ward.idWard\n"
-                + "INNER JOIN assessment ON assessment.Street_idStreet = street.idStreet AND assessment.Ward_idWard = ward.idWard\n"
-                + "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n"
-                + "LEFT JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n"
+        String qq = "SELECT\n" +
+                "\tassessment.idAssessment,\n" +
+                "\tassessment.Ward_idWard,\n" +
+                "\tassessment.Street_idStreet,\n" +
+                "\tassessment.ass_nature_idass_nature,\n" +
+                "\tassessment.ass_discription_idass_discription,\n" +
+                "\tassessment.User_idUser,\n" +
+                "\tassessment.assessment_oder,\n" +
+                "\tassessment.assessment_no,\n" +
+                "\tassessment.assessment_status,\n" +
+                "\tassessment.assessment_syn,\n" +
+                "\tassessment.assessment_comment,\n" +
+                "\tassessment.assessment_obsolete,\n" +
+                "\tward.ward_name,\n" +
+                "\tward.idWard,\n" +
+                "\tstreet.idStreet,\n" +
+                "\tstreet.street_name,\n" +
+                "\tass_nature.idass_nature,\n" +
+                "\tass_allocation.ass_allocation,\n" +
+                "\tass_nature.ass_nature_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_name SEPARATOR ' , '\n" +
+                "\t) AS cus_name,\n" +
+                "\tGROUP_CONCAT(\n" +
+                "\t\tcustomer.cus_nic SEPARATOR ' , '\n" +
+                "\t) AS cus_nic\n" +
+                "FROM\n" +
+                "\tassessment\n" +
+                "INNER JOIN ward ON assessment.Ward_idWard = ward.idWard\n" +
+                "INNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
+                "AND assessment.Street_idStreet = street.idStreet\n" +
+                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer "
                 + "WHERE\n"
-                + "ass_allocation.ass_allocation_status = 1 AND\n"
+                + "ass_allocation.ass_allocation_status = 1  AND\n" +
+                "cushasassess.`status` = 1 AND\n"
                 + "assessment.assessment_syn = 0 AND\n"
                 + "ward.ward_name = '" + com_ward.getSelectionModel().getSelectedItem() + "' AND\n"
                 + "street.street_name = '" + com_street.getSelectionModel().getSelectedItem() + "' AND\n"

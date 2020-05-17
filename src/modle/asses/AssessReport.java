@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import conn.DB;
+import conn.NewHibernateUtil;
 import javafx.geometry.Pos;
 import javafx.util.Duration;
 import modle.KeyVal;
@@ -21,6 +22,7 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 import org.controlsfx.control.Notifications;
+import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 /**
@@ -306,7 +308,9 @@ public class AssessReport {
             String path = "C:\\Ultimate\\Report\\assessment/mbil.jrxml";// IN SYSTEM
             //  String path="C:\\Users\\Ranga\\JaspersoftWorkspace\\MyReports\\Assessment\\assbill.jrxml" ;
 
-
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction().commit();
+            session.close();
             JasperReport jr = JasperCompileManager.compileReport(path);
 
             HashMap param = new HashMap<String, Integer>();

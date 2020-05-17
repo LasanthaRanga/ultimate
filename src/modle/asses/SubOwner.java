@@ -6,11 +6,14 @@
 package modle.asses;
 
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import pojo.AssSubowner;
+import pojo.Cushasassess;
+import pojo.Customer;
 
 
 /**
@@ -51,12 +54,20 @@ public class SubOwner {
         }
     }
 
-    public boolean deleteSubOwner(int sub) {
+    public boolean deleteSubOwner(int sub, int id) {
+
         Session session = conn.NewHibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            AssSubowner subowner = (AssSubowner) session.load(AssSubowner.class, sub);
-            session.delete(subowner);
+            pojo.Customer customer = (pojo.Customer) session.load(Customer.class, sub);
+            List<pojo.Cushasassess> cha = session.createCriteria(Cushasassess.class).add(Restrictions.eq("customer", customer)).list();
+            for (pojo.Cushasassess cus : cha) {
+                Integer idAssessment = cus.getAssessment().getIdAssessment();
+                if (id == idAssessment) {
+                    cus.setStatus(0);
+                    session.update(cus);
+                }
+            }
             transaction.commit();
             return true;
         } catch (Exception e) {

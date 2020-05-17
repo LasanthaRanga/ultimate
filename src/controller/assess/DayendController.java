@@ -985,13 +985,13 @@ public class DayendController implements Initializable {
 
                         String assessbilltype = KeyVal.getVal("assessbilltype");
                         if (assessbilltype.equals("short")) {
-                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print, subowners, s);
+                            modle.GetInstans.getAssessReport().getReciptView(idass_payment, tyw, tya, print, "", s);
                         } else if (assessbilltype.equals("long")) {
-                            modle.GetInstans.getAssessReport().longBill(idass_payment, print, subowners, s);
+                            modle.GetInstans.getAssessReport().longBill(idass_payment, print, "", s);
                         } else if (assessbilltype.equals("plane")) {
-                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, print, subowners, s); //Plane
+                            modle.GetInstans.getAssessReport().getReciptPrintPlane(idass_payment + "", tyw, tya, print, "", s); //Plane
                         } else {
-                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, print, subowners, s); //Report
+                            modle.GetInstans.getAssessReport().getReciptPrintEdited1(idass_payment + "", tyw, tya, print, "", s); //Report
                         }
                     }
 
