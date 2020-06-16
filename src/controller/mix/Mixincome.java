@@ -179,6 +179,12 @@ public class Mixincome implements Initializable {
     @FXML
     private JFXButton btn_clear;
 
+    @FXML
+    private JFXRadioButton radio_no1;
+
+    @FXML
+    private ToggleGroup groupe;
+
     public static boolean hasCustomer = false;
     public static int idcustomer = 0;
     public static String sdate = "";
@@ -757,8 +763,6 @@ public class Mixincome implements Initializable {
                             "LIMIT 1");
 
 
-
-
                     if (data.next()) {
                         riciptid = data.getInt("idReceipt");
                     }
@@ -1311,6 +1315,36 @@ public class Mixincome implements Initializable {
             ex.printStackTrace();
             //   Logger.getLogger(AssessmangController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    void advance(ActionEvent event) {
+
+        Parent root;
+        try {
+
+            root = FXMLLoader.load(getClass().getResource("/view/mix/advance.fxml"));
+
+            Stage stage = new Stage();
+
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+
+            stage.getIcons().add(new Image("/grafics/info.png"));
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setResizable(false);
+            stage.setScene(scene);
+
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            //   Logger.getLogger(AssessmangController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
+
     }
 
 

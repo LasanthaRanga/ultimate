@@ -164,8 +164,8 @@ public class PayObj {
                         + "WHERE\n"
                         + "	ass_payment.ass_Payment_Status = 0\n"
                         + "AND ass_payment.Assessment_idAssessment = " + assessment.getIdAssessment() + "\n"
-                        + "AND ass_payment.ass_Payment_ThisYear = " + currentYear + "\n"
-                        + "AND ass_payment.ass_Payment_date = '" + systemDate + "'");
+                        + "AND ass_payment.ass_Payment_ThisYear = " + currentYear + "\n");
+                       // + "AND ass_payment.ass_Payment_date = '" + systemDate + "'");
 
                 if (data.last()) {
                     modle.Allert.notificationInfo("Olredy Paied Today " + assessment.getAssessmentNo(), " You have to do day end");

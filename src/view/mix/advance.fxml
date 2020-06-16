@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="395.0" prefWidth="992.0" style="-fx-background-color: #B0BEC5;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.mix.Advance">
+   <children>
+      <JFXComboBox fx:id="com_1" layoutX="53.0" layoutY="36.0" onAction="#com1Action" prefHeight="31.0" prefWidth="278.0" />
+      <JFXComboBox fx:id="com2" layoutX="387.0" layoutY="36.0" onAction="#com2Action" prefHeight="31.0" prefWidth="278.0" />
+   </children>
+</AnchorPane>

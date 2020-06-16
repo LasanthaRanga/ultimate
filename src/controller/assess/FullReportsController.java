@@ -567,6 +567,19 @@ public class FullReportsController implements Initializable {
         }
         String q_end_aw_report = KeyVal.getVal("Q_END_AW_REPORT");
         modle.GetInstans.getAssessReport().loadReportByDataSource(list, q_end_aw_report);
+
+
+        exportToExcel(list);
+
+    }
+
+    void exportToExcel(ArrayList<RipHolder> list) {
+
+        for (RipHolder rh : list) {
+            System.out.println(rh.getAssessNo());
+        }
+
+
     }
 
     public RipHolder getQendWarrantArriasByID(int assessID) {

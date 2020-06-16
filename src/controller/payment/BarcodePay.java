@@ -63,6 +63,9 @@ public class BarcodePay implements Initializable {
     @FXML
     private JFXButton btn_print;
 
+    @FXML
+    private JFXTextField txt_rn;
+
 
     public int catid;
     public int idRecipt;
@@ -85,6 +88,30 @@ public class BarcodePay implements Initializable {
 
         }
         modle.StaticViews.getMc().changeTitle("Barcode Pay");
+    }
+
+    @FXML
+    void receiptEnter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            try {
+
+                String text = txt_rn.getText();
+
+                ResultSet data = DB.getData("SELECT receipt.idReceipt FROM receipt WHERE receipt.receipt_print_no = '" + text + "'");
+
+                if (data.last()) {
+                    String idReceipt = data.getString("idReceipt");
+                    txt_barcode.setText(idReceipt);
+                    barcodeEntered(event);
+                } else {
+                    modle.Allert.notificationWorning("Not found", text);
+                }
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -1228,7 +1255,40 @@ public class BarcodePay implements Initializable {
 
                 }
             } else {
-                modle.Allert.notificationWorning("Please Create New Barcode", "Expired Barcode");
+
+                String query2 = "SELECT\n" +
+                        "receipt.idReceipt,\n" +
+                        "receipt.cheack,\n" +
+                        "receipt.cesh,\n" +
+                        "receipt.amount,\n" +
+                        "customer.cus_name,\n" +
+                        "receipt.receipt_day, " +
+                        "receipt.receipt_status \n" +
+                        "FROM\n" +
+                        "receipt\n" +
+                        "INNER JOIN assessment ON assessment.idAssessment = receipt.recept_applicationId\n" +
+                        "INNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                        "INNER JOIN customer ON cushasassess.customer_id = customer.idCustomer\n" +
+                        "WHERE\n" +
+                        "receipt.idReceipt = '" + text + "' AND\n" +
+                        "receipt.Application_Catagory_idApplication_Catagory = 2 AND\n" +
+                        "cushasassess.`status` = 1\n" +
+                        "ORDER BY\n" +
+                        "cushasassess.idCusHasAssess ASC";
+
+                ResultSet data2 = DB.getData(query2);
+
+                if (data2.last()) {
+                    int receipt_status = data2.getInt("receipt_status");
+                    if (receipt_status == 1) {
+                        idRecipt = Integer.parseInt(text);
+                        //  txt_tot.setText((data2.getDouble("cheack") + data.getDouble("cesh")) + "");
+                        //   txt_dis1.setText(data2.getString("cus_name"));
+                        printAnable();
+                    } else {
+                        modle.Allert.notificationWorning("Please Create New Barcode", "Expired Barcode");
+                    }
+                }
             }
 
         } catch (Exception e) {
