@@ -3,7 +3,7 @@ package modle;
 
 public class Maths {
     public static double round2(double d){
-      return Math.round(d*100.0)/100.0;
+      return Math.round(d*100.00)/100.00;
     }
     
     public static String get2String(double d){

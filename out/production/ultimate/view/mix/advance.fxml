@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="395.0" prefWidth="992.0" style="-fx-background-color: #B0BEC5;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.mix.Advance">
    <children>
       <JFXComboBox fx:id="com_1" layoutX="53.0" layoutY="36.0" onAction="#com1Action" prefHeight="31.0" prefWidth="278.0" />
       <JFXComboBox fx:id="com2" layoutX="387.0" layoutY="36.0" onAction="#com2Action" prefHeight="31.0" prefWidth="278.0" />
+      <JFXButton fx:id="btn_close" layoutX="942.0" layoutY="13.0" onAction="#close_on_action" text="X">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </JFXButton>
+      <TableView layoutX="53.0" layoutY="119.0" prefHeight="200.0" prefWidth="870.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="#" />
+          <TableColumn prefWidth="216.0" text="Voucher ID" />
+            <TableColumn prefWidth="322.0" text="Name" />
+            <TableColumn prefWidth="234.0" text="Amount" />
+        </columns>
+      </TableView>
+      <JFXButton layoutX="797.0" layoutY="339.0" prefHeight="31.0" prefWidth="126.0" text="Pay" />
    </children>
 </AnchorPane>

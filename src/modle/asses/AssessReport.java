@@ -241,6 +241,11 @@ public class AssessReport {
     public void getReciptPrintEdited1(String id, double tyw, double tya, boolean print, String subs, String word) {//one
         try {
 
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction().commit();
+            session.close();
+
+
             String path = "C:\\Ultimate\\Report\\assessment/mbilEdited.jrxml";// IN SYSTEM
             JasperReport jr = JasperCompileManager.compileReport(path);
             HashMap param = new HashMap<String, Integer>();
@@ -271,6 +276,11 @@ public class AssessReport {
 
     public void getReciptPrintPlane(String id, double tyw, double tya, boolean print, String subs, String word) {//one
         try {
+
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction().commit();
+            session.close();
+
 
             String ass_bill_path = KeyVal.getVal("ass_bill_path");
 
@@ -311,6 +321,7 @@ public class AssessReport {
             Session session = NewHibernateUtil.getSessionFactory().openSession();
             session.beginTransaction().commit();
             session.close();
+
             JasperReport jr = JasperCompileManager.compileReport(path);
 
             HashMap param = new HashMap<String, Integer>();
@@ -495,6 +506,10 @@ public class AssessReport {
                 // fullpay += cd + overnext;
 
             }
+
+            Session session = NewHibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction().commit();
+            session.close();
 
             System.out.println("cal hari");
             String path = "C:\\Ultimate\\Report\\assessment\\longbil.jrxml";// IN SYSTEM

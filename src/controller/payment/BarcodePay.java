@@ -821,7 +821,7 @@ public class BarcodePay implements Initializable {
                 conn.DB.setData("UPDATE `account_ps_three`\n" +
                         "SET `report_date` = '" + receipt_day + "',\n" +
                         " `report_ricipt_no` = '" + receipt_print_no + "',\n" +
-                        " `report_status` = '1'\n" +
+                        " `report_status` = '1', income_or_expence='1' \n" +
                         "WHERE\n" +
                         "\t`report_ricipt_id` = '" + idReceipt + "'");
             }

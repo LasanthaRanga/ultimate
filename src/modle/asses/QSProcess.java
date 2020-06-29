@@ -22,7 +22,6 @@ public class QSProcess {
 
     static String getAll = "SELECT\n" +
             "assessment.idAssessment,\n" +
-            "assessment.Customer_idCustomer,\n" +
             "assessment.Ward_idWard,\n" +
             "assessment.Street_idStreet,\n" +
             "assessment.ass_nature_idass_nature,\n" +
@@ -522,17 +521,15 @@ public class QSProcess {
 
             System.out.println(x);
             System.out.println(pro);
+
+            String end = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+            conn.DB.setData("UPDATE `ass_process` SET `end_time`='" + end + "' WHERE process_date='" + stringDate + "' AND quater_number=" + currentQuater);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try {
-            String end = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
-            conn.DB.setData("UPDATE `ass_process` SET `end_time`='" + end + "' WHERE process_date='" + stringDate + "' AND quater_number=" + currentQuater);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-        }
+
 
 
 

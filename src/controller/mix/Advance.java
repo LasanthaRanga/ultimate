@@ -26,11 +26,31 @@ public class Advance implements Initializable {
     private JFXComboBox<ComboItem> com_1;
 
     @FXML
-    private JFXComboBox<?> com2;
+    private JFXComboBox<ComboItem> com2;
+
+
+    @FXML
+    private JFXButton btn_close;
+
+    @FXML
+    void close_on_action(ActionEvent event) {
+        btn_close.getScene().getWindow().hide();
+    }
+
 
     @FXML
     void com1Action(ActionEvent event) {
+        int x = com_1.getSelectionModel().getSelectedItem().getId();
 
+
+        ObservableList<ComboItem> comboItems = ComboLoad.loadCombo("SELECT\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_subtitle_id,\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_subtitle_name\n" +
+                "FROM\n" +
+                "acc_bal_sheet_subtitle\n" +
+                "WHERE\n" +
+                "acc_bal_sheet_subtitle.bal_sheet_title_id = " + x);
+        com2.setItems(comboItems);
     }
 
     @FXML
@@ -53,5 +73,7 @@ public class Advance implements Initializable {
 
 
     }
+
+
 
 }

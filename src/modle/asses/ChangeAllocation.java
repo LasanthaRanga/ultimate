@@ -128,23 +128,26 @@ public class ChangeAllocation {
                 "\tward.ward_name,\n" +
                 "\tstreet.street_name,\n" +
                 "\tass_allocation.ass_allocation,\n" +
-                "\tcustomer.cus_name,\n" +
                 "\tass_nature.ass_nature_name,\n" +
                 "\tass_nature.ass_nature_year_rate,\n" +
                 "\tass_nature.idass_nature,\n" +
                 "\tass_allocation.idass_allocation,\n" +
-                "\tassessment.assessment_no\n" +
+                "\tassessment.assessment_no,\n" +
+                "\tGROUP_CONCAT( customer.cus_name SEPARATOR ' , ' ) AS cus_name \n" +
                 "FROM\n" +
                 "\tward\n" +
-                "INNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN assessment ON assessment.Street_idStreet = street.idStreet\n" +
-                "AND assessment.Ward_idWard = ward.idWard\n" +
-                "INNER JOIN customer ON assessment.Customer_idCustomer = customer.idCustomer\n" +
-                "INNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
-                "INNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "\tINNER JOIN street ON street.Ward_idWard = ward.idWard\n" +
+                "\tINNER JOIN assessment ON assessment.Street_idStreet = street.idStreet \n" +
+                "\tAND assessment.Ward_idWard = ward.idWard\n" +
+                "\tINNER JOIN ass_allocation ON ass_allocation.Assessment_idAssessment = assessment.idAssessment\n" +
+                "\tINNER JOIN ass_nature ON assessment.ass_nature_idass_nature = ass_nature.idass_nature\n" +
+                "\tINNER JOIN cushasassess ON cushasassess.assessment_id = assessment.idAssessment\n" +
+                "\tINNER JOIN customer ON cushasassess.customer_id = customer.idCustomer \n" +
                 "WHERE\n" +
-                "\tass_allocation.ass_allocation_status = 1\n" +
-                "AND assessment.idAssessment =" + i;
+                "\tass_allocation.ass_allocation_status = 1 \n" +
+                "\tAND assessment.idAssessment = '" + i + "' \n" +
+                "GROUP BY\n" +
+                "\tassessment.idAssessment";
 
         try {
             ResultSet data = DB.getData(qq);

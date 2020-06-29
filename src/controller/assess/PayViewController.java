@@ -142,15 +142,26 @@ public class PayViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        payObj = new PayObj();
-        btn_pay.setDisable(true);
-        loadBanksCombo();
-        if (modle.asses.StaticBadu.getIdAssessment() != null && modle.asses.StaticBadu.getIdAssessment() != 0) {
-            txt_idAssess.setText(modle.asses.StaticBadu.getIdAssessment() + "");
-            autoRady();
-            txt_Pay.requestFocus();
-        }
         modle.StaticViews.getMc().changeTitle("Assessment Pay");
+        boolean b = new modle.asses.Process().anableProcessPayment();
+        if (b) {
+            payObj = new PayObj();
+            btn_pay.setDisable(true);
+            loadBanksCombo();
+            if (modle.asses.StaticBadu.getIdAssessment() != null && modle.asses.StaticBadu.getIdAssessment() != 0) {
+                txt_idAssess.setText(modle.asses.StaticBadu.getIdAssessment() + "");
+                autoRady();
+                txt_Pay.requestFocus();
+            }
+
+        } else {
+            modle.Allert.notificationError("Quarter End Process Not Completed", "Please Do Quarter End");
+            txt_idAssess.setDisable(true);
+            btn_search.setDisable(true);
+            btn_histry.setDisable(true);
+
+
+        }
     }
 
     public void loadBanksCombo() {
